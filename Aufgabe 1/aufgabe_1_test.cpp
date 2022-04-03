@@ -6,7 +6,7 @@ void TestPrintPrimes() {
 
   std::ofstream out("YourPrint.txt");
   std::streambuf *coutbuf = std::cout.rdbuf();
-  std::cout.rdbuf(out.rdbuf()); // cout auf Datei "YourPrint.txt" umleiten
+  std::cout.rdbuf(out.rdbuf());  // cout auf Datei "YourPrint.txt" umleiten
   print();
   out.close();
 
@@ -27,7 +27,7 @@ void TestPrintPrimes() {
   std::getline(leadFile, leadLine);
   test.Assert("No more lines :", leadFile.eof());
   remove("YourPrint.txt");
-  std::cout.rdbuf(coutbuf); // cout wieder auf Bildschirm leiten
+  std::cout.rdbuf(coutbuf);  // cout wieder auf Bildschirm leiten
 }
 
 int main() {

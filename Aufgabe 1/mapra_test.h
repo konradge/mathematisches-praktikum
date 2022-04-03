@@ -21,7 +21,6 @@ std::ostream& operator<<(std::ostream& stream, const std::vector<T>& vektor) {
   return stream;
 }
 
-
 class MapraTest {
  public:
   MapraTest(const std::string& case_name, std::ostream& out = std::cerr)
@@ -51,7 +50,8 @@ class MapraTest {
   }
 
   template <typename T>
-  void AssertEq(const std::string& test_name, const std::vector<T>& expected_value,
+  void AssertEq(const std::string& test_name,
+                const std::vector<T>& expected_value,
                 const std::vector<T>& computed_value) {
     const bool kPassed = expected_value == computed_value;
     this->Assert(test_name, kPassed);

@@ -5,71 +5,71 @@
 #include <string>
 
 void print() {
-  int M = 300;
-  int RR = 50;
-  int CC = 4;
-  int ORDMAX = 30;
-  int P[M + 1];
-  int PAGENUMBER;
-  int PAGEOFFSET;
-  int ROWOFFSET;
-  int C;
-  int J;
-  int K;
-  bool JPRIME;
-  int ORD;
-  int SQUARE;
-  int N = 0;
-  int MULT[ORDMAX + 1];
+  int m = 300;
+  int rr = 50;
+  int cc = 4;
+  int ordmax = 30;
+  int p[m + 1];
+  int page_number;
+  int page_offset;
+  int row_offset;
+  int c;
+  int j;
+  int k;
+  bool j_prime;
+  int ord;
+  int square;
+  int n = 0;
+  int mult[ordmax + 1];
 
-  J = 1;
-  K = 1;
-  P[1] = 2;
-  ORD = 2;
-  SQUARE = 9;
+  j = 1;
+  k = 1;
+  p[1] = 2;
+  ord = 2;
+  square = 9;
 
-  while (K < M) {
+  while (k < m) {
     do {
-      J += 2;
-      if (J == SQUARE) {
-        ORD++;
-        SQUARE = P[ORD] * P[ORD];
-        MULT[ORD - 1] = J;
+      j += 2;
+      if (j == square) {
+        ord++;
+        square = p[ord] * p[ord];
+        mult[ord - 1] = j;
       }
-      N = 2;
-      JPRIME = true;
-      while (N < ORD && JPRIME) {
-        while (MULT[N] < J) {
-          MULT[N] += P[N] + P[N];
+      n = 2;
+      j_prime = true;
+      while (n < ord && j_prime) {
+        while (mult[n] < j) {
+          mult[n] += p[n] + p[n];
         }
-        if (MULT[N] == J) {
-          JPRIME = false;
+        if (mult[n] == j) {
+          j_prime = false;
         }
-        N++;
+        n++;
       }
-    } while (!JPRIME);
-    K++;
-    P[K] = J;
+    } while (!j_prime);
+    k++;
+    p[k] = j;
   }
-  PAGENUMBER = 1;
-  PAGEOFFSET = 1;
-  while (PAGEOFFSET <= M) {
+  page_number = 1;
+  page_offset = 1;
+  while (page_offset <= m) {
     std::cout << "The First ";
-    std::cout << M;
+    std::cout << m;
     std::cout << " Prime Numbers --- Page ";
-    std::cout << PAGENUMBER;
+    std::cout << page_number;
     std::cout << std::endl;
-    for (ROWOFFSET = PAGEOFFSET; ROWOFFSET <= PAGEOFFSET + RR - 1;
-         ROWOFFSET++) {
-      for (C = 0; C <= CC - 1; C++) {
-        if (ROWOFFSET + C * RR <= M) {
-          std::cout << std::setw(10) << P[ROWOFFSET + C * RR];
+    for (row_offset = page_offset; row_offset <= page_offset + rr - 1;
+         row_offset++) {
+      for (c = 0; c <= cc - 1; c++) {
+        if (row_offset + c * rr <= m) {
+          std::cout << std::setw(10) << p[row_offset + c * rr];
         }
       }
       std::cout << std::endl;
     }
     std::cout << "\f" << std::endl;
-    PAGENUMBER++;
-    PAGEOFFSET += RR * CC;
+    page_number++;
+    page_offset += rr * cc;
   }
 }

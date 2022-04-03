@@ -5,30 +5,23 @@
 #include <string>
 
 void print() {
-  int m = 300;
-  int rr = 50;
-  int cc = 4;
-  int ordmax = 30;
-  int p[m + 1];
-  int page_number;
-  int page_offset;
-  int row_offset;
-  int c;
-  int j;
-  int k;
+  const int kOrdmax = 30;
+  const int kM = 300;
+  const int kRr = 50;
+  const int kCc = 4;
+  int p[kM + 1];
+  int page_number = 1;
+  int page_offset = 1;
+  int j = 1;
+  int k = 1;
   bool j_prime;
-  int ord;
-  int square;
-  int n = 0;
-  int mult[ordmax + 1];
+  int ord = 2;
+  int square = 9;
+  int mult[kOrdmax + 1];
 
-  j = 1;
-  k = 1;
   p[1] = 2;
-  ord = 2;
-  square = 9;
 
-  while (k < m) {
+  while (k < kM) {
     do {
       j += 2;
       if (j == square) {
@@ -36,7 +29,7 @@ void print() {
         square = p[ord] * p[ord];
         mult[ord - 1] = j;
       }
-      n = 2;
+      int n = 2;
       j_prime = true;
       while (n < ord && j_prime) {
         while (mult[n] < j) {
@@ -51,25 +44,23 @@ void print() {
     k++;
     p[k] = j;
   }
-  page_number = 1;
-  page_offset = 1;
-  while (page_offset <= m) {
+  while (page_offset <= kM) {
     std::cout << "The First ";
-    std::cout << m;
+    std::cout << kM;
     std::cout << " Prime Numbers --- Page ";
     std::cout << page_number;
     std::cout << std::endl;
-    for (row_offset = page_offset; row_offset <= page_offset + rr - 1;
+    for (int row_offset = page_offset; row_offset <= page_offset + kRr - 1;
          row_offset++) {
-      for (c = 0; c <= cc - 1; c++) {
-        if (row_offset + c * rr <= m) {
-          std::cout << std::setw(10) << p[row_offset + c * rr];
+      for (int c = 0; c <= kCc - 1; c++) {
+        if (row_offset + c * kRr <= kM) {
+          std::cout << std::setw(10) << p[row_offset + c * kRr];
         }
       }
       std::cout << std::endl;
     }
     std::cout << "\f" << std::endl;
     page_number++;
-    page_offset += rr * cc;
+    page_offset += kRr * kCc;
   }
 }

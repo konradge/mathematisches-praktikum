@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.tikz": "latex",
-        "vector": "cpp"
+        "vector": "cpp",
+        "ios": "cpp"
     }
 }

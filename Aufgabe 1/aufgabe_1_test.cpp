@@ -23,17 +23,11 @@ void TestPrintPrimes() {
   // Zeile fuer Zeile vergleichen
   while (std::getline(gold_file, gold_line)) {
     std::stringstream ss;
-    ss << "Line " << std::to_string(i) << "xxx";
+    ss << "Line " << std::to_string(i) << ":\t";
     std::getline(lead_file, lead_line);
-    std::cout << "EXP: ";
-    std::cout << gold_line << std::endl;
-    std::cout << "GOT: ";
-    std::cout << lead_line << std::endl;
     test.AssertEq(ss.str(), gold_line, lead_line);
     i++;
   }
-
-  test.AssertEq("Test:", "EXP", "GOT");
   std::getline(lead_file, lead_line);
   test.Assert("No more lines :", lead_file.eof());
   remove("YourPrint.txt");
@@ -72,7 +66,7 @@ void TestIsPrime() {
 
 int main() {
   TestPrintPrimes();
-  // TestGeneratePrimes();
-  // TestIsPrime();
+  TestGeneratePrimes();
+  TestIsPrime();
   return 0;
 }

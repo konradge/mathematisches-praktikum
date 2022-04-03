@@ -5,10 +5,9 @@
 #include <string>
 #include <vector>
 
-void print(int prime_count) {
+// Generate prime_count prime numbers as a std::vector
+std::vector<int> GeneratePrimes(int prime_count) {
   const int kOrdmax = 30;
-  const int kRr = 50;
-  const int kCc = 4;
 
   std::vector<int> p(prime_count + 1);
   p[1] = 2;
@@ -43,6 +42,15 @@ void print(int prime_count) {
     p[k + 1] = j;
   }
 
+  return p;
+}
+
+// Print out prime_count primes
+void Print(int prime_count) {
+  const int kRr = 50;
+  const int kCc = 4;
+
+  auto p = GeneratePrimes(prime_count);
   int page_number = 1;
   int page_offset = 1;
 

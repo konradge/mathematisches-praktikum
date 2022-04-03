@@ -1,6 +1,6 @@
 #include "prime_printer.h"
 
 int main() {
-  print();
+  Print(300);
   return 0;
 }

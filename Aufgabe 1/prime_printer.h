@@ -20,7 +20,7 @@ void print() {
   bool JPRIME;
   int ORD;
   int SQUARE;
-  int N=0;
+  int N = 0;
   int MULT[ORDMAX + 1];
 
   J = 1;
@@ -33,7 +33,9 @@ void print() {
     do {
       J += 2;
       if (J == SQUARE) {
-        ORD++;  SQUARE = P[ORD] * P[ORD];   MULT[ORD-1] = J;
+        ORD++;
+        SQUARE = P[ORD] * P[ORD];
+        MULT[ORD-1] = J;
       }
       N=2;
       JPRIME=true;
@@ -58,7 +60,8 @@ void print() {
     std::cout << " Prime Numbers --- Page ";
     std::cout << PAGENUMBER;
     std::cout << std::endl;
-    for (ROWOFFSET = PAGEOFFSET; ROWOFFSET <= PAGEOFFSET + RR - 1; ROWOFFSET++) {
+    for (ROWOFFSET = PAGEOFFSET; ROWOFFSET <= PAGEOFFSET + RR - 1;
+        ROWOFFSET++) {
       for (C = 0; C <= CC - 1; C++) {
         if (ROWOFFSET + C * RR <= M) {
           std::cout << std::setw(10) << P[ROWOFFSET + C * RR];

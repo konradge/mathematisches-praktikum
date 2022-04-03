@@ -7,7 +7,7 @@ void TestPrintPrimes() {
   std::ofstream out("YourPrint.txt");
   std::streambuf *cout_buffer = std::cout.rdbuf();
   std::cout.rdbuf(out.rdbuf());  // cout auf Datei "YourPrint.txt" umleiten
-  print();
+  print(300);
   out.close();
 
   std::ifstream gold_file("PerfectPrint.txt");

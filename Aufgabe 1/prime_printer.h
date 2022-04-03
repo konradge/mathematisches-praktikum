@@ -10,9 +10,6 @@ void print() {
   const int kM = 300;
   const int kRr = 50;
   const int kCc = 4;
-  int page_number = 1;
-  int page_offset = 1;
-  int j = 1;
 
   std::vector<int> p(kM + 1);
   p[1] = 2;
@@ -20,6 +17,7 @@ void print() {
   std::vector<int> mult(kOrdmax + 1);
   int square = 9;
   int ord = 2;
+  int j = 1;
 
   for (int k = 1; k < kM; k++) {
     bool j_prime;
@@ -45,6 +43,10 @@ void print() {
 
     p[k + 1] = j;
   }
+
+  int page_number = 1;
+  int page_offset = 1;
+
   while (page_offset <= kM) {
     std::cout << "The First ";
     std::cout << kM;

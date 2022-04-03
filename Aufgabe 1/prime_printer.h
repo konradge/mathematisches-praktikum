@@ -38,8 +38,9 @@ void print() {
       N=2;
       JPRIME=true;
       while (N < ORD && JPRIME) {
-        while (MULT[N] < J)
-        MULT[N] += P[N] + P[N]; 
+        while (MULT[N] < J) {
+          MULT[N] += P[N] + P[N]; 
+        }
         if (MULT[N] == J) {
           JPRIME=false;
         }
@@ -58,9 +59,11 @@ void print() {
     std::cout << PAGENUMBER;
     std::cout << std::endl;
     for (ROWOFFSET=PAGEOFFSET; ROWOFFSET <= PAGEOFFSET+RR-1; ROWOFFSET++) {
-      for (C=0; C <= CC-1; C++)
-        if (ROWOFFSET+C*RR <= M)
+      for (C=0; C <= CC-1; C++) {
+        if (ROWOFFSET+C*RR <= M) {
           std::cout << std::setw(10) << P[ROWOFFSET+C*RR];
+        }
+      }
       std::cout << std::endl;
     }
     std::cout << "\f" << std::endl;

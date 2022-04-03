@@ -5,48 +5,29 @@
 #include <string>
 #include <vector>
 
+#include "PrimeTester.h"
+
+const int kRowsPerPage = 50;
+const int kColumnsPerRow = 4;
+
 // Generate prime_count prime numbers as a std::vector
 std::vector<int> GeneratePrimes(int prime_count) {
-  const int kOrdmax = 30;
+  std::vector<int> primes(prime_count);
 
-  std::vector<int> p(prime_count + 1);
-  p[1] = 2;
+  PrimeTester prime_tester(prime_count);
 
-  std::vector<int> mult(kOrdmax + 1);
-  int square = 9;
-  int ord = 2;
-  int j = 1;
+  int found_primes = 0;
+  int number = 2;
 
-  for (int k = 1; k < prime_count; k++) {
-    bool j_prime;
-    do {
-      j += 2;
-      if (j == square) {
-        ord++;
-        square = p[ord] * p[ord];
-        mult[ord - 1] = j;
-      }
-      int n = 2;
-      j_prime = true;
-      while (n < ord && j_prime) {
-        while (mult[n] < j) {
-          mult[n] += p[n] + p[n];
-        }
-        if (mult[n] == j) {
-          j_prime = false;
-        }
-        n++;
-      }
-    } while (!j_prime);
-
-    p[k + 1] = j;
+  while (found_primes < prime_count) {
+    if (prime_tester.is_prime(number)) {
+      primes[found_primes] = number;
+      found_primes++;
+    }
+    number++;
   }
 
-  // Remove the first element from the vector, as the above function starts the
-  // primes with zero
-  p.erase(p.begin());
-
-  return p;
+  return primes;
 }
 
 void PrintRow(const int kPrimeCount, const int kRowsPerPage,
@@ -78,9 +59,6 @@ void PrintPage(const int kPageNumber, const int kPrimeCount,
 
 // Print out prime_count primes
 void Print(int prime_count) {
-  const int kRowsPerPage = 50;
-  const int kColumnsPerRow = 4;
-
   const auto kPrimes = GeneratePrimes(prime_count);
   int page_number = 1;
   int page_offset = 1;

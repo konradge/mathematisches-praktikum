@@ -1,5 +1,7 @@
+#include "fstream"
 #include "mapra_test.h"
 #include "prime_printer.h"
+#include "sstream"
 
 void TestPrintPrimes() {
   mapra::MapraTest test("PrimePrintTester");

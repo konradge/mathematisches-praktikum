@@ -49,14 +49,9 @@ std::vector<int> GeneratePrimes(int prime_count) {
   return p;
 }
 
-void PrintPage(const int kPageNumber, const int kPrimeCount,
-               const int kRowsPerPage, const int kColumnsPerRow,
-               const int kPageOffset, const std::vector<int>& kPrimes) {
-  std::cout << "The First ";
-  std::cout << kPrimeCount;
-  std::cout << " Prime Numbers --- Page ";
-  std::cout << kPageNumber;
-  std::cout << std::endl;
+void PrintRow(const int kPrimeCount, const int kRowsPerPage,
+              const int kColumnsPerRow, const int kPageOffset,
+              const std::vector<int>& kPrimes) {
   for (int row_offset = kPageOffset;
        row_offset <= kPageOffset + kRowsPerPage - 1; row_offset++) {
     for (int c = 0; c <= kColumnsPerRow - 1; c++) {
@@ -67,6 +62,17 @@ void PrintPage(const int kPageNumber, const int kPrimeCount,
     }
     std::cout << std::endl;
   }
+}
+
+void PrintPage(const int kPageNumber, const int kPrimeCount,
+               const int kRowsPerPage, const int kColumnsPerRow,
+               const int kPageOffset, const std::vector<int>& kPrimes) {
+  std::cout << "The First ";
+  std::cout << kPrimeCount;
+  std::cout << " Prime Numbers --- Page ";
+  std::cout << kPageNumber;
+  std::cout << std::endl;
+  PrintRow(kPrimeCount, kRowsPerPage, kColumnsPerRow, kPageOffset, kPrimes);
   std::cout << "\f" << std::endl;
 }
 

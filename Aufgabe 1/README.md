@@ -1,4 +1,3 @@
 # Compile
 
-g++ -std=c++17 -Wall -Wextra -Wpedantic -c PrimeTester.cpp
-g++ -std=c++17 -Wall -Wextra -Wpedantic aufgabe_1_test.cpp PrimeTester.o -o testA1
+` g++ -std=c++17 -Wall -Wextra -Wpedantic aufgabe_1_test.cpp prime_printer.cpp PrimeTester.cpp -o testA1 `

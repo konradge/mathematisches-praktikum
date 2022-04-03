@@ -45,9 +45,21 @@ PrimeTester::PrimeTester(int prime_count) {
   // primes with zero
   p.erase(p.begin());
 
+  // Save the highest calculated prime number, as all numbers above may or may
+  // not be primes
+  max_prime = *p.end();
+
+  // For performance regarding the is_prime function, the primes are stored in a
+  // map --> Lookup will need constant time
   for (auto pr = p.begin(); pr != p.end(); ++pr) {
     primes[*pr] = true;
   }
 }
 
-bool PrimeTester::is_prime(int number) { return primes[number]; }
+bool PrimeTester::is_prime(int number) {
+  if (number > max_prime) {
+    // It has not been tested, if the number is a prime
+    throw 1;
+  }
+  return primes[number];
+}

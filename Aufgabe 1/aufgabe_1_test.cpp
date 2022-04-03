@@ -1,3 +1,4 @@
+#include "PrimeTester.h"
 #include "fstream"
 #include "mapra_test.h"
 #include "prime_printer.h"
@@ -41,8 +42,37 @@ void TestGeneratePrimes() {
   test.AssertEq("Generated primes", primes, generated_primes);
 }
 
+void TestIsPrime() {
+  mapra::MapraTest test("IsPrimeTester");
+  PrimeTester prime_tester(20);
+  std::vector<int> primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
+  std::vector<int> non_primes = {1,  4,  6,  8,  9,  10, 12, 14,
+                                 15, 16, 18, 20, 21, 22, 24, 25};
+  std::vector<int> to_big_numbers = {1000, 2000};
+  for (auto p : primes) {
+    test.AssertEq("Positive test", prime_tester.is_prime(p), true);
+  }
+
+  for (auto np : non_primes) {
+    test.AssertEq("Negative test", prime_tester.is_prime(np), false);
+  }
+
+  for (auto tbn : to_big_numbers) {
+    bool catched;
+    try {
+      prime_tester.is_prime(tbn);
+      catched = false;
+    } catch (int err) {
+      catched = true;
+    }
+
+    test.Assert("To big number", catched);
+  }
+}
+
 int main() {
   TestPrintPrimes();
   TestGeneratePrimes();
+  TestIsPrime();
   return 0;
 }

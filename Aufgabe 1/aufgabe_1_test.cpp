@@ -4,15 +4,6 @@
 #include "prime_printer.h"
 #include "sstream"
 
-// Concatenate strings in the given vector to one string
-std::string StringConcatHelper(const std::vector<std::string> kStrings) {
-  std::stringstream ss;
-  for (const auto kStr : kStrings) {
-    ss << kStr;
-  }
-  return ss.str();
-}
-
 void TestPrintPrimes() {
   mapra::MapraTest test("PrimePrintTester");
 
@@ -21,31 +12,39 @@ void TestPrintPrimes() {
   std::cout.rdbuf(out.rdbuf());  // cout auf Datei "YourPrint.txt" umleiten
   Print(300);
   out.close();
+  std::cout.rdbuf(cout_buffer);
 
-  std::ifstream expected_file("PerfectPrint.txt");
-  std::ifstream got_file("YourPrint.txt");
+  std::ifstream gold_file("PerfectPrint.txt");
+  std::ifstream lead_file("YourPrint.txt");
 
-  std::string expected_line;
-  std::string got_line;
+  std::string gold_line;
+  std::string lead_line;
   int i = 1;
   // Zeile fuer Zeile vergleichen
-  while (std::getline(expected_file, expected_line)) {
-    std::getline(got_file, got_line);
-    std::string test_name =
-        StringConcatHelper({"Line ", std::to_string(i), "\t:"});
-    test.AssertEq(test_name, expected_line, got_line);
+  while (std::getline(gold_file, gold_line)) {
+    std::stringstream ss;
+    ss << "Line " << std::to_string(i) << "xxx";
+    std::getline(lead_file, lead_line);
+    std::cout << "EXP: ";
+    std::cout << gold_line << std::endl;
+    std::cout << "GOT: ";
+    std::cout << lead_line << std::endl;
+    test.AssertEq(ss.str(), gold_line, lead_line);
     i++;
   }
-  std::getline(got_file, got_line);
-  test.Assert("No more lines :", got_file.eof());
+
+  test.AssertEq("Test:", "EXP", "GOT");
+  std::getline(lead_file, lead_line);
+  test.Assert("No more lines :", lead_file.eof());
   remove("YourPrint.txt");
-  std::cout.rdbuf(cout_buffer);  // cout wieder auf Bildschirm leiten
+  //  std::cout.rdbuf(cout_buffer);  // cout wieder auf Bildschirm leiten
 }
 
 void TestGeneratePrimes() {
   mapra::MapraTest test("PrimeGenerateTester");
 
   const std::vector<int> kPrimes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
+
   const std::vector<int> kGeneratedPrimes = GeneratePrimes(10);
 
   test.AssertEq("Generated primes", kPrimes, kGeneratedPrimes);
@@ -67,21 +66,13 @@ void TestIsPrime() {
   }
 
   for (const auto tbn : to_big_numbers) {
-    bool catched;
-    try {
-      prime_tester.is_prime(tbn);
-      catched = false;
-    } catch (int err) {
-      catched = true;
-    }
-
-    test.Assert("To big number", catched);
+    test.Assert("To big number", !prime_tester.is_prime(tbn));
   }
 }
 
 int main() {
   TestPrintPrimes();
-  TestGeneratePrimes();
-  TestIsPrime();
+  // TestGeneratePrimes();
+  // TestIsPrime();
   return 0;
 }

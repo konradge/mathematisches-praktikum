@@ -49,32 +49,40 @@ std::vector<int> GeneratePrimes(int prime_count) {
   return p;
 }
 
+void PrintPage(const int kPageNumber, const int kPrimeCount,
+               const int kRowsPerPage, const int kColumnsPerRow,
+               const int kPageOffset, const std::vector<int>& kPrimes) {
+  std::cout << "The First ";
+  std::cout << kPrimeCount;
+  std::cout << " Prime Numbers --- Page ";
+  std::cout << kPageNumber;
+  std::cout << std::endl;
+  for (int row_offset = kPageOffset;
+       row_offset <= kPageOffset + kRowsPerPage - 1; row_offset++) {
+    for (int c = 0; c <= kColumnsPerRow - 1; c++) {
+      if (row_offset + c * kRowsPerPage <= kPrimeCount) {
+        std::cout << std::setw(10)
+                  << kPrimes[row_offset + c * kRowsPerPage - 1];
+      }
+    }
+    std::cout << std::endl;
+  }
+  std::cout << "\f" << std::endl;
+}
+
 // Print out prime_count primes
 void Print(int prime_count) {
-  const int kRr = 50;
-  const int kCc = 4;
+  const int kRowsPerPage = 50;
+  const int kColumnsPerRow = 4;
 
-  auto p = GeneratePrimes(prime_count);
+  const auto kPrimes = GeneratePrimes(prime_count);
   int page_number = 1;
   int page_offset = 1;
 
   while (page_offset <= prime_count) {
-    std::cout << "The First ";
-    std::cout << prime_count;
-    std::cout << " Prime Numbers --- Page ";
-    std::cout << page_number;
-    std::cout << std::endl;
-    for (int row_offset = page_offset; row_offset <= page_offset + kRr - 1;
-         row_offset++) {
-      for (int c = 0; c <= kCc - 1; c++) {
-        if (row_offset + c * kRr <= prime_count) {
-          std::cout << std::setw(10) << p[row_offset + c * kRr - 1];
-        }
-      }
-      std::cout << std::endl;
-    }
-    std::cout << "\f" << std::endl;
+    PrintPage(page_number, prime_count, kRowsPerPage, kColumnsPerRow,
+              page_offset, kPrimes);
     page_number++;
-    page_offset += kRr * kCc;
+    page_offset += kRowsPerPage * kColumnsPerRow;
   }
 }

@@ -3,13 +3,14 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 void print() {
   const int kOrdmax = 30;
   const int kM = 300;
   const int kRr = 50;
   const int kCc = 4;
-  int p[kM + 1];
+  std::vector<int> p(kM + 1);
   int page_number = 1;
   int page_offset = 1;
   int j = 1;
@@ -17,7 +18,7 @@ void print() {
   bool j_prime;
   int ord = 2;
   int square = 9;
-  int mult[kOrdmax + 1];
+  std::vector<int> mult(kOrdmax + 1);
 
   p[1] = 2;
 

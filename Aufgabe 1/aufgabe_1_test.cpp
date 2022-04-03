@@ -30,7 +30,17 @@ void TestPrintPrimes() {
   std::cout.rdbuf(cout_buffer);  // cout wieder auf Bildschirm leiten
 }
 
+void TestGeneratePrimes() {
+  mapra::MapraTest test("PrimeGenerateTester");
+
+  std::vector<int> primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
+  auto generated_primes = GeneratePrimes(10);
+
+  test.AssertEq("Generated primes", primes, generated_primes);
+}
+
 int main() {
   TestPrintPrimes();
+  TestGeneratePrimes();
   return 0;
 }

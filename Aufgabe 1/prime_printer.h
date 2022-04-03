@@ -42,6 +42,10 @@ std::vector<int> GeneratePrimes(int prime_count) {
     p[k + 1] = j;
   }
 
+  // Remove the first element from the vector, as the above function starts the
+  // primes with zero
+  p.erase(p.begin());
+
   return p;
 }
 
@@ -64,7 +68,7 @@ void Print(int prime_count) {
          row_offset++) {
       for (int c = 0; c <= kCc - 1; c++) {
         if (row_offset + c * kRr <= prime_count) {
-          std::cout << std::setw(10) << p[row_offset + c * kRr];
+          std::cout << std::setw(10) << p[row_offset + c * kRr - 1];
         }
       }
       std::cout << std::endl;

@@ -46,20 +46,20 @@ void TestGeneratePrimes() {
 
 void TestIsPrime() {
   mapra::MapraTest test("IsPrimeTester");
-  PrimeTester prime_tester(20);
+  PrimeTester prime_tester(10);
   const std::vector<int> kPrimes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
   const std::vector<int> kNonPrimes = {1,  4,  6,  8,  9,  10, 12, 14,
                                        15, 16, 18, 20, 21, 22, 24, 25};
-  std::vector<int> to_big_numbers = {1000, 2000};
+  std::vector<int> too_big_numbers = {31, 2000, 3333};
   for (const auto p : kPrimes) {
-    test.AssertEq("Positive test", prime_tester.is_prime(p), true);
+    test.Assert("Positive test", prime_tester.is_prime(p));
   }
 
   for (const auto np : kNonPrimes) {
-    test.AssertEq("Negative test", prime_tester.is_prime(np), false);
+    test.Assert("Negative test", !prime_tester.is_prime(np));
   }
 
-  for (const auto tbn : to_big_numbers) {
+  for (const auto tbn : too_big_numbers) {
     test.Assert("To big number", !prime_tester.is_prime(tbn));
   }
 }

@@ -1,16 +1,19 @@
+#include <fstream>
+#include <sstream>
+
+#include "PrimePrinter.h"
 #include "PrimeTester.h"
-#include "fstream"
 #include "mapra_test.h"
 #include "prime_printer.h"
-#include "sstream"
 
 void TestPrintPrimes() {
+  PrimePrinter pp(50, 4);
   mapra::MapraTest test("PrimePrintTester");
 
   std::ofstream out("YourPrint.txt");
   std::streambuf *cout_buffer = std::cout.rdbuf();
   std::cout.rdbuf(out.rdbuf());  // cout auf Datei "YourPrint.txt" umleiten
-  Print(300);
+  pp.Print(300);
   out.close();
   std::cout.rdbuf(cout_buffer);
 

@@ -1,3 +1,5 @@
+#include "generate_primes.h"
+
 #include <fstream>
 #include <iomanip>
 #include <iostream>

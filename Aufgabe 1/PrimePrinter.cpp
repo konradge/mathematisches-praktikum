@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#include "prime_printer.h"
+#include "generate_primes.h"
 
 void PrimePrinter::PrintRow(const int kPrimeCount, const int kPageOffset,
                             const std::vector<int>& kPrimes) {

@@ -3,8 +3,8 @@
 
 #include "PrimePrinter.h"
 #include "PrimeTester.h"
+#include "generate_primes.h"
 #include "mapra_test.h"
-#include "prime_printer.h"
 
 void TestPrintPrimes() {
   PrimePrinter pp(50, 4);

@@ -11,9 +11,9 @@ PrimeTester::PrimeTester(const int kPrimeCount) {
 
   primes_vector[1] = 2;
 
-  std::vector<int> mult(kOrdmax + 1);
+  std::vector<int> prime_multiples(kOrdmax + 1);
   int square = 9;
-  int ord = 2;
+  int num_prime_sieves = 2;
   int j = 1;
 
   for (int k = 1; k < kPrimeCount; k++) {
@@ -21,17 +21,17 @@ PrimeTester::PrimeTester(const int kPrimeCount) {
     do {
       j += 2;
       if (j == square) {
-        ord++;
-        square = primes_vector[ord] * primes_vector[ord];
-        mult[ord - 1] = j;
+        num_prime_sieves++;
+        square = primes_vector[num_prime_sieves] * primes_vector[num_prime_sieves];
+        prime_multiples[num_prime_sieves - 1] = j;
       }
       int n = 2;
       j_prime = true;
-      while (n < ord && j_prime) {
-        while (mult[n] < j) {
-          mult[n] += primes_vector[n] + primes_vector[n];
+      while (n < num_prime_sieves && j_prime) {
+        while (prime_multiples[n] < j) {
+          prime_multiples[n] += 2 * primes_vector[n];
         }
-        if (mult[n] == j) {
+        if (prime_multiples[n] == j) {
           j_prime = false;
         }
         n++;

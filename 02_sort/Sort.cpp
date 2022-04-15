@@ -91,3 +91,17 @@ std::vector < unsigned int> Sort::selectionsort(std::vector <unsigned int> data)
 
 	return data;
 }
+
+//function insertionsort
+
+std::vector <unsigned int> Sort::insertionsort(std::vector <unsigned int> data) {
+	unsigned int n = data.size();
+	for (unsigned int i = 0; i < n; i++) {
+		for (int j = i; j >= 0; j--) {
+			if (data[j] < data[i]) {
+				std::swap(data[j], data[i]);
+			}
+	   }
+	}
+	return data;
+}

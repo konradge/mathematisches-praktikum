@@ -34,13 +34,21 @@ int main() {
   mapra::CheckSolution(*&data2);
   cout << "-----------------------------------------" << endl;
   
-  std::vector <unsigned int > data3 = mapra::GetExample(1, 10);
+  std::vector <unsigned int > data3 = mapra::GetExample(2, 10);
   cout << "vector before selectionsort" << endl;
   Sort::print_vector(data3);
   cout << "vector after selectionsort" << endl;
   data3 = Sort::selectionsort(data3);
   Sort::print_vector(data3);
   mapra::CheckSolution(*&data3);
-  
+  cout << "-----------------------------------------" << endl;
+
+  std::vector <unsigned int > data4 = mapra::GetExample(3, 20);
+  cout << "vector before insertionsort" << endl;
+  Sort::print_vector(data4);
+  cout << "vector after insertionsort" << endl;
+  data4 = Sort::selectionsort(data4);
+  Sort::print_vector(data4);
+  mapra::CheckSolution(*&data4);
   return 0;
 }

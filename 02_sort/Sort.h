@@ -16,15 +16,13 @@ namespace Sort {
    void print_vector(std::vector <unsigned int> data);
 
    std::vector < unsigned int> merge(std::vector < unsigned int> left,
-	                                     unsigned int n_left,
-	                                     std::vector < unsigned int> right,
-	                                     unsigned int n_right);
-   std::vector < unsigned int> mergesort(std::vector <unsigned int> data,
-	                                        unsigned int n);
+	                                 std::vector < unsigned int> right);
 
-   std::vector < unsigned int> bubblesort(std::vector <unsigned int> data,
-		  unsigned int n);
+   std::vector < unsigned int> mergesort(std::vector <unsigned int> data);
 
+   std::vector < unsigned int> bubblesort(std::vector <unsigned int> data);
+
+   std::vector < unsigned int> selectionsort(std::vector <unsigned int> data);
 }
     
 #endif

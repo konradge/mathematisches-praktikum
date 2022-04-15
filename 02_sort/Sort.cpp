@@ -8,10 +8,10 @@ using namespace std;
 
 
 // function merge
-vector < unsigned int> Sort::merge(vector < unsigned int> left,
-							 unsigned int n_left,
-	                         vector < unsigned int> right,
-                             unsigned int n_right) {
+vector < unsigned int> Sort::merge(std::vector < unsigned int> left,
+	                              std::vector < unsigned int> right) {
+	unsigned int n_left = left.size();
+	unsigned int n_right = right.size();
 	unsigned int i = 0;  // index of data
 	unsigned int l = 0;  // index of left
 	unsigned int r = 0;  // index of right
@@ -35,7 +35,8 @@ vector < unsigned int> Sort::merge(vector < unsigned int> left,
 
 
 // function mergeSort
-vector < unsigned int> Sort::mergesort(vector <unsigned int> data, unsigned int n) {
+vector < unsigned int> Sort::mergesort(vector <unsigned int> data) {
+	unsigned int n = data.size();
 	if (n == 0) {
 		cout << "the vector is empty" << endl;                //case the vector is empty
 		return data;
@@ -47,7 +48,7 @@ vector < unsigned int> Sort::mergesort(vector <unsigned int> data, unsigned int 
 	std::vector <unsigned int> right(n - n/2);
 	copy(data.begin(), data.begin() + n / 2, left.begin());  //copy the left part of data in left
 	copy(data.begin() + n / 2 , data.end(), right.begin());  //copy the right part of data in right
-	return merge(mergesort(left, n / 2), n / 2, mergesort(right, n - n / 2), n - n / 2);  //sort the left and right part and merge
+	return merge(mergesort(left), mergesort(right));         //sort the left and right part and merge
 }
 
 
@@ -60,8 +61,8 @@ void Sort::print_vector(std::vector <unsigned int> data) {
 }
 
 //function bubblesort
-std::vector < unsigned int> Sort::bubblesort(std::vector <unsigned int> data,
-	                                         unsigned int n) {
+std::vector < unsigned int> Sort::bubblesort(std::vector <unsigned int> data) {
+	unsigned int n = data.size();
 	for (unsigned int j = 1; j < n; j++) {
 		for (unsigned int i = 0; i < j; i++) {
 			if (data[i] > data[j]) {
@@ -69,5 +70,24 @@ std::vector < unsigned int> Sort::bubblesort(std::vector <unsigned int> data,
 			}
 	  }
 	}
+	return data;
+}
+
+
+//selectionsort
+
+std::vector < unsigned int> Sort::selectionsort(std::vector <unsigned int> data) {
+	unsigned int n = data.size();
+	unsigned int min = 0;
+	for (unsigned int i = 0; i < n; i++) {
+		min = i;
+		for (unsigned int j = i+1; j < n ; j++) {
+			if (data[min] > data[j]) {
+				min = j;
+			}
+		}
+		swap(data[min], data[i]);
+	}
+
 	return data;
 }

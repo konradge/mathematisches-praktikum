@@ -11,23 +11,21 @@ using namespace std;
 
     
 
-class Sort {
-   public :
-    	Sort() {}
-	          
-   public: 
-	   void print_vector(std::vector <unsigned int> data);
+namespace Sort {
+   
+   void print_vector(std::vector <unsigned int> data);
 
-
-   public: 
-	   std::vector < unsigned int> merge(std::vector < unsigned int> left,
+   std::vector < unsigned int> merge(std::vector < unsigned int> left,
 	                                     unsigned int n_left,
 	                                     std::vector < unsigned int> right,
 	                                     unsigned int n_right);
+   std::vector < unsigned int> mergesort(std::vector <unsigned int> data,
+	                                        unsigned int n);
 
-  public: std::vector < unsigned int> mergeSort(std::vector <unsigned int> data,
-	                                            unsigned int n);
-};
+   std::vector < unsigned int> bubblesort(std::vector <unsigned int> data,
+		  unsigned int n);
+
+}
     
 #endif
   

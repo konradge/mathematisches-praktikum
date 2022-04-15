@@ -105,3 +105,39 @@ std::vector <unsigned int> Sort::insertionsort(std::vector <unsigned int> data) 
 	}
 	return data;
 }
+std::vector <unsigned int> Sort::heapify(std::vector <unsigned int> data, unsigned int n, unsigned  i) {
+	unsigned int left = 2 * i + 1;
+	unsigned int right = 2 * i + 2;
+	unsigned int max = i;
+	
+	if (data[max] < data[left] && left < n) {
+		max = left;
+	}
+	if (data[max] < data[right] && right < n) {
+		max = right;
+	}
+
+	if (max != i) {
+		std::swap(data[max], data[i]);
+		data = heapify(data,n, max);
+	}
+	return data;
+}
+//function heapsort
+std::vector <unsigned int> Sort::heapsort(std::vector <unsigned int> data) {
+	unsigned int n = data.size();
+
+	// transform the vector to an heap
+	for (int i = n / 2; i >= 0; i--) {
+		data = heapify(data,n , i);
+	}
+
+	//sorted by extraying the max element and put it at the end
+	for (int i =  n - 1; i >= 0; i--) {
+		swap(data[0], data[i]);
+		n--;
+		data = heapify(data, n, 0);
+		
+	}
+	return data;
+}

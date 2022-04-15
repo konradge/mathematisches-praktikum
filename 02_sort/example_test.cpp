@@ -50,5 +50,14 @@ int main() {
   data4 = Sort::selectionsort(data4);
   Sort::print_vector(data4);
   mapra::CheckSolution(*&data4);
+  cout << "-----------------------------------------" << endl;
+
+  std::vector <unsigned int > data5 = mapra::GetExample(5, 20);
+  cout << "vector before heapsort" << endl;
+  Sort::print_vector(data5);
+  cout << "vector after heapsort" << endl;
+  data5 = Sort::heapsort(data5);
+  Sort::print_vector(data5);
+  mapra::CheckSolution(*&data5);
   return 0;
 }

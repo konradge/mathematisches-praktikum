@@ -23,7 +23,9 @@ namespace Sort {
    std::vector <unsigned int> insertionsort(std::vector <unsigned int> data);
    std::vector <unsigned int> heapify(std::vector <unsigned int> data, unsigned int n, unsigned int i);
    std::vector <unsigned int> heapsort(std::vector <unsigned int> data);
-
+   std::vector <unsigned int> quicksort(std::vector <unsigned int> data);
+   std::vector <unsigned int> quicksortMedian(std::vector <unsigned int> data);
+   unsigned int median(std::vector <unsigned int> data);
 }
     
 #endif

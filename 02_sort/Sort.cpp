@@ -141,3 +141,52 @@ std::vector <unsigned int> Sort::heapsort(std::vector <unsigned int> data) {
 	}
 	return data;
 }
+
+std::vector <unsigned int> Sort::quicksort(std::vector <unsigned int> data) {
+	if (data.size() <= 1) return data;
+	
+	std::vector <unsigned int> left;
+	std::vector <unsigned int> right;
+	unsigned int pivotIndex = data.size() - 1;
+	unsigned int pivot = data[pivotIndex];
+
+	for (unsigned int i = 0; i < pivotIndex; i++) {
+		if (data[i] < pivot) left.push_back(data[i]);
+		else right.push_back(data[i]);
+	}
+	std::vector <unsigned int> newLeft = quicksort(left);
+	std::vector <unsigned int> newRight = quicksort(right);
+	data[newLeft.size()] = pivot;
+	copy(newLeft.begin(), newLeft.end(), data.begin());
+	copy(newRight.begin(), newRight.end(), data.begin() + newLeft.size() + 1);
+	return data;
+}
+
+std::vector <unsigned int> Sort::quicksortMedian(std::vector <unsigned int> data) {
+	if (data.size() <= 1) return data;
+	
+	std::vector <unsigned int> left;
+	std::vector <unsigned int> right;
+	unsigned int pivot = median(data);
+	unsigned int pivotIndex = 0;
+	if (pivot == data[data.size() - 1]) pivotIndex = data.size() - 1;
+	else if (pivot == data[data.size() / 2]) pivotIndex = data.size() / 2;
+	std::swap(data[pivotIndex], data[data.size() - 1]);
+
+	for (unsigned int i = 0; i < data.size() - 1; i++) {
+		if (data[i] < pivot) left.push_back(data[i]);
+		else right.push_back(data[i]);
+	}
+	std::vector <unsigned int> newLeft = quicksort(left);
+	std::vector <unsigned int> newRight = quicksort(right);
+	data[newLeft.size()] = pivot;
+	copy(newLeft.begin(), newLeft.end(), data.begin());
+	copy(newRight.begin(), newRight.end(), data.begin() + newLeft.size() + 1);
+	return data;
+}
+
+unsigned int Sort::median(std::vector <unsigned int> data) {
+	std::vector <unsigned int> threeNumbers = {data[0], data[data.size() / 2], data[data.size() - 1]};
+	threeNumbers = insertionsort(threeNumbers);
+	return threeNumbers[1];
+}

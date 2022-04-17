@@ -43,21 +43,31 @@ int main() {
   mapra::CheckSolution(*&data3);
   cout << "-----------------------------------------" << endl;
 
-  std::vector <unsigned int > data4 = mapra::GetExample(3, 20);
-  cout << "vector before insertionsort" << endl;
+  std::vector <unsigned int > data4 = mapra::GetExample(0, 20);
+  cout << "vector before quicksort" << endl;
   Sort::print_vector(data4);
-  cout << "vector after insertionsort" << endl;
-  data4 = Sort::selectionsort(data4);
+  cout << "vector after quicksort" << endl;
+  data4 = Sort::quicksort(data4);
   Sort::print_vector(data4);
   mapra::CheckSolution(*&data4);
   cout << "-----------------------------------------" << endl;
 
-  std::vector <unsigned int > data5 = mapra::GetExample(5, 20);
+  std::vector <unsigned int > data5 = mapra::GetExample(4, 20);
   cout << "vector before heapsort" << endl;
   Sort::print_vector(data5);
   cout << "vector after heapsort" << endl;
   data5 = Sort::heapsort(data5);
   Sort::print_vector(data5);
   mapra::CheckSolution(*&data5);
+  cout << "-----------------------------------------" << endl;
+
+  std::vector <unsigned int > data6 = mapra::GetExample(4, 20);
+  cout << "vector before quicksortMedian" << endl;
+  Sort::print_vector(data6);
+  cout << "vector after quicksortMedian" << endl;
+  data6 = Sort::quicksortMedian(data6);
+  Sort::print_vector(data6);
+  mapra::CheckSolution(*&data6);
+
   return 0;
 }

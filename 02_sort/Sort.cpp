@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "Sort.h"
+#include "mapra_test.h"
 
 using namespace std;
 
@@ -79,9 +80,9 @@ std::vector < unsigned int> Sort::bubblesort(std::vector <unsigned int> data) {
 std::vector < unsigned int> Sort::selectionsort(std::vector <unsigned int> data) {
 	unsigned int n = data.size();
 	unsigned int min = 0;
-	for (unsigned int i = 0; i < n; i++) {
-		min = i;
-		for (unsigned int j = i+1; j < n ; j++) {
+	for (unsigned int i = 0; i < n; i++) {                 //look the minimum in the  non sorted Part
+		min = i;                                          //and insert it  at  the next position after 
+		for (unsigned int j = i+1; j < n ; j++) {        // the sorted part
 			if (data[min] > data[j]) {
 				min = j;
 			}
@@ -97,28 +98,28 @@ std::vector < unsigned int> Sort::selectionsort(std::vector <unsigned int> data)
 std::vector <unsigned int> Sort::insertionsort(std::vector <unsigned int> data) {
 	unsigned int n = data.size();
 	for (unsigned int i = 0; i < n; i++) {
-		for (int j = i; j >= 0; j--) {
-			if (data[j] < data[i]) {
+		for (int j = i; j >= 0; j--) {              // insert  the next element in the right position in
+			if (data[j] < data[i]) {               // the sorted part 
 				std::swap(data[j], data[i]);
 			}
 	   }
 	}
 	return data;
 }
-std::vector <unsigned int> Sort::heapify(std::vector <unsigned int> data, unsigned int n, unsigned  i) {
+std::vector <unsigned int> Sort::heapify(std::vector <unsigned int> data, unsigned int n, unsigned int  i) {
 	unsigned int left = 2 * i + 1;
 	unsigned int right = 2 * i + 2;
 	unsigned int max = i;
 	
 	if (data[max] < data[left] && left < n) {
-		max = left;
+		max = left;      //looking for the biggest child
 	}
 	if (data[max] < data[right] && right < n) {
 		max = right;
 	}
 
 	if (max != i) {
-		std::swap(data[max], data[i]);
+		std::swap(data[max], data[i]);  // swap with the parent 
 		data = heapify(data,n, max);
 	}
 	return data;
@@ -151,8 +152,12 @@ std::vector <unsigned int> Sort::quicksort(std::vector <unsigned int> data) {
 	unsigned int pivot = data[pivotIndex];
 
 	for (unsigned int i = 0; i < pivotIndex; i++) {
-		if (data[i] < pivot) left.push_back(data[i]);
-		else right.push_back(data[i]);
+		if (data[i] < pivot) {
+			left.push_back(data[i]);
+		}
+		else { 
+			right.push_back(data[i]);
+		}
 	}
 	std::vector <unsigned int> newLeft = quicksort(left);
 	std::vector <unsigned int> newRight = quicksort(right);
@@ -169,8 +174,10 @@ std::vector <unsigned int> Sort::quicksortMedian(std::vector <unsigned int> data
 	std::vector <unsigned int> right;
 	unsigned int pivot = median(data);
 	unsigned int pivotIndex = 0;
-	if (pivot == data[data.size() - 1]) pivotIndex = data.size() - 1;
-	else if (pivot == data[data.size() / 2]) pivotIndex = data.size() / 2;
+	if (pivot == data[data.size() - 1]) 
+		pivotIndex = data.size() - 1;
+	else if (pivot == data[data.size() / 2]) 
+		pivotIndex = data.size() / 2;
 	std::swap(data[pivotIndex], data[data.size() - 1]);
 
 	for (unsigned int i = 0; i < data.size() - 1; i++) {
@@ -190,3 +197,4 @@ unsigned int Sort::median(std::vector <unsigned int> data) {
 	threeNumbers = insertionsort(threeNumbers);
 	return threeNumbers[1];
 }
+

@@ -26,6 +26,7 @@ namespace Sort {
    std::vector <unsigned int> quicksort(std::vector <unsigned int> data);
    std::vector <unsigned int> quicksortMedian(std::vector <unsigned int> data);
    unsigned int median(std::vector <unsigned int> data);
+   void test_mergesort();
 }
     
 #endif

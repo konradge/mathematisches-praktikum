@@ -39,17 +39,20 @@ vector < unsigned int> Sort::merge(std::vector < unsigned int> left,
 vector < unsigned int> Sort::mergesort(vector <unsigned int> data) {
 	unsigned int n = data.size();
 	if (n == 0) {
-		cout << "the vector is empty" << endl;                //case the vector is empty
+		cout << "the vector is empty" << endl;               
 		return data;
 	}
 	if (n == 1) {       
-		return data;                                         // case the vector has only one element
+		return data;                                         
 	}	
 	std::vector <unsigned int> left(n/2);
 	std::vector <unsigned int> right(n - n/2);
-	copy(data.begin(), data.begin() + n / 2, left.begin());  //copy the left part of data in left
-	copy(data.begin() + n / 2 , data.end(), right.begin());  //copy the right part of data in right
-	return merge(mergesort(left), mergesort(right));         //sort the left and right part and merge
+	//copy the left part of data in left
+	copy(data.begin(), data.begin() + n / 2, left.begin());  
+	//copy the right part of data in right
+	copy(data.begin() + n / 2 , data.end(), right.begin());  
+	//sort the left and right part and merge
+	return merge(mergesort(left), mergesort(right));         
 }
 
 
@@ -62,7 +65,7 @@ void Sort::print_vector(std::vector <unsigned int> data) {
 }
 
 //function bubblesort
-std::vector < unsigned int> Sort::bubblesort(std::vector <unsigned int> data) {
+std::vector <unsigned int> Sort::bubblesort(std::vector <unsigned int> data) {
 	unsigned int n = data.size();
 	for (unsigned int j = 1; j < n; j++) {
 		for (unsigned int i = 0; i < j; i++) {
@@ -77,12 +80,15 @@ std::vector < unsigned int> Sort::bubblesort(std::vector <unsigned int> data) {
 
 //selectionsort
 
-std::vector < unsigned int> Sort::selectionsort(std::vector <unsigned int> data) {
+std::vector <unsigned int> Sort::selectionsort(std::vector <unsigned int> data) {
 	unsigned int n = data.size();
 	unsigned int min = 0;
-	for (unsigned int i = 0; i < n; i++) {                 //look the minimum in the  non sorted Part
-		min = i;                                          //and insert it  at  the next position after 
-		for (unsigned int j = i+1; j < n ; j++) {        // the sorted part
+	//look the minimum in the non sorted Part
+	for (unsigned int i = 0; i < n; i++) {   
+		//and insert it at the next position after               
+		min = i;                                   
+		// the sorted part       
+		for (unsigned int j = i+1; j < n ; j++) {        
 			if (data[min] > data[j]) {
 				min = j;
 			}
@@ -98,15 +104,19 @@ std::vector < unsigned int> Sort::selectionsort(std::vector <unsigned int> data)
 std::vector <unsigned int> Sort::insertionsort(std::vector <unsigned int> data) {
 	unsigned int n = data.size();
 	for (unsigned int i = 0; i < n; i++) {
-		for (int j = i; j > 0; j--) {              // insert  the next element in the right position in
-			if (data[j - 1] > data[j]) {               // the sorted part 
+		// insert  the next element in the right position in
+		for (int j = i; j > 0; j--) {    
+			// the sorted part 
+			if (data[j - 1] > data[j]) {               
 				std::swap(data[j - 1], data[j]);
 			}
 	   }
 	}
 	return data;
 }
-std::vector <unsigned int> Sort::heapify(std::vector <unsigned int> data, unsigned int n, unsigned int  i) {
+std::vector <unsigned int> Sort::heapify(std::vector <unsigned int> data, 
+																				 unsigned int n, 
+																				 unsigned int i) {
 	unsigned int left = 2 * i + 1;
 	unsigned int right = 2 * i + 2;
 	unsigned int max = i;
@@ -197,7 +207,8 @@ std::vector <unsigned int> Sort::quicksortMedian(std::vector <unsigned int> data
 }
 
 unsigned int Sort::median(std::vector <unsigned int> data) {
-	std::vector <unsigned int> threeNumbers = {data[0], data[data.size() / 2], data[data.size() - 1]};
+	std::vector <unsigned int> threeNumbers = {data[0], data[data.size() / 2],
+																						 data[data.size() - 1]};
 	threeNumbers = insertionsort(threeNumbers);
 	return threeNumbers[1];
 }

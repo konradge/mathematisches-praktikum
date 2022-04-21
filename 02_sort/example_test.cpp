@@ -9,200 +9,106 @@
 #include "Sort.h"
 #include "unit.h"
 
-void test_bubblesort();
-void test_mergesort();
-void test_quicksort();
-void test_selectionsort();
-void test_insertionsort();
-void test_heapsort();
-void test_quicksortMedian();
+void test_algorithm(unsigned int number);
 
 int main() {
-	test_bubblesort();
+	for (auto & number: {0, 1, 2, 3, 4, 5, 6})
+		test_algorithm(number);
 
   return 0;
 }
 
 
-void test_bubblesort() {
-	mapra::MapraTest test("bubblesort");
-	cout << "-----test with  empty vector-----" << endl;
-	std::vector <unsigned int> data0;
-	test.AssertEq(" ", Sort::bubblesort(data0), data0);
+void test_algorithm(unsigned int number) {
+	std::vector <unsigned int> (*algorithm)(std::vector <unsigned int>);
+	std::string algorithmName = "";
+	switch (number) {
+		case 0:
+			algorithmName = "bubblesort";
+			algorithm = &(Sort::bubblesort);
+			break;
+		case 1:
+			algorithmName = "mergesort";
+			algorithm = &(Sort::mergesort);
+			break;
+		case 2:
+			algorithmName = "selectionsort";
+			algorithm = &(Sort::selectionsort);
+			break;
+		case 3:
+			algorithmName = "insertionsort";
+			algorithm = &(Sort::insertionsort);
+			break;
+		case 4:
+			algorithmName = "heapsort";
+			algorithm = &(Sort::heapsort);
+			break;
+		case 5:
+			algorithmName = "quicksort";
+			algorithm = &(Sort::quicksort);
+			break;
+		default: // case 6
+			algorithmName = "quicksortMedian";
+			algorithm = &(Sort::quicksortMedian);	
+	}
+
+	
+
+	mapra::MapraTest test(algorithmName);
+
+	for (auto & c: algorithmName) c = toupper(c);
+
+	cout << "-----" + algorithmName + "-----" << endl;
+	
+	cout << "-----test with empty vector-----" << endl;
+	std::vector <unsigned int> data0 = {};
+	test.AssertEq(" ", algorithm(data0), data0);
 	cout << endl;
 
 	cout << "-----test with a vector with one element-----" << endl;
 	std::vector <unsigned int> data1 = { 1 };
 
-	test.AssertEq(" ", Sort::bubblesort(data1), data1);
+	test.AssertEq(" ", algorithm(data1), data1);
 	cout << endl;
 
-	cout << "-----test with a vector with a even number of element-----" << endl;
+	cout << "-----test with vector with even number of elements -----" << endl;
 	std::vector <unsigned int> data2 = mapra::GetExample(1, 10);
-	data2 = Sort::bubblesort(data2);
+	Sort::print_vector(data2);
+	data2 = algorithm(data2);
+	Sort::print_vector(data2);
 	mapra::CheckSolution(*&data2);
 	cout << endl;
 
-
-	cout << "-----test with a vector with a uneven number of element1 -----" << endl;
+	cout << "-----test with vector with uneven number of elements -----" << endl;
 	std::vector <unsigned int> data3 = mapra::GetExample(1, 11);
-	data3 = Sort::bubblesort(data3);
+	Sort::print_vector(data3);
+	data3 = algorithm(data3);
+	Sort::print_vector(data3);
 	mapra::CheckSolution(*&data3);
 	cout << endl;
 
 	cout << "-----test with a sorted vector-----" << endl;
 	std::vector <unsigned int> data4 = mapra::GetExample(2, 10);
-	data4 = Sort::bubblesort(data4);
+	Sort::print_vector(data4);
+	data4 = algorithm(data4);
+	Sort::print_vector(data4);
 	mapra::CheckSolution(*&data4);
 	cout << endl;
 
 	cout << "-----test with a inverse sorted vector-----" << endl;
 	std::vector <unsigned int> data5 = mapra::GetExample(3, 10);
-	data5 = Sort::bubblesort(data5);
+	Sort::print_vector(data5);
+	data5 = algorithm(data5);
+	Sort::print_vector(data5);
 	mapra::CheckSolution(*&data5);
 	cout << endl;
 
 	cout << "-----test with quicksort median aus 3 killer----- " << endl;
 	std::vector <unsigned int> data6 = mapra::GetExample(4, 10);
-	data6 = Sort::bubblesort(data6);
-	mapra::CheckSolution(*&data6);
-	cout << endl;
-
-
-}
-
-void test_mergesort() {
-	mapra::MapraTest test("mergesort");
-	cout << "-----test with  empty vector-----" << endl;
-	std::vector <unsigned int> data0;
-	test.AssertEq(" ", Sort::mergesort(data0), data0);
-	cout << endl;
-
-	cout << "-----test with a vector with one element-----" << endl;
-	std::vector <unsigned int> data1 = { 1 };
-
-	test.AssertEq(" ", Sort::mergesort(data1), data1);
-	cout << endl;
-
-	cout << "-----test with a vector with a even number of element-----" << endl;
-	std::vector <unsigned int> data2 = mapra::GetExample(1, 10);
-	data2 = Sort::mergesort(data2);
-	mapra::CheckSolution(*&data2);
-	cout << endl;
-
-
-	cout << "-----test with a vector with a uneven number of element1 -----" << endl;
-	std::vector <unsigned int> data3 = mapra::GetExample(1, 11);
-	data3 = Sort::mergesort(data3);
-	mapra::CheckSolution(*&data3);
-	cout << endl;
-
-	cout << "-----test with a sorted vector-----" << endl;
-	std::vector <unsigned int> data4 = mapra::GetExample(2, 10);
-	data4 = Sort::mergesort(data4);
-	mapra::CheckSolution(*&data4);
-	cout << endl;
-
-	cout << "-----test with a inverse sorted vector-----" << endl;
-	std::vector <unsigned int> data5 = mapra::GetExample(3, 10);
-	data5 = Sort::merge(data5);
-	mapra::CheckSolution(*&data5);
-	cout << endl;
-
-	cout << "-----test with quicksort median aus 3 killer----- " << endl;
-	std::vector <unsigned int> data6 = mapra::GetExample(4, 10);
-	data6 = Sort::mergesort(data6);
+	Sort::print_vector(data6);
+	data6 = algorithm(data6);
+	Sort::print_vector(data6);
 	mapra::CheckSolution(*&data6);
 	cout << endl;
 }
-void test_quicksort() {
-	mapra::MapraTest test("quicksort");
-	cout << "-----test with  empty vector-----" << endl;
-	std::vector <unsigned int> data0;
-	test.AssertEq(" ", Sort::quicksort(data0), data0);
-	cout << endl;
 
-	cout << "-----test with a vector with one element-----" << endl;
-	std::vector <unsigned int> data1 = { 1 };
-
-	test.AssertEq(" ", Sort::quicksort(data1), data1);
-	cout << endl;
-
-	cout << "-----test with a vector with a even number of element-----" << endl;
-	std::vector <unsigned int> data2 = mapra::GetExample(1, 10);
-	data2 = Sort::quicksort(data2);
-	mapra::CheckSolution(*&data2);
-	cout << endl;
-
-
-	cout << "-----test with a vector with a uneven number of element1 -----" << endl;
-	std::vector <unsigned int> data3 = mapra::GetExample(1, 11);
-	data3 = Sort::quicksort(data3);
-	mapra::CheckSolution(*&data3);
-	cout << endl;
-
-	cout << "-----test with a sorted vector-----" << endl;
-	std::vector <unsigned int> data4 = mapra::GetExample(2, 10);
-	data4 = Sort::quicksort(data4);
-	mapra::CheckSolution(*&data4);
-	cout << endl;
-
-	cout << "-----test with a inverse sorted vector-----" << endl;
-	std::vector <unsigned int> data5 = mapra::GetExample(3, 10);
-	data5 = Sort::quicksort(data5);
-	mapra::CheckSolution(*&data5);
-	cout << endl;
-
-	cout << "-----test with quicksort median aus 3 killer----- " << endl;
-	std::vector <unsigned int> data6 = mapra::GetExample(4, 10);
-	data6 = Sort::quicksort(data6);
-	mapra::CheckSolution(*&data6);
-	cout << endl;
-}
-void test_selectionsort() {
-	mapra::MapraTest test("");
-	cout << "-----test with  empty vector-----" << endl;
-	std::vector <unsigned int> data0;
-	test.AssertEq(" ", Sort::(data0), data0);
-	cout << endl;
-
-	cout << "-----test with a vector with one element-----" << endl;
-	std::vector <unsigned int> data1 = { 1 };
-
-	test.AssertEq(" ", Sort::(data1), data1);
-	cout << endl;
-
-	cout << "-----test with a vector with a even number of element-----" << endl;
-	std::vector <unsigned int> data2 = mapra::GetExample(1, 10);
-	data2 = Sort::(data2);
-	mapra::CheckSolution(*&data2);
-	cout << endl;
-
-
-	cout << "-----test with a vector with a uneven number of element1 -----" << endl;
-	std::vector <unsigned int> data3 = mapra::GetExample(1, 11);
-	data3 = Sort::(data3);
-	mapra::CheckSolution(*&data3);
-	cout << endl;
-
-	cout << "-----test with a sorted vector-----" << endl;
-	std::vector <unsigned int> data4 = mapra::GetExample(2, 10);
-	data4 = Sort::(data4);
-	mapra::CheckSolution(*&data4);
-	cout << endl;
-
-	cout << "-----test with a inverse sorted vector-----" << endl;
-	std::vector <unsigned int> data5 = mapra::GetExample(3, 10);
-	data5 = Sort::(data5);
-	mapra::CheckSolution(*&data5);
-	cout << endl;
-
-	cout << "-----test with quicksort median aus 3 killer----- " << endl;
-	std::vector <unsigned int> data6 = mapra::GetExample(4, 10);
-	data6 = Sort::(data6);
-	mapra::CheckSolution(*&data6);
-	cout << endl;
-}
-void test_insertionsort();
-void test_heapsort();
-void test_quicksortMedian();

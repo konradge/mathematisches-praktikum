@@ -98,9 +98,9 @@ std::vector < unsigned int> Sort::selectionsort(std::vector <unsigned int> data)
 std::vector <unsigned int> Sort::insertionsort(std::vector <unsigned int> data) {
 	unsigned int n = data.size();
 	for (unsigned int i = 0; i < n; i++) {
-		for (int j = i; j >= 0; j--) {              // insert  the next element in the right position in
-			if (data[j] < data[i]) {               // the sorted part 
-				std::swap(data[j], data[i]);
+		for (int j = i; j > 0; j--) {              // insert  the next element in the right position in
+			if (data[j - 1] > data[j]) {               // the sorted part 
+				std::swap(data[j - 1], data[j]);
 			}
 	   }
 	}
@@ -127,6 +127,10 @@ std::vector <unsigned int> Sort::heapify(std::vector <unsigned int> data, unsign
 //function heapsort
 std::vector <unsigned int> Sort::heapsort(std::vector <unsigned int> data) {
 	unsigned int n = data.size();
+
+	if (n <= 1) {
+		return data;
+	}
 
 	// transform the vector to an heap
 	for (int i = n / 2; i >= 0; i--) {

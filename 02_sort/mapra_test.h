@@ -32,9 +32,9 @@ class MapraTest {
   void Assert(const std::string& test_name, bool condition) {
     ++num_tests_;
     if (condition) {
-      out_ << "[   OK   ] Test '" << name_ << '.' << test_name << "' passed.\n";
+      out_ << "[   OK   ] Test '" << name_ << '.' << test_name << "passed.\n ";
     } else {
-      out_ << "[ FAILED ] Test '" << name_ << '.' << test_name << "' failed.\n";
+      out_ << "[ FAILED ] Test '" << name_ << '.' << test_name << "failed.\n ";
       ++failed_tests_;
     }
   }
@@ -63,10 +63,15 @@ class MapraTest {
   void Summary() {
     out_ << "[========] Case '" << name_ << "': " << failed_tests_ << " out of "
          << num_tests_ << " tests failed!\n";
-    if (failed_tests_)
+    if (failed_tests_) {
+      std::cout << "\033[1;31m";
       out_ << "[ FAILED ] Go and fix some bugs!\n";
-    else
+      std::cout << "\033[0m\n";
+    } else {
+      std::cout << "\033[1;32m";
       out_ << "[CONGRATS] Everything seems to be ok.\n";
+      std::cout << "\033[0m\n";
+    }
   }
 
  private:

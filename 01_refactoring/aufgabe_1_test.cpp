@@ -34,7 +34,7 @@ void TestPrintPrimes() {
   std::getline(lead_file, lead_line);
   test.Assert("No more lines :", lead_file.eof());
   remove("YourPrint.txt");
-  //  std::cout.rdbuf(cout_buffer);  // cout wieder auf Bildschirm leiten
+  std::cout.rdbuf(cout_buffer);  // cout wieder auf Bildschirm leiten
 }
 
 void TestGeneratePrimes() {

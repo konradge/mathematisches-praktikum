@@ -183,4 +183,10 @@ std::vector<unsigned int> Sort::Quicksort(std::vector<unsigned int> data,
   return data;
 }
 
-unsigned int Sort::MedianOfThree(std::vector<unsigned int> data) { return 0; }
+unsigned int Sort::MedianOfThree(std::vector<unsigned int> data) {
+  auto sorted = Selectionsort(data);
+  for (unsigned int i = 0; i < data.size(); i++) {
+    if (sorted[data.size() / 2] == data[i]) return i;
+  }
+  return 0;
+}

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May  1 14:49:22 2022
+# Make data base, printed on Sun May  1 17:20:22 2022
 
 # Variables
 
@@ -55,7 +55,7 @@ PATH = /home/geller/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-3b7ed989-08f7-4b13-8c84-1f12aa96090a.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-4603caef-cb5e-4228-991b-8fec4dd55ba0.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -79,7 +79,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = geller
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -205,12 +205,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 200 B / avg = 9 B
-# current buf: size = 8162 B / used = 200 B / count = 21 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 21 / storage = 209 B / avg = 9 B
+# current buf: size = 8162 B / used = 209 B / count = 21 / avg = 9 B
 
 # strcache performance: lookups = 24 / hit rate = 12%
 # hash-table stats:
 # Load=21/8192=0%, Rehash=0, Collisions=1/24=4%
-# Finished Make data base on Sun May  1 14:49:22 2022
+# Finished Make data base on Sun May  1 17:20:22 2022
 
  

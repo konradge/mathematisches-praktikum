@@ -15,3 +15,5 @@ void mapra::Print(std::ostream& os, const std::vector<T>& array) {
     os << data;
   }
 }
+
+int main() { return 0; }

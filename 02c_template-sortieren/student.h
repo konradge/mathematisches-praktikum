@@ -23,6 +23,8 @@ std::ostream& operator<<(std::ostream&, const Student&);
 // Vergleichsoperator "<"
 bool operator<(const Student&, const Student&);
 
+bool operator>(const mapra::Student& s1, const mapra::Student& s2);
+
 // Vergleichsoperatoren "==" bzw. "!="
 bool operator==(const Student&, const Student&);
 bool operator!=(const Student&, const Student&);

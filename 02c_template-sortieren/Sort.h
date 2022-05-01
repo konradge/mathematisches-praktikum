@@ -7,8 +7,6 @@
 #include <iostream>
 #include <vector>
 
-#include "main.h"
-
 namespace Sort {
 
 // function merge
@@ -50,12 +48,6 @@ std::vector<T> Mergesort(std::vector<T> data) {
 
   // sort the left and right part and merge
   return Merge(Mergesort(left), Mergesort(right));
-}
-
-// function print_vector
-void print_vector(std::vector<unsigned int> data) {
-  for (auto entry : data) std::cout << entry << "  ";
-  std::cout << std::endl;
 }
 
 // function bubblesort

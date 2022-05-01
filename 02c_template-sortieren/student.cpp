@@ -34,7 +34,7 @@ bool mapra::operator<=(const mapra::Student& s1, const mapra::Student& s2) {
 
 // Vergleichsoperatoren "==" bzw. "!="
 bool mapra::operator==(const mapra::Student& s1, const mapra::Student& s2) {
-  return s1.last_name == s2.last_name && s1.first_name == s2.last_name;
+  return s1.last_name == s2.last_name && s1.first_name == s2.first_name;
 }
 
 bool mapra::operator!=(const mapra::Student& s1, const mapra::Student& s2) {

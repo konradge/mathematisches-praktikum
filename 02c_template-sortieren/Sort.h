@@ -11,20 +11,14 @@ namespace Sort {
 
 void print_vector(std::vector<unsigned int> data);
 
-std::vector<unsigned int> Merge(std::vector<unsigned int> left,
-                                std::vector<unsigned int> right);
-std::vector<unsigned int> Mergesort(std::vector<unsigned int> data);
-std::vector<unsigned int> Bubblesort(std::vector<unsigned int> data);
-std::vector<unsigned int> Selectionsort(std::vector<unsigned int> data);
-std::vector<unsigned int> Insertionsort(std::vector<unsigned int> data);
-std::vector<unsigned int> Heapify(std::vector<unsigned int> data,
-                                  unsigned int n, unsigned int i);
-std::vector<unsigned int> Heapsort(std::vector<unsigned int> data);
-std::vector<unsigned int> Quicksort(std::vector<unsigned int> data);
-std::vector<unsigned int> Quicksort(std::vector<unsigned int> data,
-                                    bool medianMode);
-std::vector<unsigned int> QuicksortMedian(std::vector<unsigned int> data);
-unsigned int MedianOfThree(std::vector<unsigned int> data);
+template <typename T>
+std::vector<T> Merge(std::vector<T> left, std::vector<T> right);
+template <typename T>
+std::vector<T> Mergesort(std::vector<T> data);
+template <typename T>
+std::vector<T> Bubblesort(std::vector<T> data);
+template <typename T>
+std::vector<T> Selectionsort(std::vector<T> array);
 }  // namespace Sort
 
 #endif

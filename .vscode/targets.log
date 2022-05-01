@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May  1 13:20:07 2022
+# Make data base, printed on Sun May  1 14:49:22 2022
 
 # Variables
 
@@ -55,7 +55,7 @@ PATH = /home/geller/.vscode-server/bin/dfd34e8260c270da74b5c2d86d61aee4b6d56977/
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-d36cac65-caeb-44f5-be50-2bbcf2a22091.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-3b7ed989-08f7-4b13-8c84-1f12aa96090a.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -69,7 +69,7 @@ PWD = /mnt/c/Users/gelle/OneDrive - rwth-aachen.de/04_Sommersemester_2022/MaPra/
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/4094_interop
+WSL_INTEROP = /run/WSL/12_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -211,6 +211,6 @@ GNUmakefile:
 # strcache performance: lookups = 24 / hit rate = 12%
 # hash-table stats:
 # Load=21/8192=0%, Rehash=0, Collisions=1/24=4%
-# Finished Make data base on Sun May  1 13:20:07 2022
+# Finished Make data base on Sun May  1 14:49:22 2022
 
  

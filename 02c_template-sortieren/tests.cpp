@@ -1,5 +1,5 @@
 #include "Sort.h"
-#include "main.h"
+#include "SortInterface.h"
 #include "mapra_test.h"
 #include "student.h"
 #include "unit.h"
@@ -22,14 +22,14 @@ int main() {
   for (auto algorithm : {mapra::SortingAlgorithm::BUBBLE_SORT,
                          mapra::SortingAlgorithm::MERGE_SORT,
                          mapra::SortingAlgorithm::SELECTION_SORT}) {
-    auto out = GetFromFileAndSort<double>("doubles.txt", algorithm);
+    auto out = mapra::GetFromFileAndSort<double>("doubles.txt", algorithm);
     tests.Assert("Sortiere doubles ", !mapra::CheckSolution(out));
   }
 
   for (auto algorithm : {mapra::SortingAlgorithm::BUBBLE_SORT,
                          mapra::SortingAlgorithm::MERGE_SORT,
                          mapra::SortingAlgorithm::SELECTION_SORT}) {
-    auto out = GetFromFileAndSort<std::string>("strings.txt", algorithm);
+    auto out = mapra::GetFromFileAndSort<std::string>("strings.txt", algorithm);
 
     tests.Assert("Sortiere Strings ", !mapra::CheckSolution(out));
   }
@@ -37,7 +37,8 @@ int main() {
   for (auto algorithm : {mapra::SortingAlgorithm::BUBBLE_SORT,
                          mapra::SortingAlgorithm::MERGE_SORT,
                          mapra::SortingAlgorithm::SELECTION_SORT}) {
-    auto out = GetFromFileAndSort<mapra::Student>("studenten.txt", algorithm);
+    auto out =
+        mapra::GetFromFileAndSort<mapra::Student>("studenten.txt", algorithm);
 
     tests.Assert("Sortiere Studenten ", !mapra::CheckSolution(out));
   }

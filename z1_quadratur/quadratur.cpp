@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+#include "CalculateIntegral.h"
 #include "unit.h"
 
 int main() {
@@ -10,8 +11,10 @@ int main() {
 
   double a, b, epsilon;
 
-  getExample(1, a, b, epsilon, false);
+  getExample(example_id, a, b, epsilon, false);
 
-  std::cout << f(200) << std::endl;
+  double result = CalculateIntegral::calculate(&f, a, b, epsilon);
+
+  checkSolution(result);
   return 0;
 }

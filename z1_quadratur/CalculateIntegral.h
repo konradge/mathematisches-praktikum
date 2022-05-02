@@ -2,9 +2,13 @@
 #include <unordered_map>
 #include <vector>
 
-namespace CalculateIntegral {
 typedef std::function<double(double)> function_t;
-std::unordered_map<double, double> function_values;
+
+typedef double (*function_ptr)(double);
+
+namespace CalculateIntegral {
+
+// std::unordered_map<double, double> function_values;
 double eval_function(function_t function,
                      std::unordered_map<double, double> function_values,
                      double value);
@@ -16,5 +20,5 @@ double midpoint_rule(function_t f, double a, double b);
 double simpson_rule(function_t f, double a, double b);
 double calculate_integral(function_t f, double a, double b, double eps);
 
-double calculate(function_t f, double a, double b, double eps);
+double calculate(double (*f)(double), double a, double b, double eps);
 }  // namespace CalculateIntegral

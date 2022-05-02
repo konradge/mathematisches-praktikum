@@ -53,12 +53,13 @@ double CalculateIntegral::calculate_integral(function_t f, double a, double b,
          calculate_integral(f, (a + b) / 2, b, eps / 2);
 }
 
-double CalculateIntegral::calculate(function_t f, double a, double b,
+double CalculateIntegral::calculate(double (*f)(double), double a, double b,
                                     double eps) {
   std::unordered_map<double, double> function_values;
-  auto function = [f, function_values](double value) {
-    return eval_function(f, function_values, value);
-  };
+  function_t f_lambda = [f](double value) { return f(value); };
 
+  auto function = [f_lambda, function_values](double value) {
+    return eval_function(f_lambda, function_values, value);
+  };
   return calculate_integral(function, a, b, eps);
 }

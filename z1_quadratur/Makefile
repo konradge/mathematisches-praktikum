@@ -1,16 +1,18 @@
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O2 -fno-inline -fPIC -fPIE
+CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic
+LIBS  = -lGL -lpthread -lX11
 
+all: quadratur
 
-main: main.o
-	$(CXX) $(CXXFLAGS) -o $@ IGL.o -lGL -lpthread -lX11 unit.o main.o CalculateIntegral.o
+quadratur.o: quadratur.cpp unit.h
+	$(CXX) $(CXXFLAGS) -c $<
 
-main.o: main.cpp
-	${CXX} ${CXXFLAGS} -c $<
+CalculateIntegral.o: CalculateIntegral.cpp CalculateIntegral.h
+	$(CXX) $(CXXFLAGS) -c $<
 
-CalculateIntegral.o: CalculateIntegral.cpp
-	${CXX} ${CXXFLAGS} -c $<
+quadratur: quadratur.o CalculateIntegral.o unit.o IGL.o
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LIBS)
 
 clean:
-	rm -f main.o main
+	rm -f quadratur quadratur.o CalculateIntegral.o
 
 .PHONY: clean

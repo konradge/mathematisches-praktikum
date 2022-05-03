@@ -21,6 +21,7 @@ double CalculateIntegral::newton_cotes(function_t f, double a, double b,
   if (weights.size() != supporting_points.size()) return -1;
 
   double sum = 0;
+
   for (unsigned int i = 0; i < weights.size(); i++) {
     sum += weights[i] * f(supporting_points[i]);
   }
@@ -37,7 +38,8 @@ double CalculateIntegral::midpoint_rule(function_t f, double a, double b) {
 }
 
 double CalculateIntegral::simpson_rule(function_t f, double a, double b) {
-  return newton_cotes(f, a, b, {1 / 6, 4 / 6, 1 / 6}, {a, (a + b) / 2, b});
+  return newton_cotes(f, a, b, {(double)1 / 6, (double)4 / 6, (double)1 / 6},
+                      {a, (a + b) / 2, b});
 }
 
 double CalculateIntegral::calculate_integral(function_t f, double a, double b,
@@ -61,5 +63,6 @@ double CalculateIntegral::calculate(double (*f)(double), double a, double b,
   auto function = [f_lambda, function_values](double value) {
     return eval_function(f_lambda, function_values, value);
   };
+
   return calculate_integral(function, a, b, eps);
 }

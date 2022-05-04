@@ -1,17 +1,18 @@
 #include "CalculateIntegral.h"
 
-#include <cstdlib>
-#include <unordered_map>
+#include <cmath>
+#include <iostream>
+#include <map>
+#include <utility>
 #include <vector>
 
-double CalculateIntegral::eval_function(
-    function_t function, std::unordered_map<double, double> function_values,
-    double value) {
-  if (function_values.find(value) == function_values.end()) {
+double CalculateIntegral::eval_function(function_t function,
+                                        map_t function_values, double value) {
+  if (function_values.find(std::to_string(value)) == function_values.end()) {
     // Function has not been evaluated before
-    function_values[value] = function(value);
+    function_values[std::to_string(value)] = function(value);
   }
-  return function_values[value];
+  return function_values[std::to_string(value)];
 }
 
 double CalculateIntegral::newton_cotes(function_t f, double a, double b,
@@ -47,9 +48,9 @@ double CalculateIntegral::calculate_integral(function_t f, double a, double b,
   double I_M = midpoint_rule(f, a, b);
   double I_T = trapeze_rule(f, a, b);
 
-  double error_estimator = abs(I_M - I_T);
+  double error_estimator = fabs(I_M - I_T);
 
-  if (error_estimator <= eps) return simpson_rule(f, a, b);
+  if (error_estimator < eps) return simpson_rule(f, a, b);
 
   return calculate_integral(f, a, (a + b) / 2, eps / 2) +
          calculate_integral(f, (a + b) / 2, b, eps / 2);
@@ -57,7 +58,7 @@ double CalculateIntegral::calculate_integral(function_t f, double a, double b,
 
 double CalculateIntegral::calculate(double (*f)(double), double a, double b,
                                     double eps) {
-  std::unordered_map<double, double> function_values;
+  map_t function_values;
   function_t f_lambda = [f](double value) { return f(value); };
 
   auto function = [f_lambda, function_values](double value) {

@@ -6,13 +6,16 @@
 #include <utility>
 #include <vector>
 
-double CalculateIntegral::eval_function(function_t function,
-                                        map_t function_values, double value) {
-  if (function_values.find(std::to_string(value)) == function_values.end()) {
+#include "unit.h"
+
+umap_t function_values;
+
+double CalculateIntegral::eval_function(double value) {
+  if (function_values.find(value) == function_values.end()) {
     // Function has not been evaluated before
-    function_values[std::to_string(value)] = function(value);
+    function_values[value] = f(value);
   }
-  return function_values[std::to_string(value)];
+  return function_values[value];
 }
 
 double CalculateIntegral::newton_cotes(function_t f, double a, double b,
@@ -56,14 +59,6 @@ double CalculateIntegral::calculate_integral(function_t f, double a, double b,
          calculate_integral(f, (a + b) / 2, b, eps / 2);
 }
 
-double CalculateIntegral::calculate(double (*f)(double), double a, double b,
-                                    double eps) {
-  map_t function_values;
-  function_t f_lambda = [f](double value) { return f(value); };
-
-  auto function = [f_lambda, function_values](double value) {
-    return eval_function(f_lambda, function_values, value);
-  };
-
-  return calculate_integral(function, a, b, eps);
+double CalculateIntegral::calculate(double a, double b, double eps) {
+  return calculate_integral(&eval_function, a, b, eps);
 }

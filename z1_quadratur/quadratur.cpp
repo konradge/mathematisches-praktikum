@@ -13,7 +13,7 @@ int main() {
 
   getExample(example_id, a, b, epsilon, true);
 
-  double result = CalculateIntegral::calculate(&f, a, b, epsilon);
+  double result = CalculateIntegral::calculate(a, b, epsilon);
 
   checkSolution(result);
   return 0;

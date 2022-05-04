@@ -1,18 +1,14 @@
 #include <functional>
-#include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
-typedef std::function<double(double)> function_t;
+typedef double (*function_t)(double);
 
-typedef double (*function_ptr)(double);
-
-typedef std::map<std::string, double> map_t;
+typedef std::unordered_map<double, double> umap_t;
 
 namespace CalculateIntegral {
-
-// std::unordered_map<double, double> function_values;
-double eval_function(function_t function, map_t function_values, double value);
+double eval_function(double value);
 double newton_cotes(function_t f, double a, double b,
                     std::vector<double> weights,
                     std::vector<double> supporting_points);
@@ -21,5 +17,5 @@ double midpoint_rule(function_t f, double a, double b);
 double simpson_rule(function_t f, double a, double b);
 double calculate_integral(function_t f, double a, double b, double eps);
 
-double calculate(double (*f)(double), double a, double b, double eps);
+double calculate(double a, double b, double eps);
 }  // namespace CalculateIntegral

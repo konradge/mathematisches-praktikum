@@ -10,6 +10,8 @@
 
 umap_t function_values;
 
+double min_distance = 1;
+
 double CalculateIntegral::eval_function(double value) {
   if (function_values.find(value) == function_values.end()) {
     // Function has not been evaluated before
@@ -48,6 +50,9 @@ double CalculateIntegral::simpson_rule(function_t f, double a, double b) {
 
 double CalculateIntegral::calculate_integral(function_t f, double a, double b,
                                              double eps) {
+  // Recalculate minimal distance between a and b
+  if (fabs(a - b) < min_distance) min_distance = fabs(a - b);
+
   double I_M = midpoint_rule(f, a, b);
   double I_T = trapeze_rule(f, a, b);
 
@@ -60,5 +65,9 @@ double CalculateIntegral::calculate_integral(function_t f, double a, double b,
 }
 
 double CalculateIntegral::calculate(double a, double b, double eps) {
-  return calculate_integral(&eval_function, a, b, eps);
+  auto res = calculate_integral(&eval_function, a, b, eps);
+  std::cout << "Bei einer äquidistanten Auswertung müsste die Funktion "
+            << ((2 * fabs(a - b) / min_distance) + 1)
+            << " mal ausgewertet werden.";
+  return res;
 }

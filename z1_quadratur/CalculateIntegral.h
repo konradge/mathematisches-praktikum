@@ -16,6 +16,7 @@ double trapeze_rule(function_t f, double a, double b);
 double midpoint_rule(function_t f, double a, double b);
 double simpson_rule(function_t f, double a, double b);
 double calculate_integral(function_t f, double a, double b, double eps);
+double calculate_integral_equidistant(function_t f, double a, double b, double eps);
 
 double calculate(double a, double b, double eps);
 }  // namespace CalculateIntegral

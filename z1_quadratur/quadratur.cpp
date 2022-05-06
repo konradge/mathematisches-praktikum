@@ -11,7 +11,7 @@ int main() {
 
   double a, b, epsilon;
 
-  getExample(example_id, a, b, epsilon, true);
+  getExample(example_id, a, b, epsilon, false);
 
   double result = CalculateIntegral::calculate(a, b, epsilon);
 

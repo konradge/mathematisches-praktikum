@@ -6,7 +6,10 @@ test : matrix.o test.o
 matrix.o: matrix.cpp matrix.h
 	$(CXX) $(CXXFLAGS) -c matrix.cpp
 
+loesung.o loesung.cpp
+	${CXX} ${CXXFLAGS} -c loesung.cpp
+
 clean:
-	rm -f matrix.o test
+	rm -f matrix.o test loesung.o
 
 .PHONY: clean

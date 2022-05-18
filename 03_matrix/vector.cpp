@@ -129,7 +129,6 @@ std::size_t Vector::GetLength() const { return elems_.size(); }
 // ----- Euklidische Norm -----
 
 double Vector::Norm2() const {
-  // ***** Hier fehlt was *****
   double squaresum = 0;
 
   for (size_t i = 0; i < (*this).GetLength(); i++) {
@@ -142,11 +141,10 @@ double Vector::Norm2() const {
 // ----- Maximum-Norm -----
 
 double Vector::NormMax() const {
-  // ***** Hier fehlt was *****
-  double max = (*this)(0);
+  double max = fabs((*this)(0));
 
   for (size_t i = 1; i < (*this).GetLength(); i++) {
-    if ((*this)(i) > max) max = (*this)(i);
+    if (fabs((*this)(i)) > max) max = fabs((*this)(i));
   }
 
   return max;
@@ -258,10 +256,7 @@ bool operator==(const Vector& x, const Vector& y) {
 
 // ----- Test auf Ungleichheit "!=" -----
 
-bool operator!=(const Vector& x, const Vector& y) {
-  // ***** Hier fehlt was *****
-  return !(x == y);
-}
+bool operator!=(const Vector& x, const Vector& y) { return !(x == y); }
 
 // ==========================
 //      Ein- und Ausgabe
@@ -300,4 +295,4 @@ void Vector::VecError(const char str[]) {
   exit(1);
 }
 
-}
+}  // namespace mapra

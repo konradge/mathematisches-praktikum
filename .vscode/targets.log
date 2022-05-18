@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 16 19:09:48 2022
+# Make data base, printed on Wed May 18 16:11:59 2022
 
 # Variables
 
@@ -53,7 +53,7 @@ PATH = /home/geller/.vscode-server/bin/da15b6fd3ef856477bf6f4fb29ba1b7af717770d/
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-77e03d13-6829-483b-9791-941eb543b9ed.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-16209efa-9769-4730-9abc-0fc98338dd9f.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # automatic
@@ -65,7 +65,7 @@ PWD = /mnt/c/Users/gelle/OneDrive - rwth-aachen.de/04_Sommersemester_2022/MaPra/
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/12_interop
+WSL_INTEROP = /run/WSL/18_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -97,7 +97,7 @@ NAME = LAPTOP-M6TVT9BG
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
-VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/gelle/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.2
+VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/gelle/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
 # default
 MAKE_COMMAND := make
 # default
@@ -207,6 +207,6 @@ GNUmakefile:
 # strcache performance: lookups = 25 / hit rate = 12%
 # hash-table stats:
 # Load=22/8192=0%, Rehash=0, Collisions=1/25=4%
-# Finished Make data base on Mon May 16 19:09:48 2022
+# Finished Make data base on Wed May 18 16:11:59 2022
 
  

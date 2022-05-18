@@ -31,6 +31,8 @@ class Matrix {
   std::size_t GetRows() const;
   std::size_t GetCols() const;
 
+  Vector ToVector();
+
   static void MatError(const char str[]);
 
   friend Matrix operator+(const Matrix&, const Matrix&);
@@ -57,6 +59,9 @@ class Matrix {
   std::vector<double> elems_;
 };
 
+Matrix VectorTo1xNMatrix(const Vector& v);
+
+Matrix VectorToMx1Matrix(const Vector& v);
 }  // namespace mapra
 
 #endif  // MATRIX_H_

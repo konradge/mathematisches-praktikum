@@ -188,9 +188,53 @@ std::istream& operator>>(std::istream& s, Matrix& m) {
 }
 
 // v * M
-Vector operator*(const Vector& v, const Matrix& m) { return v * m; }
+Vector operator*(const Vector& v, const Matrix& m) {
+  Matrix vAsMatrix = VectorTo1xNMatrix(v);
+  vAsMatrix *= m;
+  return vAsMatrix.ToVector();
+}
 // M * v
-Vector operator*(const Matrix& m, const Vector& v) { return m * v; }
+Vector operator*(const Matrix& m, const Vector& v) {
+  Matrix vAsMatrix = VectorToMx1Matrix(v);
+  vAsMatrix = m * vAsMatrix;
+  return vAsMatrix.ToVector();
+}
+
+// Create a vector from a 1xn or mx1 Matrix
+Vector Matrix::ToVector() {
+#ifndef NDEBUG
+  if (GetRows() != 1 && GetCols() != 1) {
+    Vector::VecError("Matrix muss 1xn oder mx1 sein!");
+  }
+#endif
+  Vector res(std::max(GetRows(), GetCols()));
+  if (GetRows() == 1) {
+    for (size_t i = 0; i < GetCols(); i++) {
+      res(i) = (*this)(0, i);
+    }
+  } else {
+    for (size_t i = 0; i < GetRows(); i++) {
+      res(i) = (*this)(i, 0);
+    }
+  }
+  return res;
+}
+
+Matrix VectorTo1xNMatrix(const Vector& v) {
+  Matrix res(1, v.GetLength());
+  for (size_t i = 0; i < v.GetLength(); i++) {
+    res(0, i) = v(i);
+  }
+  return res;
+}
+
+Matrix VectorToMx1Matrix(const Vector& v) {
+  Matrix res(v.GetLength(), 1);
+  for (size_t i = 0; i < v.GetLength(); i++) {
+    res(i, 0) = v(i);
+  }
+  return res;
+}
 
 }  // namespace mapra
 

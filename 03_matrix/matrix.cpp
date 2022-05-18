@@ -111,7 +111,7 @@ Matrix& Matrix::operator/=(double c) {
 Matrix& Matrix::Redim(std::size_t r, std::size_t c) {
   rows_ = r;
   cols_ = c;
-  elems_ = std::vector<double>(r * c);
+  elems_ = std::vector<double>(r * c, 0);
   return *this;
 }
 std::size_t Matrix::GetRows() const { return rows_; }

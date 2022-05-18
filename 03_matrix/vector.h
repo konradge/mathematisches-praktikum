@@ -12,6 +12,7 @@ namespace mapra {
 class Vector {
  public:
   explicit Vector(std::size_t len = 1);
+  Vector(const Vector&);
 
   double& operator()(std::size_t);
   double operator()(std::size_t) const;

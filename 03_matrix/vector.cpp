@@ -4,8 +4,11 @@
 
 #include <algorithm>
 #include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <vector>
+
+namespace mapra {
 
 // =======================
 //      Konstruktoren
@@ -13,7 +16,14 @@
 
 // ----- Konstruktor -----
 
-mapra::Vector::Vector(size_t len) : elems_(len, 0) {}
+Vector::Vector(size_t len) : elems_(len, 0) {}
+
+// Copy constructor
+Vector::Vector(const Vector& v) : elems_(v.GetLength(), 0) {
+  for (size_t i = 0; i < v.GetLength(); i++) {
+    (*this)(i) = v(i);
+  }
+}
 
 // ===========================================
 //      Vektorelement schreiben und lesen
@@ -21,10 +31,10 @@ mapra::Vector::Vector(size_t len) : elems_(len, 0) {}
 
 // ----- Schreib- und Lesezugriff auf Vektorelemente -----
 
-double& mapra::Vector::operator()(size_t i) {
+double& Vector::operator()(size_t i) {
 #ifndef NDEBUG
   if (i >= elems_.size()) {
-    mapra::Vector::VecError("Ungueltiger Index!");
+    Vector::VecError("Ungueltiger Index!");
   }
 #endif
 
@@ -33,10 +43,10 @@ double& mapra::Vector::operator()(size_t i) {
 
 // ----- Lesezugriff auf Elemente konstanter Vektoren -----
 
-double mapra::Vector::operator()(size_t i) const {
+double Vector::operator()(size_t i) const {
 #ifndef NDEBUG
   if (i >= elems_.size()) {
-    mapra::Vector::VecError("Ungueltiger Index!");
+    Vector::VecError("Ungueltiger Index!");
   }
 #endif
 
@@ -49,16 +59,15 @@ double mapra::Vector::operator()(size_t i) const {
 
 // ----- Zuweisungsoperator mit Addition "+=" ----
 
-mapra::Vector& mapra::Vector::operator+=(const mapra::Vector& x) {
-  // ***** Hier fehlt was *****
+Vector& Vector::operator+=(const Vector& x) {
 #ifndef NDEBUG
-  if (x.elems_.size() != (*this).elems_.size()) {
-    mapra::Vector::VecError("Inkompatible Dimensionen fuer 'Vektor + Vektor'!");
+  if (x.elems_.size() != (*this).GetLength()) {
+    Vector::VecError("Inkompatible Dimensionen fuer 'Vektor + Vektor'!");
   }
 #endif
 
-  for (int i = 0; i < x.size(); i++) {
-    (*this)[i] += x[i];
+  for (size_t i = 0; i < x.GetLength(); i++) {
+    (*this)(i) += x(i);
   }
 
   return (*this);
@@ -66,16 +75,15 @@ mapra::Vector& mapra::Vector::operator+=(const mapra::Vector& x) {
 
 // ----- Zuweisungsoperator mit Subtraktion "-=" ----
 
-mapra::Vector& mapra::Vector::operator-=(const mapra::Vector& x) {
-  // ***** Hier fehlt was *****
+Vector& Vector::operator-=(const Vector& x) {
 #ifndef NDEBUG
-  if (x.elems_.size() != (*this).elems_.size()) {
-    mapra::Vector::VecError("Inkompatible Dimensionen fuer 'Vektor - Vektor'!");
+  if (x.GetLength() != GetLength()) {
+    Vector::VecError("Inkompatible Dimensionen fuer 'Vektor - Vektor'!");
   }
 #endif
 
-  for (int i = 0; i < x.size(); i++) {
-    (*this)[i] += -x[i];
+  for (size_t i = 0; i < x.GetLength(); i++) {
+    (*this)(i) += -x(i);
   }
 
   return (*this);
@@ -83,10 +91,9 @@ mapra::Vector& mapra::Vector::operator-=(const mapra::Vector& x) {
 
 // ----- Zuweisungsoperator mit Multiplikation "*=" ----
 
-mapra::Vector& mapra::Vector::operator*=(double c) {
-  // ***** Hier fehlt was *****
-  for (int i = 0; i < x.size(); i++) {
-    (*this)[i] *= c;
+Vector& Vector::operator*=(double c) {
+  for (size_t i = 0; i < GetLength(); i++) {
+    (*this)(i) *= c;
   }
 
   return (*this);
@@ -94,10 +101,9 @@ mapra::Vector& mapra::Vector::operator*=(double c) {
 
 // ----- Zuweisungsoperator mit Divsion "/=" ----
 
-mapra::Vector& mapra::Vector::operator/=(double c) {
-  // ***** Hier fehlt was *****
-  for (int i = 0; i < x.size(); i++) {
-    (*this)[i] /= c;
+Vector& Vector::operator/=(double c) {
+  for (size_t i = 0; i < GetLength(); i++) {
+    (*this)(i) /= c;
   }
 
   return (*this);
@@ -109,12 +115,12 @@ mapra::Vector& mapra::Vector::operator/=(double c) {
 
 // ----- Vektorlaenge aendern -----
 
-mapra::Vector& mapra::Vector::Redim(size_t l) {
-  // ***** Hier fehlt was *****
-  return std::vector<double>(l);
+Vector& Vector::Redim(size_t l) {
+  elems_ = std::vector<double>(l, 0);
+  return (*this);
 }
 
-std::size_t mapra::Vector::GetLength() const { return elems_.size(); }
+std::size_t Vector::GetLength() const { return elems_.size(); }
 
 // ======================
 //      Vektornormen
@@ -122,12 +128,12 @@ std::size_t mapra::Vector::GetLength() const { return elems_.size(); }
 
 // ----- Euklidische Norm -----
 
-double mapra::Vector::Norm2() const {
+double Vector::Norm2() const {
   // ***** Hier fehlt was *****
   double squaresum = 0;
 
-  for (double component : this) {
-    squaresum += component * component;
+  for (size_t i = 0; i < (*this).GetLength(); i++) {
+    squaresum += pow((*this)(i), 2);
   }
 
   return sqrt(squaresum);
@@ -135,12 +141,12 @@ double mapra::Vector::Norm2() const {
 
 // ----- Maximum-Norm -----
 
-double mapra::Vector::NormMax() const {
+double Vector::NormMax() const {
   // ***** Hier fehlt was *****
-  double max = this[0];
+  double max = (*this)(0);
 
-  for (double component : this) {
-    if (component > max) max = component;
+  for (size_t i = 1; i < (*this).GetLength(); i++) {
+    if ((*this)(i) > max) max = (*this)(i);
   }
 
   return max;
@@ -152,54 +158,52 @@ double mapra::Vector::NormMax() const {
 
 // ----- Addition "+" -----
 
-mapra::Vector mapra::operator+(const mapra::Vector& x, const mapra::Vector& y) {
+Vector operator+(const Vector& x, const Vector& y) {
 #ifndef NDEBUG
   if (x.elems_.size() != y.elems_.size()) {
-    mapra::Vector::VecError("Inkompatible Dimensionen fuer 'Vektor + Vektor'!");
+    Vector::VecError("Inkompatible Dimensionen fuer 'Vektor + Vektor'!");
   }
 #endif
 
-  mapra::Vector z = x;
+  Vector z = x;
   return z += y;
 }
 
 // ----- Subtraktion "-" -----
 
-mapra::Vector mapra::operator-(const mapra::Vector& x, const mapra::Vector& y) {
-  // ***** Hier fehlt was *****
+Vector operator-(const Vector& x, const Vector& y) {
 #ifndef NDEBUG
   if (x.elems_.size() != y.elems_.size()) {
-    mapra::Vector::VecError("Inkompatible Dimensionen fuer 'Vektor - Vektor'!");
+    Vector::VecError("Inkompatible Dimensionen fuer 'Vektor - Vektor'!");
   }
 #endif
 
-  mapra::Vector z = x;
+  Vector z = x;
   return z -= y;
 }
 
 // ----- Vorzeichen wechseln "-" -----
 
-mapra::Vector mapra::operator-(const mapra::Vector& x) {
-  // ***** Hier fehlt was *****
-  for (int i = 0; i < x.size(); i++) {
-    x[i] = -x[i];
+Vector operator-(const Vector& x) {
+  Vector v(x.GetLength());
+  for (size_t i = 0; i < x.GetLength(); i++) {
+    v(i) = -x(i);
   }
-  return x;
+  return v;
 }
 
 // ----- Skalarprodukt "*" -----
 
-double mapra::operator*(const mapra::Vector& x, const mapra::Vector& y) {
-  // ***** Hier fehlt was *****
+double operator*(const Vector& x, const Vector& y) {
 #ifndef NDEBUG
-  if (x.elems_.size() != y.elems_.size()) {
-    mapra::Vector::VecError("Inkompatible Dimensionen fuer 'Vektor x Vektor'!");
+  if (x.GetLength() != y.GetLength()) {
+    Vector::VecError("Inkompatible Dimensionen fuer 'Vektor x Vektor'!");
   }
 #endif
   double multsum = 0;
 
-  for (int i = 0; i < x.size(); i++) {
-    multsum += x[i] * y[i];
+  for (size_t i = 0; i < x.GetLength(); i++) {
+    multsum += x(i) * y(i);
   }
 
   return multsum;
@@ -207,34 +211,27 @@ double mapra::operator*(const mapra::Vector& x, const mapra::Vector& y) {
 
 // ----- Multiplikation Skalar*Vektor "*" -----
 
-mapra::Vector mapra::operator*(double c, const mapra::Vector& x) {
-  // ***** Hier fehlt was *****
+Vector operator*(double c, const Vector& x) {
+  Vector multiplied(x);
 
-  std::vector<double> multiplied(x.size());
-
-  multiplied = x;
   multiplied *= c;
   return multiplied;
 }
 
 // ----- Multiplikation Vektor*Skalar "*" -----
 
-mapra::Vector mapra::operator*(const mapra::Vector& x, double c) {
-  // ***** Hier fehlt was *****
-  std::vector<double> multiplied(x.size());
+Vector operator*(const Vector& x, double c) {
+  Vector multiplied(x);
 
-  multiplied = x;
   multiplied *= c;
   return multiplied;
 }
 
 // ----- Division Vektor/Skalar "/" -----
 
-mapra::Vector mapra::operator/(const mapra::Vector& x, double c) {
-  // ***** Hier fehlt was *****
-  std::vector<double> multiplied(x.size());
+Vector operator/(const Vector& x, double c) {
+  Vector multiplied(x);
 
-  multiplied = x;
   multiplied /= c;
   return multiplied;
 }
@@ -245,7 +242,7 @@ mapra::Vector mapra::operator/(const mapra::Vector& x, double c) {
 
 // ----- Test auf Gleichheit "==" -----
 
-bool mapra::operator==(const mapra::Vector& x, const mapra::Vector& y) {
+bool operator==(const Vector& x, const Vector& y) {
   if (x.elems_.size() != y.elems_.size()) {
     return false;
   }
@@ -261,7 +258,7 @@ bool mapra::operator==(const mapra::Vector& x, const mapra::Vector& y) {
 
 // ----- Test auf Ungleichheit "!=" -----
 
-bool mapra::operator!=(const mapra::Vector& x, const mapra::Vector& y) {
+bool operator!=(const Vector& x, const Vector& y) {
   // ***** Hier fehlt was *****
   return !(x == y);
 }
@@ -272,7 +269,7 @@ bool mapra::operator!=(const mapra::Vector& x, const mapra::Vector& y) {
 
 // ----- Ausgabe "<<" -----
 
-std::ostream& mapra::operator<<(std::ostream& s, const mapra::Vector& x) {
+std::ostream& operator<<(std::ostream& s, const Vector& x) {
   s << std::setiosflags(std::ios::right);
   for (size_t i = 0; i < x.elems_.size(); i++) {
     s << "\n(" << std::setw(4) << i << ") " << x(i);
@@ -283,7 +280,7 @@ std::ostream& mapra::operator<<(std::ostream& s, const mapra::Vector& x) {
 
 // ----- Eingabe ">>" -----
 
-std::istream& mapra::operator>>(std::istream& s, mapra::Vector& x) {
+std::istream& operator>>(std::istream& s, Vector& x) {
   std::cout << std::setiosflags(std::ios::right);
   for (size_t i = 0; i < x.elems_.size(); i++) {
     std::cout << "\n(" << std::setw(4) << i << ") " << std::flush;
@@ -298,7 +295,9 @@ std::istream& mapra::operator>>(std::istream& s, mapra::Vector& x) {
 
 // ----- Ausgabe der Fehlermeldung "str" -----
 
-void mapra::Vector::VecError(const char str[]) {
+void Vector::VecError(const char str[]) {
   std::cerr << "\nVektorfehler: " << str << '\n' << std::endl;
   exit(1);
+}
+
 }

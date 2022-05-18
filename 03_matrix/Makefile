@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O2 -fno-inline -fPIC -fPIE
+CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O2 -fno-inline -fPIC -fPIE -g
 
 precompiledTests : vector.o matrix.o test.o
 	$(CXX) $(CXXFLAGS) -o precompiledTests vector.o matrix.o test.o
@@ -14,6 +14,6 @@ loesung.o: loesung.cpp
 	${CXX} ${CXXFLAGS} -c loesung.cpp
 
 clean:
-	rm -f matrix.o test loesung.o
+	rm -f matrix.o test loesung.o precompiledTests vector.o
 
 .PHONY: clean

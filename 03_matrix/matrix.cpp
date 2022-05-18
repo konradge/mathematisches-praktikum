@@ -1,12 +1,10 @@
 #include "matrix.h"
 
+#include <iomanip>
 #include <iostream>
 #include <vector>
 
 #include "vector.h"
-
-// define save-mode to prevent access to non-existant indices
-#define NDEBUG
 
 #define NOOP
 
@@ -31,55 +29,68 @@ Matrix::Matrix(std::size_t r, std::size_t c) {
   // Constructor of Matrix
   rows_ = r;
   cols_ = c;
-  elems_ = std::vector<double>(r * c);
+  elems_ = std::vector<double>(r * c, 0);
 }
 
 Matrix::Matrix(const Matrix& m) {
   rows_ = m.GetRows();
   cols_ = m.GetCols();
-  ITERATE_MATRIX((*this), (*this)(i, j) = m(i, j));
+  elems_ = std::vector<double>(rows_ * cols_);
+  // ITERATE_MATRIX((*this), (*this)(i, j) = m(i, j));
+  for (std::size_t i = 0; i < m.GetRows(); i++) {
+    for (std::size_t j = 0; j < m.GetCols(); j++) {
+      (*this)(i, j) = m(i, j);
+    }
+  }
 }
 
 double& Matrix::operator()(std::size_t i, std::size_t j) {
   // Return reference of entry A_ij, where i is the row and j is the column
-#ifdef NDEBUG
-  if (i >= GetRows() || j >= GetCols()) throw(1);
+#ifndef NDEBUG
+  // std::cout << "--------" << std::endl;
+  // std::cout << i << ", " << j << std::endl;
+  // std::cout << GetRows() << "," << GetCols() << std::endl;
+  // std::cout << elems_.size() << std::endl;
+  if (i >= GetRows() || j >= GetCols()) Matrix::MatError("Ungueltiger Index!");
 #endif
-  double& value = elems_[i * GetRows() + j];
+  double& value = elems_[i * GetCols() + j];
   return value;
 }
 
 double Matrix::operator()(std::size_t i, std::size_t j) const {
   // Return value of entry A_ij, where i is the row and j is the column
-#ifdef NDEBUG
-  if (i >= GetRows() || j >= GetCols()) throw(1);
+#ifndef NDEBUG
+  if (i >= GetRows() || j >= GetCols()) Matrix::MatError("Ungueltiger Index!");
 #endif
-  return elems_[i * GetRows() + j];
+  return elems_[i * GetCols() + j];
 }
 
 // M += N
 Matrix& Matrix::operator+=(const Matrix& m) {
-#ifdef NDEBUG
-  if (!(GetRows() == m.GetRows() && GetCols() == m.GetCols())) throw(1);
+#ifndef NDEBUG
+  if (!(GetRows() == m.GetRows() && GetCols() == m.GetCols()))
+    Matrix::MatError("Inkompatible Dimensionen fuer 'Matrix + Matrix'!");
 #endif
   ITERATE_MATRIX((*this), (*this)(i, j) += m(i, j));
   return *this;
 }
 // M -= N
 Matrix& Matrix::operator-=(const Matrix& m) {
-#ifdef NDEBUG
-  if (!(GetRows() == m.GetRows() && GetCols() == m.GetCols())) throw(1);
+#ifndef NDEBUG
+  if (!(GetRows() == m.GetRows() && GetCols() == m.GetCols()))
+    Matrix::MatError("Inkompatible Dimensionen fuer 'Matrix - Matrix'!");
 #endif
   ITERATE_MATRIX((*this), (*this)(i, j) -= m(i, j));
   return *this;
 }
 // M *= N
 Matrix& Matrix::operator*=(const Matrix& m) {
-#ifdef NDEBUG
-  if (!(GetCols() == m.GetRows())) throw(1);
+#ifndef NDEBUG
+  if (!(GetCols() == m.GetRows()))
+    Matrix::MatError("Inkompatible Dimensionen fuer 'Matrix * Matrix'!");
+  ;
 #endif
-  Matrix copy;
-  copy = (*this);
+  Matrix copy(*this);
   Redim(GetRows(), m.GetCols());
   for (std::size_t i = 0; i < GetRows(); i++) {
     for (std::size_t j = 0; j < GetCols(); j++) {
@@ -117,14 +128,14 @@ Matrix& Matrix::Redim(std::size_t r, std::size_t c) {
 std::size_t Matrix::GetRows() const { return rows_; }
 std::size_t Matrix::GetCols() const { return cols_; }
 
-void Matrix::MatError(const char str[]) {}
+void Matrix::MatError(const char str[]) {
+  std::cerr << "\nMatrixfehler: " << str << '\n' << std::endl;
+  exit(1);
+}
 
 // ====== Non member functions =======
 // M + N
 Matrix operator+(const Matrix& m1, const Matrix& m2) {
-#ifdef NDEBUG
-  if (!(m1.GetRows() == m2.GetRows() && m1.GetCols() == m2.GetCols())) throw(1);
-#endif
   Matrix result(m1);
   result += m2;
   return result;
@@ -165,9 +176,15 @@ std::ostream& operator<<(std::ostream& out, const Matrix& m) {
   ITERATE_MATRIX_COL_END(m, out << m(i, j) << "\t", out << std::endl)
   return out;
 }
-std::istream& operator>>(std::istream& in, Matrix& m) {
-  // TODO
-  return in;
+std::istream& operator>>(std::istream& s, Matrix& m) {
+  std::cout << std::setiosflags(std::ios::right);
+  for (size_t i = 0; i < m.GetCols(); i++) {
+    for (size_t j = 0; j < m.GetRows(); j++) {
+      std::cout << "\n(" << std::setw(4) << i << ") " << std::flush;
+      s >> m(i, j);
+    }
+  }
+  return s;
 }
 
 // v * M

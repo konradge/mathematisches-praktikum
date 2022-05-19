@@ -17,6 +17,8 @@ class Vector {
   double& operator()(std::size_t);
   double operator()(std::size_t) const;
 
+  Vector& operator=(const Vector& m);
+
   Vector& operator+=(const Vector&);
   Vector& operator-=(const Vector&);
   Vector& operator*=(double);

@@ -53,6 +53,14 @@ double Vector::operator()(size_t i) const {
   return elems_[i];
 }
 
+// Copy vector with "="
+Vector& Vector::operator=(const Vector& v) {
+  for (size_t i = 0; i < v.GetLength(); i++) {
+    (*this)(i) = v(i);
+  }
+  return *this;
+}
+
 // =====================
 //      Zuweisungen
 // =====================

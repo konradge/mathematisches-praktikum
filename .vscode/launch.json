@@ -27,7 +27,7 @@
             "type": "cppdbg",
             "request": "launch",
             // Resolved by CMake Tools:
-            "program": "${workspaceRoot}/03_matrix/precompiledTests",
+            "program": "${workspaceRoot}/03_matrix/eigenvectorTests",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}",

@@ -1,3 +1,7 @@
+// 3 ist komplett falsch
+// 4 falsch skaliert
+// 5 hat Probleme mit Iterationen
+
 #include <cmath>
 #include <sstream>
 #include <tuple>
@@ -16,31 +20,42 @@ size_t pick_k(mapra::Vector&, size_t);
 bool is_finished(mapra::Vector&, mapra::Vector&, size_t, double);
 
 std::tuple<mapra::Vector, double, unsigned int> calculate_eigenvector(
-    mapra::Matrix& m, mapra::Vector x0, double eps) {
+    mapra::Matrix& A, mapra::Vector x0, double eps) {
   // Assert that x0 is not zero
   if (x0.NormMax() == 0) return std::make_tuple(x0, -1, 0);
   unsigned int iterations = 0;
   mapra::Vector x = x0;
-  size_t k = 1;
+  size_t k = 0;
   // Check if it is necessary to pick another k
   k = pick_k(x, k);
+  double lambda = x(k);
 
   while (true) {
     iterations++;
-    // Calculate next x_i based on the given formula:
-    // x_i^~ = A * x_{i-1}^~
-    mapra::Vector x_next = m * x;
+    // Get the next unscaled x_i by multiplying A with the scaled x_{i-1}
+    mapra::Vector x_next = A * x;
 
-    double lambda = x_next(k);
-    // x_i =x_i^~ / x_i(k)
+    // Eigenvalue is the entry at position k in unscaled vector
+    double lambda_next = x_next(k);
+
+    // Scale x_next, so that x_next(k) = 1
     x_next /= x_next(k);
 
-    if (is_finished(x, x_next, k, eps)) {
+    // Check if the iteration has converged
+    // 1. Compare the scaled vectors
+    bool isFinished = (x_next - x).NormMax() <= eps;
+    // 2. Eigenvalue has not changed much
+    isFinished = isFinished && fabs(lambda - lambda_next);
+
+    if (isFinished) {
       // Iteration has converged
+      std::cout << "k:" << k << std::endl;
+      std::cout << "Eigenvalue:" << lambda << std::endl;
       return std::make_tuple(x_next, lambda, iterations);
     } else {
       // Prepare for next iteration
       x = x_next;
+      lambda = lambda_next;
       k = pick_k(x, k);
     }
   }
@@ -62,11 +77,6 @@ size_t pick_k(mapra::Vector& x, size_t old_k) {
   }
 }
 
-bool is_finished(mapra::Vector& x_i, mapra::Vector& x_ip1, size_t k,
-                 double eps) {
-  return (x_ip1 - x_i).NormMax() <= eps && fabs(x_i(k) - x_ip1(k)) <= eps;
-}
-
 int main(int argc, char* argv[]) {
   if (argc <= 1) {
     std::cout << "Bitte gib die Nummer eines Beispiels an";
@@ -76,6 +86,7 @@ int main(int argc, char* argv[]) {
   std::istringstream isstream(argv[1]);
   int example;
   isstream >> example;
+  // int example = 2;
 
   auto [A, x, eps] = mapra::GetExample(example);
   auto [eigVector, eigValue, iterations] = calculate_eigenvector(A, x, eps);

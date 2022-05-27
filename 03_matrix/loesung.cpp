@@ -1,4 +1,4 @@
-// 3 ist komplett falsch
+// 2 + 3 ist komplett falsch
 // 4 falsch skaliert
 // 5 hat Probleme mit Iterationen
 

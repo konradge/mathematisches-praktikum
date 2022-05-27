@@ -15,7 +15,8 @@ void test_median();
 
 int main() {
   // each number corresponds to one algorithm, triggered by switch-case
-  for (auto number : {0, 1, 2, 3, 4, 5, 6}) test_algorithm(number, 2);
+  for (auto number : {0, 1, 2, 3, 4, 5, 6})
+    test_algorithm(number, 2);
   test_median();
   return 0;
 }
@@ -24,33 +25,33 @@ void test_algorithm(unsigned int algorithmNumber, int testNumber) {
   std::vector<unsigned int> (*algorithm)(std::vector<unsigned int>);
   std::string algorithmName;
   switch (algorithmNumber) {
-    case 0:
-      algorithmName = "bubblesort";
-      algorithm = &(Sort::Bubblesort);
-      break;
-    case 1:
-      algorithmName = "mergesort";
-      algorithm = &(Sort::Mergesort);
-      break;
-    case 2:
-      algorithmName = "selectionsort";
-      algorithm = &(Sort::Selectionsort);
-      break;
-    case 3:
-      algorithmName = "insertionsort";
-      algorithm = &(Sort::Insertionsort);
-      break;
-    case 4:
-      algorithmName = "heapsort";
-      algorithm = &(Sort::Heapsort);
-      break;
-    case 5:
-      algorithmName = "quicksort";
-      algorithm = &(Sort::Quicksort);
-      break;
-    default:  // case 6
-      algorithmName = "quicksortMedian";
-      algorithm = &(Sort::QuicksortMedian);
+  case 0:
+    algorithmName = "bubblesort";
+    algorithm = &(Sort::Bubblesort);
+    break;
+  case 1:
+    algorithmName = "mergesort";
+    algorithm = &(Sort::Mergesort);
+    break;
+  case 2:
+    algorithmName = "selectionsort";
+    algorithm = &(Sort::Selectionsort);
+    break;
+  case 3:
+    algorithmName = "insertionsort";
+    algorithm = &(Sort::Insertionsort);
+    break;
+  case 4:
+    algorithmName = "heapsort";
+    algorithm = &(Sort::Heapsort);
+    break;
+  case 5:
+    algorithmName = "quicksort";
+    algorithm = &(Sort::Quicksort);
+    break;
+  default: // case 6
+    algorithmName = "quicksortMedian";
+    algorithm = &(Sort::QuicksortMedian);
   }
 
   mapra::MapraTest test(algorithmName);

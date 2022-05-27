@@ -55,6 +55,7 @@ double Vector::operator()(size_t i) const {
 
 // Copy vector with "="
 Vector& Vector::operator=(const Vector& v) {
+  elems_ = std::vector<double>(v.GetLength(), 0);
   for (size_t i = 0; i < v.GetLength(); i++) {
     (*this)(i) = v(i);
   }

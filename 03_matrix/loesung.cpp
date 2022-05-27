@@ -13,16 +13,15 @@
 // Constant C
 #define C 2
 
-size_t index_of_element(mapra::Vector&, double);
+size_t pick_k(mapra::Vector &, size_t);
 
-size_t pick_k(mapra::Vector&, size_t);
+bool is_finished(mapra::Vector &, mapra::Vector &, size_t, double);
 
-bool is_finished(mapra::Vector&, mapra::Vector&, size_t, double);
-
-std::tuple<mapra::Vector, double, unsigned int> calculate_eigenvector(
-    mapra::Matrix& A, mapra::Vector x0, double eps) {
+std::tuple<mapra::Vector, double, unsigned int>
+calculate_eigenvector(mapra::Matrix &A, mapra::Vector x0, double eps) {
   // Assert that x0 is not zero
-  if (x0.NormMax() == 0) return std::make_tuple(x0, -1, 0);
+  if (x0.NormMax() == 0)
+    return std::make_tuple(x0, -1, 0);
   unsigned int iterations = 0;
   mapra::Vector x = x0;
   size_t k = 0;
@@ -45,7 +44,7 @@ std::tuple<mapra::Vector, double, unsigned int> calculate_eigenvector(
     // 1. Compare the scaled vectors
     bool isFinished = (x_next - x).NormMax() <= eps;
     // 2. Eigenvalue has not changed much
-    isFinished = isFinished && fabs(lambda - lambda_next);
+    isFinished = isFinished && (fabs(lambda - lambda_next) <= eps);
 
     if (isFinished) {
       // Iteration has converged
@@ -61,23 +60,21 @@ std::tuple<mapra::Vector, double, unsigned int> calculate_eigenvector(
   }
 }
 
-size_t index_of_element(mapra::Vector& vector, double element) {
-  for (size_t i = 0; i < vector.GetLength(); i++)
-    if (vector(i) == element) return i;
-
-  return 0;
-}
-
 // Pick new k, if necessary
-size_t pick_k(mapra::Vector& x, size_t old_k) {
+size_t pick_k(mapra::Vector &x, size_t old_k) {
   if (C * std::fabs(x(old_k)) <= x.NormMax()) {
-    return index_of_element(x, x.NormMax());
+    size_t maxIndex = 0;
+    for (size_t i = 1; i < x.GetLength(); i++) {
+      if (fabs(x(maxIndex)) < fabs(x(i)))
+        maxIndex = i;
+    }
+    return maxIndex;
   } else {
     return old_k;
   }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
   if (argc <= 1) {
     std::cout << "Bitte gib die Nummer eines Beispiels an";
     return 0;

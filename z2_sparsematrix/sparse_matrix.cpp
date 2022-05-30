@@ -82,8 +82,17 @@ Sparse_Matrix& Sparse_Matrix::operator*=(double c) {
   }
   return *this;
 }
+
 Sparse_Matrix& Sparse_Matrix::operator/=(double c) {
   (*this) *= 1 / c;
+  return *this;
+}
+
+Sparse_Matrix& Sparse_Matrix::redim(size_t r, size_t c) {
+  rows = r;
+  cols = c;
+  mat.clear();
+
   return *this;
 }
 
@@ -140,3 +149,8 @@ std::ostream& operator<<(std::ostream& os, const Sparse_Matrix& m) {
 
 Vector operator*(const Sparse_Matrix& m, const Vector& v) { return v; }
 Vector operator*(const Vector& v, const Sparse_Matrix& m) { return v; }
+
+void Sparse_Matrix::matError(const char str[]) {
+  std::cerr << "\nMatrixfehler: " << str << '\n' << std::endl;
+  std::abort();
+}

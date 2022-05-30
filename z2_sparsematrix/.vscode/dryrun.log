@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/mnt/c/Users/gelle/OneDrive - rwth-aachen.de/04_Sommersemester_2022/MaPra/mathematisches-praktikum/z2_sparsematrix'
+g++ -std=c++17 -Wall -Wextra -Wpedantic -O2 -fno-inline -fPIC -fPIE -o test vector.o sparse_matrix.o test_mv.o
+make: Leaving directory '/mnt/c/Users/gelle/OneDrive - rwth-aachen.de/04_Sommersemester_2022/MaPra/mathematisches-praktikum/z2_sparsematrix'
+ 

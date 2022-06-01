@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O2 -fno-inline -fPIC -fPIE
+CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O0 -fno-inline -fPIC -fPIE -g
 
 .PHONY: clean
 
@@ -13,5 +13,5 @@ vector.o: vector.cpp vector.h
 	$(CXX) $(CXXFLAGS) -c $<
 
 clean:
-	rm -f vector.o sparse_matrix.o
+	rm -f vector.o sparse_matrix.o test
 

@@ -139,8 +139,11 @@ Vector &Vector::operator/=(double c) {
 Vector &Vector::redim(size_t l) {
   length = l;
   delete[] vec;
-  vec = new double[l];
+  vec = new double(l);
   if (vec == NULL) vecError("Nicht genuegend Speicher!");
+  for (size_t i = 0; i < l; i++) {
+    vec[i] = 0;
+  }
   return *this;
 }
 

@@ -10,6 +10,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <iomanip>
+#include <vector>
 
 // =======================
 //      Konstruktoren
@@ -24,8 +25,7 @@ Vector::Vector(size_t l) {
 
   length = l;
 
-  vec = new double[l];
-  if (vec == NULL) vecError("Nicht genuegend Speicher!");
+  vec = std::vector<double>(l, 0);
 
   for (size_t i = 0; i < l; i++) (*this)(i) = 0;
 }
@@ -34,18 +34,14 @@ Vector::Vector(size_t l) {
 
 Vector::~Vector() {
   // Free space on heap
-  delete[] vec;
 }
 
 // ----- Kopierkonstruktor -----
 
 Vector::Vector(const Vector &x) {
-  length = x.length;
+  vec = std::vector<double>(x.length, 0);
 
-  vec = new double[length];
-  if (vec == NULL) vecError("Nicht genuegend Speicher!");
-
-  for (size_t i = 0; i < length; i++) (*this)(i) = x(i);
+  for (size_t i = 0; i < x.length; i++) (*this)(i) = x(i);
 }
 
 // ===========================================
@@ -80,10 +76,8 @@ double Vector::operator()(size_t i) const {
 
 Vector &Vector::operator=(const Vector &x) {
   if (length != x.length) {
-    delete[] vec;
     length = x.getLength();
-    vec = new (std::nothrow) double[length];
-    if (vec == NULL) vecError("Nicht genuegend Speicher!");
+    vec = std::vector<double>(length, 0);
   }
 
   for (size_t i = 0; i < length; i++) (*this)(i) = x(i);
@@ -138,9 +132,7 @@ Vector &Vector::operator/=(double c) {
 
 Vector &Vector::redim(size_t l) {
   length = l;
-  delete[] vec;
-  vec = new double(l);
-  if (vec == NULL) vecError("Nicht genuegend Speicher!");
+  vec = std::vector<double>(l, 0);
   for (size_t i = 0; i < l; i++) {
     vec[i] = 0;
   }

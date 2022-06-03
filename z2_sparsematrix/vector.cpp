@@ -18,16 +18,14 @@
 
 // ----- Konstruktor -----
 
-Vector::Vector(size_t l) {
+Vector::Vector(size_t l) : vec(l, 0) {
 #ifndef NDEBUG
   if (l <= 0) vecError("Nur Vektoren mit positiver Laenge!");
 #endif
 
   length = l;
 
-  vec = std::vector<double>(l, 0);
-
-  for (size_t i = 0; i < l; i++) (*this)(i) = 0;
+  for (size_t i = 0; i < getLength(); i++) (*this)(i) = 0;
 }
 
 // ----- Destruktor -----
@@ -38,10 +36,11 @@ Vector::~Vector() {
 
 // ----- Kopierkonstruktor -----
 
-Vector::Vector(const Vector &x) {
-  vec = std::vector<double>(x.length, 0);
-
-  for (size_t i = 0; i < x.length; i++) (*this)(i) = x(i);
+Vector::Vector(const Vector &x) : vec(x.getLength(), 0) {
+  length = x.getLength();
+  for (size_t i = 0; i < getLength(); i++) {
+    (*this)(i) = x(i);
+  }
 }
 
 // ===========================================
@@ -77,7 +76,7 @@ double Vector::operator()(size_t i) const {
 Vector &Vector::operator=(const Vector &x) {
   if (length != x.length) {
     length = x.getLength();
-    vec = std::vector<double>(length, 0);
+    vec.resize(length);
   }
 
   for (size_t i = 0; i < length; i++) (*this)(i) = x(i);
@@ -132,7 +131,7 @@ Vector &Vector::operator/=(double c) {
 
 Vector &Vector::redim(size_t l) {
   length = l;
-  vec = std::vector<double>(l, 0);
+  vec.resize(l, 0);
   for (size_t i = 0; i < l; i++) {
     vec[i] = 0;
   }

@@ -1,6 +1,8 @@
 #include "sparse_matrix.h"
 
 #include "vector.h"
+#include <iomanip>
+#include <iostream>
 
 #define CHECK_INDEX \
   if (i >= rows || j >= cols) matError("Index not allowed")
@@ -45,6 +47,7 @@ Sparse_Matrix& Sparse_Matrix::operator=(const Sparse_Matrix& m) {
   copy_map(&this->mat, m.mat);
   return *this;
 }
+
 Sparse_Matrix& Sparse_Matrix::operator+=(const Sparse_Matrix& m) {
   if (cols != m.cols || rows != m.rows) matError("Illegal dimensions!");
   for (auto& [key, value] : m.mat) {
@@ -136,21 +139,59 @@ bool operator!=(const Sparse_Matrix& m, const Sparse_Matrix& n) {
   return !(m == n);
 }
 
-std::istream& operator>>(std::istream& is, Sparse_Matrix& m) { return is; }
+std::istream& operator>>(std::istream& is, Sparse_Matrix& m) { 
+  for (size_t i = 0; i < m.getCols(); i++) {
+    for (size_t j = 0; j < m.getRows(); j++) {
+      double d;
+      is >> d;
+      m.put(i, j, d);
+    }
+  }
+  return is;
+}
+
+
 std::ostream& operator<<(std::ostream& os, const Sparse_Matrix& m) {
   for (size_t i = 0; i < m.rows; i++) {
     for (size_t j = 0; j < m.cols; j++) {
-      os << m(i, j);
+      os << m(i, j) << "\t";
     }
     os << std::endl;
   }
   return os;
 }
 
-Vector operator*(const Sparse_Matrix& m, const Vector& v) { return v; }
-Vector operator*(const Vector& v, const Sparse_Matrix& m) { return v; }
+// v * M
+Vector operator*(const Vector& v, const Sparse_Matrix& m) {
+  Vector res(m.getCols());
+  if(v.getLength() != m.getRows()) {
+    std::cout << "Wrong dimensions v*M" << std::endl;
+    return res;
+  }
+  for(size_t i = 0; i < m.getCols(); i++) {
+    for(size_t j = 0; j < m.getRows(); j++) {
+      res(i) += m(j,i) * v(j);
+    }
+  }
+  return res;
+}
+// M * v
+Vector operator*(const Sparse_Matrix& m, const Vector& v) {
+  Vector res(m.getRows());
+  if(v.getLength() != m.getCols()) {
+    std::cout << "Wrong dimensions M*v" << std::endl;
+    return res;
+  }
+  for(size_t i = 0; i < m.getRows(); i++) {
+    for(size_t j = 0; j < m.getCols(); j++) {
+      res(i) += m(i,j) * v(j);
+    }
+  }
+  return res;  
+}
 
 void Sparse_Matrix::matError(const char str[]) {
   std::cerr << "\nMatrixfehler: " << str << '\n' << std::endl;
   std::abort();
 }
+

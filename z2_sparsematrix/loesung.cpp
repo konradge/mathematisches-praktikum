@@ -1,30 +1,25 @@
 #include <cmath>
 
 #include "sparse_matrix.h"
-#include "vector.h"
 #include "unit.h"
-
-#define K_MAX 200
+#include "vector.h"
 
 bool isSymmetric(Sparse_Matrix& A) {
+  if (A.getCols() != A.getRows()) return false;
 
-  if (A.getCols() != A.getRows())
-    return false;
-    
   for (size_t i = 0; i < A.getCols(); i++) {
     for (size_t j = 0; j < i; j++) {
-      if(A(i,j) != A(j,i)) return false;
+      if (A(i, j) != A(j, i)) return false;
     }
   }
   return true;
-  
 }
 
 double residuum(Sparse_Matrix& A, Vector& x, Vector& b) {
   return (b - A * x).norm2();
 }
 
-int gsv(Sparse_Matrix A, Vector& b, Vector& x0, const int k_max, double eps) {
+int gsv(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
   // Konvergenzkriterium überprüfen
   for (size_t i = 0; i < A.getCols(); i++) {
     double sum = 0;
@@ -44,27 +39,32 @@ int gsv(Sparse_Matrix A, Vector& b, Vector& x0, const int k_max, double eps) {
 
   Vector x(x0);
   Vector residuum_vec;
-  for (unsigned int k = 0; (k < K_MAX) && (residuum(A, x, b) > eps); k++) {
+  for (int k = 0; (k < k_max) && (residuum(A, x, b) > eps); k++) {
     x = (b - A * x) / d;
+  }
+
+  // Restore matrix A
+  for (size_t i = 0; i < A.getCols(); i++) {
+    A.put(i, i, d(i));
   }
 
   return 0;
 }
 
-int cg(Sparse_Matrix A, Vector& b, Vector& x0, const int k_max, double eps) {
+int cg(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
   if (!isSymmetric(A)) {
     std::cerr << "Matrix not symmetric" << std::endl;
     return 0;
   }
   if (A.getCols() != b.getLength() || b.getLength() != x0.getLength()) {
-    return -1;    
+    return -1;
   }
   Vector r = b - A * x0;
   Vector d(r);
   double alpha, beta;
   double norm_r_squared = pow(r.norm2(), 2);
   int k;
-  for (k = 0; (k < K_MAX) && (residuum(A, x0, b) > eps); k++) {
+  for (k = 0; k < k_max; k++) {
     Vector Ad(A * d);
     double energy_scalar_product = Ad * Ad;
     alpha = norm_r_squared / energy_scalar_product;
@@ -75,8 +75,17 @@ int cg(Sparse_Matrix A, Vector& b, Vector& x0, const int k_max, double eps) {
     d *= beta;
     d += r;
     norm_r_squared = norm_r_squared_next;
+
+    if (residuum(A, x0, b) < eps) {
+      // Set eps to the reached residuum
+      eps = residuum(A, x0, b);
+      return k + 1;
+    }
   }
-  return k;
+  std::cout << "Max iterations reached!" << std::endl;
+  // k_max Iterations have been reached
+  eps = residuum(A, x0, b);
+  return 0;
 }
 
 int main() {
@@ -84,9 +93,10 @@ int main() {
   Vector x0, b;
   double tol;
   int max_iter;
-  getExample(2,A,x0,b, tol, max_iter);
-  int res = cg(A, b, x0, max_iter, tol);
-  checkSolution(x0, res, 1);
+  getExample(1, A, x0, b, tol, max_iter);
+  int res = gsv(A, b, x0, max_iter, tol);
+  std::cout << "k=" << res << std::endl;
+  checkSolution(x0, res, 0);
 
   return 0;
 }

@@ -32,13 +32,10 @@ class Vector {
   Vector& operator*=(double);
   Vector& operator/=(double);
 
-  Vector& redim(size_t);  // neue Laenge festlegen
-  size_t getLength() const {
-    std::cout << "Länge!" << std::endl;
-    return length;
-  }                        // Laenge
-  double norm2() const;    // Euklidische Norm des Vektors
-  double normMax() const;  // Maximum-Norm des Vektors
+  Vector& redim(size_t);                       // neue Laenge festlegen
+  size_t getLength() const { return length; }  // Laenge
+  double norm2() const;                        // Euklidische Norm des Vektors
+  double normMax() const;                      // Maximum-Norm des Vektors
 
   friend Vector operator+(const Vector&, const Vector&);  // Addition
   friend Vector operator-(const Vector&, const Vector&);  // Subtraktion

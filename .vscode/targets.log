@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun  3 16:30:35 2022
+# Make data base, printed on Wed Jun  8 16:01:23 2022
 
 # Variables
 
@@ -17,7 +17,7 @@ make: *** No rule to make target 'all'.  Stop.
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = VSCODE_WSL_EXT_LOCATION/up
+WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
 # default
 .SHELLFLAGS := -c
 # environment
@@ -35,7 +35,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"de","availableLanguages":{}}
 # environment
-_ = /home/geller/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/node
+_ = /mnt/c/Users/gelle/Microsoft VS Code/bin/code
 # makefile
 MAKEFILE_LIST := 
 # 'override' directive
@@ -49,11 +49,11 @@ VSCODE_CWD = /mnt/c/Users/gelle/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/geller/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Python310/Scripts/:/mnt/c/Python310/:/mnt/c/Program Files/AdoptOpenJDK/jdk-15.0.2.7-hotspot/bin:/mnt/c/Users/gelle/AppData/Roaming/ActiveState/bin:/mnt/c/Python39/Scripts/:/mnt/c/Python39/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/tools/Manim/Scripts:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/gnupg/bin:/mnt/c/MinGW/bin:/mnt/c/Program Files (x86)/Vim/vim82:/mnt/c/Users/gelle/AppData/Roaming/npm:/mnt/c/Program Files/Graphviz/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/gelle/Downloads/latexindent:/mnt/c/Users/gelle/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/gelle/Microsoft VS Code/bin:/mnt/c/Users/gelle/AppData/Local/Programs/MiKTeX/miktex/bin/x64/C:/Users/gelle/AppData/Local/MiKTeX/latexindent/latexindent/:/mnt/c/Strawberry/c/bin:/mnt/c/Strawberry/perl/site/bin:/mnt/c/Strawberry/perl/bin:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files/MATLAB/R2021b/bin:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files/MySQL/MySQL Shell 8.0/bin/:/mnt/c/Users/gelle/AppData/Local/activestate/bin:/mnt/c/Users/gelle/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/gelle/Microsoft VS Code/bin:/mnt/c/Users/gelle/AppData/Local/Programs/MiKTeX/miktex/bin/x64/:/mnt/c/Users/gelle/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/gelle/AppData/Roaming/cabal/bin:/mnt/c/tools/ghc-9.0.1/bin:/mnt/c/Users/gelle/go/bin:/mnt/c/Users/gelle/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0/LocalCache/local-packages/Python39/Scripts':/mnt/c/Program Files/heroku/bin:/mnt/c/Users/gelle/AppData/Roaming/npm:/snap/bin
+PATH = /home/geller/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/Microsoft.WindowsTerminal_1.13.11431.0_x64__8wekyb3d8bbwe:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Python310/Scripts/:/mnt/c/Python310/:/mnt/c/Program Files/AdoptOpenJDK/jdk-15.0.2.7-hotspot/bin:/mnt/c/Users/gelle/AppData/Roaming/ActiveState/bin:/mnt/c/Python39/Scripts/:/mnt/c/Python39/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/tools/Manim/Scripts:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/gnupg/bin:/mnt/c/MinGW/bin:/mnt/c/Program Files (x86)/Vim/vim82:/mnt/c/Users/gelle/AppData/Roaming/npm:/mnt/c/Program Files/Graphviz/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/gelle/Downloads/latexindent:/mnt/c/Users/gelle/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/gelle/Microsoft VS Code/bin:/mnt/c/Users/gelle/AppData/Local/Programs/MiKTeX/miktex/bin/x64/C:/Users/gelle/AppData/Local/MiKTeX/latexindent/latexindent/:/mnt/c/Strawberry/c/bin:/mnt/c/Strawberry/perl/site/bin:/mnt/c/Strawberry/perl/bin:/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/170/Tools/Binn/:/mnt/c/Program Files (x86)/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/Tools/Binn/:/mnt/c/Program Files/Microsoft SQL Server/150/DTS/Binn/:/mnt/c/Program Files/MATLAB/R2021b/bin:/mnt/c/Program Files/Go/bin:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files/MySQL/MySQL Shell 8.0/bin/:/mnt/c/Users/gelle/AppData/Local/activestate/bin:/mnt/c/Users/gelle/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/gelle/Microsoft VS Code/bin:/mnt/c/Users/gelle/AppData/Local/Programs/MiKTeX/miktex/bin/x64/:/mnt/c/Users/gelle/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/gelle/AppData/Roaming/cabal/bin:/mnt/c/tools/ghc-9.0.1/bin:/mnt/c/Users/gelle/go/bin:/mnt/c/Users/gelle/AppData/Local/Packages/PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0/LocalCache/local-packages/Python39/Scripts':/mnt/c/Program Files/heroku/bin:/mnt/c/Users/gelle/AppData/Roaming/npm:/snap/bin
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-769fce23-6385-4f99-a494-9c31150ef53b.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-4d1c2d30-7b3c-4dfb-b857-54404322ebbf.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # automatic
@@ -65,7 +65,9 @@ PWD = /mnt/c/Users/gelle/OneDrive - rwth-aachen.de/04_Sommersemester_2022/MaPra/
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/12_interop
+WSL_INTEROP = /run/WSL/9_interop
+# environment
+WT_SESSION = a79d3ee2-da9a-43b8-89dd-d42609329564
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -85,7 +87,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 0
+SHLVL = 1
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -93,7 +95,7 @@ USER = geller
 # makefile
 .DEFAULT_GOAL := 
 # environment
-NAME = LAPTOP-M6TVT9BG
+NAME = Code
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -116,6 +118,8 @@ MFLAGS = -pqrR
 +F = $(notdir $+)
 # environment
 VSCODE_HANDLES_SIGPIPE = true
+# environment
+WT_PROFILE_ID = {2c4de342-38b7-51cf-b940-2309a097f518}
 # default
 MAKEFILES := 
 # automatic
@@ -140,8 +144,10 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
+# environment
+MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=64/1024=6%, Rehash=0, Collisions=4/86=5%
+# Load=67/1024=7%, Rehash=0, Collisions=4/89=4%
 
 # Pattern-specific Variable Values
 
@@ -149,9 +155,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 45, inode 35747322042299957): 12 files, no impossibilities.
+# . (device 45, inode 35747322042299957): 14 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 14 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -201,12 +207,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 209 B / avg = 10 B
-# current buf: size = 8162 B / used = 209 B / count = 20 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 22 / storage = 233 B / avg = 10 B
+# current buf: size = 8162 B / used = 233 B / count = 22 / avg = 10 B
 
-# strcache performance: lookups = 23 / hit rate = 13%
+# strcache performance: lookups = 25 / hit rate = 12%
 # hash-table stats:
-# Load=20/8192=0%, Rehash=0, Collisions=1/23=4%
-# Finished Make data base on Fri Jun  3 16:30:35 2022
+# Load=22/8192=0%, Rehash=0, Collisions=1/25=4%
+# Finished Make data base on Wed Jun  8 16:01:23 2022
 
  

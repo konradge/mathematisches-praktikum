@@ -108,7 +108,10 @@ class Vector {
     return max;
   }
 
-  static void VecError(const char str[]);
+  static void VecError(const char str[]) {
+    std::cerr << "\nVektorfehler: " << str << '\n' << std::endl;
+    exit(1);
+  }
 
   friend Vector<T> operator+(const Vector<T>& x, const Vector<T>& y) {
 #ifndef NDEBUG

@@ -147,9 +147,9 @@ Vector &Vector::redim(size_t l) {
 double Vector::norm2() const {
   double res = 0;
   for (size_t i = 0; i < getLength(); i++) {
-    res += fabs((*this)(i));
+    res += pow((*this)(i), 2);
   }
-  return res;
+  return sqrt(res);
 }
 
 // ----- Maximum-Norm -----
@@ -224,8 +224,14 @@ Vector operator/(const Vector &x, double c) { return ((double)1 / c) * x; }
 // ----- Division Vector/Vector "/"  <-->  D^(-1)*x -----
 
 Vector operator/(const Vector &x, const Vector &d) {
-  // ???
-  return x + d;
+#ifndef NDEBUG
+  if (x.getLength() != d.getLength()) Vector::vecError("Illegal dimensions");
+#endif
+  Vector res(x.getLength());
+  for (size_t i = 0; i < res.getLength(); i++) {
+    res(i) = x(i) / d(i);
+  }
+  return res;
 }
 
 // ----- Vector*.Vector "%"  <--> komponentenweise Multiplikation -----

@@ -37,21 +37,21 @@ class Matrix {
     elems_.resize(r * c, 0);
   };
 
-  T& operator()(std::size_t i, std::size_t j) {
+  T &operator()(std::size_t i, std::size_t j) {
 #ifndef NDEBUG
-    if (i >= rows_ || j >= cols) MatError("Index is too big");
+    if (i >= rows_ || j >= cols_) MatError("Index is too big");
 #endif
     return elems_[i + rows_ * j];
   }
 
   T operator()(std::size_t i, std::size_t j) const {
 #ifndef NDEBUG
-    if (i >= rows_ || j >= cols) MatError("Index is too big");
+    if (i >= rows_ || j >= cols_) MatError("Index is too big");
 #endif
     return elems_[i + rows_ * j];
   }
 
-  Matrix<T>& operator+=(const Matrix<T>& m) {
+  Matrix<T> &operator+=(const Matrix<T> &m) {
 #ifndef NDEBUG
     if (!(GetRows() == m.GetRows() && GetCols() == m.GetCols()))
       Matrix<T>::MatError(
@@ -60,7 +60,7 @@ class Matrix {
     ITERATE_MATRIX((*this), (*this)(i, j) += m(i, j));
     return *this;
   }
-  Matrix<T>& operator-=(const Matrix<T>& m) {
+  Matrix<T> &operator-=(const Matrix<T> &m) {
 #ifndef NDEBUG
     if (!(GetRows() == m.GetRows() && GetCols() == m.GetCols()))
       Matrix<T>::MatError(
@@ -70,7 +70,7 @@ class Matrix {
     return *this;
   }
 
-  Matrix<T>& operator*=(const Matrix<T>& m) {
+  Matrix<T> &operator*=(const Matrix<T> &m) {
 #ifndef NDEBUG
     if (!(GetCols() == m.GetRows()))
       Matrix<T>::MatError(
@@ -88,17 +88,17 @@ class Matrix {
     return *this;
   }
 
-  Matrix<T>& operator*=(T c) {
-    c*(*this);
+  Matrix<T> &operator*=(T c) {
+    c *(*this);
     return *this;
   }
 
-  Matrix<T>& operator/=(T c) {
+  Matrix<T> &operator/=(T c) {
     ((T)1 / c) * (*this);
     return *this;
   }
 
-  Matrix<T>& Redim(std::size_t r, std::size_t c) {
+  Matrix<T> &Redim(std::size_t r, std::size_t c) {
     rows_ = r;
     cols_ = c;
     elems_ = std::vector<double>(r * c, 0);
@@ -113,47 +113,47 @@ class Matrix {
     exit(1);
   }
 
-  friend Matrix<T> operator+(const Matrix<T>& m1, const Matrix<T>& m2) {
+  friend Matrix<T> operator+(const Matrix<T> &m1, const Matrix<T> &m2) {
     Matrix<T> result(m1);
     result += m2;
     return result;
   }
 
-  friend Matrix<T> operator-(const Matrix<T>& m1, const Matrix<T>& m2) {
+  friend Matrix<T> operator-(const Matrix<T> &m1, const Matrix<T> &m2) {
     return m1 + -m2;
   }
 
-  friend Matrix<T> operator-(const Matrix<T>& m) { return -1 * m; }
+  friend Matrix<T> operator-(const Matrix<T> &m) { return -1 * m; }
 
-  friend Matrix<T> operator*(const Matrix<T>& m1, const Matrix<T>& m2) {
+  friend Matrix<T> operator*(const Matrix<T> &m1, const Matrix<T> &m2) {
     Matrix<T> result;
     result = m1;
     result *= m2;
     return result;
   }
 
-  friend Matrix<T> operator*(T c, const Matrix<T>& m) {
+  friend Matrix<T> operator*(T c, const Matrix<T> &m) {
     Matrix<T> result(m.GetRows(), m.GetCols());
     ITERATE_MATRIX(result, result(i, j) = c * m(i, j));
     return result;
   }
-  friend Matrix<T> operator*(const Matrix<T>& m, T c) { return c * m; }
-  friend Matrix<T> operator/(const Matrix<T>& m, T c) {
+  friend Matrix<T> operator*(const Matrix<T> &m, T c) { return c * m; }
+  friend Matrix<T> operator/(const Matrix<T> &m, T c) {
     return ((double)1 / c) * m;
   }
 
-  friend bool operator==(const Matrix<T>& m1, const Matrix<T>& m2) {
+  friend bool operator==(const Matrix<T> &m1, const Matrix<T> &m2) {
     if (!(m1.GetRows() == m2.GetRows() && m1.GetCols() == m2.GetCols()))
       return false;
     ITERATE_MATRIX(m1, if (m1(i, j) != m2(i, j)) return false);
     return true;
   }
 
-  friend bool operator!=(const Matrix<T>& m1, const Matrix<T>& m2) {
+  friend bool operator!=(const Matrix<T> &m1, const Matrix<T> &m2) {
     return !(m1 == m2);
   }
 
-  friend std::istream& operator>>(std::istream& in, Matrix<T>& m) {
+  friend std::istream &operator>>(std::istream &in, Matrix<T> &m) {
     std::cout << std::setiosflags(std::ios::right);
     for (size_t i = 0; i < m.GetCols(); i++) {
       for (size_t j = 0; j < m.GetRows(); j++) {
@@ -164,18 +164,18 @@ class Matrix {
     return in;
   }
 
-  friend std::ostream& operator<<(std::ostream& out, const Matrix<T>& m) {
+  friend std::ostream &operator<<(std::ostream &out, const Matrix<T> &m) {
     ITERATE_MATRIX_COL_END(m, out << m(i, j) << "\t", out << std::endl)
     return out;
   }
 
-  friend Vector<T> operator*(const Matrix<T>& m, const Vector<T>& v) {
+  friend Vector<T> operator*(const Matrix<T> &m, const Vector<T> &v) {
     Matrix<T> vAsMatrix = VectorTo1xNMatrix(v);
     vAsMatrix *= m;
     return vAsMatrix.ToVector();
   }
 
-  friend Vector<T> operator*(const Vector<T>& v, const Matrix<T>& m) {
+  friend Vector<T> operator*(const Vector<T> &v, const Matrix<T> &m) {
     Matrix<T> vAsMatrix = VectorToMx1Matrix(v);
     vAsMatrix = m * vAsMatrix;
     return vAsMatrix.ToVector();
@@ -184,7 +184,7 @@ class Matrix {
   Vector<T> ToVector() {
 #ifndef NDEBUG
     if (GetRows() != 1 && GetCols() != 1) {
-      Vector::VecError("Matrix<T> muss 1xn oder mx1 sein!");
+      Vector<T>::VecError("Matrix<T> muss 1xn oder mx1 sein!");
     }
 #endif
     Vector res(std::max(GetRows(), GetCols()));
@@ -207,7 +207,7 @@ class Matrix {
 };
 
 template <typename T>
-Matrix<T> VectorTo1xNMatrix(const Vector<T>& v) {
+Matrix<T> VectorTo1xNMatrix(const Vector<T> &v) {
   Matrix<T> res(1, v.GetLength());
   for (size_t i = 0; i < v.GetLength(); i++) {
     res(0, i) = v(i);
@@ -216,7 +216,7 @@ Matrix<T> VectorTo1xNMatrix(const Vector<T>& v) {
 }
 
 template <typename T>
-Matrix<T> VectorToMx1Matrix(const Vector<T>& v) {
+Matrix<T> VectorToMx1Matrix(const Vector<T> &v) {
   Matrix<T> res(v.GetLength(), 1);
   for (size_t i = 0; i < v.GetLength(); i++) {
     res(i, 0) = v(i);

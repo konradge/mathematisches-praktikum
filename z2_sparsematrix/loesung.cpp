@@ -15,8 +15,16 @@ bool isSymmetric(Sparse_Matrix& A) {
   return true;
 }
 
-double residuum(Sparse_Matrix& A, Vector& x, Vector& b) {
+double residuum(Sparse_Matrix A, Vector& x, Vector& b) {
   return (b - A * x).norm2();
+}
+
+Sparse_Matrix diagonalMatrix(Vector& d) {
+  Sparse_Matrix res(d.getLength(), d.getLength());
+  for (size_t i = 0; i < d.getLength(); i++) {
+    res.put(i, i, d(i));
+  }
+  return res;
 }
 
 int gsv(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
@@ -28,7 +36,10 @@ int gsv(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
         sum += fabs(A.get(i, j));
       }
     }
-    if (fabs(A.get(i, i)) <= sum) return 0;
+    if (fabs(A.get(i, i)) <= sum) {
+      std::cerr << "Matrix ist nicht streng diagonal dominant" << std::endl;
+      return 0;
+    }
   }
   // Diagnonalmatrix erhalten und aus A löschen
   Vector d(A.getCols());
@@ -36,11 +47,13 @@ int gsv(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
     d(i) = A.get(i, i);
     A.put(i, i, 0);
   }
-
-  Vector x(x0);
   Vector residuum_vec;
-  for (int k = 0; (k < k_max) && (residuum(A, x, b) > eps); k++) {
-    x = (b - A * x) / d;
+  int k;
+  for (k = 0; k < k_max; k++) {
+    x0 = (b - A * x0) / d;
+    if (residuum(A + diagonalMatrix(d), x0, b) <= eps) {
+      break;
+    }
   }
 
   // Restore matrix A
@@ -48,7 +61,7 @@ int gsv(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
     A.put(i, i, d(i));
   }
 
-  return 0;
+  return k;
 }
 
 int cg(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
@@ -93,10 +106,19 @@ int main() {
   Vector x0, b;
   double tol;
   int max_iter;
-  getExample(1, A, x0, b, tol, max_iter);
-  int res = gsv(A, b, x0, max_iter, tol);
-  std::cout << "k=" << res << std::endl;
-  checkSolution(x0, res, 0);
+  std::cout << num_examples << " Examples" << std::endl;
+  for (int i = 1; i <= num_examples; i++) {
+    if (i != 3) {
+      getExample(i, A, x0, b, tol, max_iter);
+      std::cout << "=================" << std::endl;
+      std::cout << A << "*";
+      std::cout << x0 << "=";
+      std::cout << b << std::endl;
+      std::cout << "=================" << std::endl;
+      int res = gsv(A, b, x0, max_iter, tol);
+      checkSolution(x0, res, 0);
+    }
+  }
 
   return 0;
 }

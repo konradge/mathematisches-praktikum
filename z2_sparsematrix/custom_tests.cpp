@@ -50,5 +50,34 @@ int main() {
   test.Assert("2-Norm", v.norm2() == 5);
 
   test.Assert("Vector - Vector", (v - v).norm2() == 0);
+
+  Sparse_Matrix n(2, 3);
+  n.put(0, 0, 1);
+  n.put(0, 1, 2);
+  n.put(0, 2, 3);
+  n.put(1, 0, 4);
+  n.put(1, 1, 5);
+  n.put(1, 2, 6);
+
+  Sparse_Matrix exp(3, 2);
+  exp.put(0, 0, 1);
+  exp.put(1, 0, 2);
+  exp.put(2, 0, 3);
+  exp.put(0, 1, 4);
+  exp.put(1, 1, 5);
+  exp.put(2, 1, 6);
+
+  test.Assert("Transpose Matrix", transpose(n) == exp);
+
+  Vector v1(3), v2(3);
+  v1(0) = 2;
+  v1(1) = 4;
+  v1(2) = 1;
+
+  v2(0) = 1;
+  v2(1) = 2;
+  v2(2) = 9;
+
+  test.Assert("Vector * Vector", v1 * v2 == 19);
   return 0;
 }

@@ -18,10 +18,27 @@
 
 // ----- Konstruktor -----
 
-Vector::Vector(size_t l) : vec(l, 0) {
+void Vector::initializeVector(size_t len) {
+  length = len;
+  // vec.resize(length, 0);
+  vec = new (std::nothrow) double[length];
+  if (vec == NULL) vecError("Nicht genuegend Speicher!");
+  for (size_t i = 0; i < len; i++) {
+    vec[i] = 0;
+  }
+}
+
+void Vector::reinitializeVector(size_t length) {
+  delete[] vec;
+  initializeVector(length);
+}
+
+Vector::Vector(size_t l) {
 #ifndef NDEBUG
   if (l <= 0) vecError("Nur Vektoren mit positiver Laenge!");
 #endif
+
+  initializeVector(l);
 
   length = l;
 
@@ -32,11 +49,13 @@ Vector::Vector(size_t l) : vec(l, 0) {
 
 Vector::~Vector() {
   // Free space on heap
+  if (vec != NULL) delete[] vec;
 }
 
 // ----- Kopierkonstruktor -----
 
-Vector::Vector(const Vector &x) : vec(x.getLength(), 0) {
+Vector::Vector(const Vector &x) {
+  initializeVector(x.getLength());
   length = x.getLength();
   for (size_t i = 0; i < getLength(); i++) {
     (*this)(i) = x(i);
@@ -76,7 +95,7 @@ double Vector::operator()(size_t i) const {
 Vector &Vector::operator=(const Vector &x) {
   if (length != x.length) {
     length = x.getLength();
-    vec.resize(length);
+    reinitializeVector(x.length);
   }
 
   for (size_t i = 0; i < length; i++) (*this)(i) = x(i);
@@ -131,10 +150,7 @@ Vector &Vector::operator/=(double c) {
 
 Vector &Vector::redim(size_t l) {
   length = l;
-  vec.resize(l, 0);
-  for (size_t i = 0; i < l; i++) {
-    vec[i] = 0;
-  }
+  reinitializeVector(l);
   return *this;
 }
 

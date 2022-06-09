@@ -23,24 +23,24 @@
       "miDebuggerPath": "/usr/bin/gdb"
     },
     {
-            "name": "(gdb) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            // Resolved by CMake Tools:
-            "program": "${workspaceRoot}/z2_sparsematrix/loesung",
-            "args": [],
-            "stopAtEntry": true,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "console": "externalTerminal",
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
+      "name": "(gdb) Launch",
+      "type": "cppdbg",
+      "request": "launch",
+      // Resolved by CMake Tools:
+      "program": "${workspaceRoot}/z2_sparsematrix/test",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "console": "externalTerminal",
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
         }
+      ]
+    }
   ]
 }

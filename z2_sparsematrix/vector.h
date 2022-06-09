@@ -13,9 +13,11 @@ class Sparse_Matrix;  // fuer friend Matrix * Vector etc.
 
 class Vector {
  private:
-  std::vector<double> vec;  // Zeiger auf Feld fuer Vektorelemente
-  size_t length;            // Vektorlaenge
+  double* vec;    // Zeiger auf Feld fuer Vektorelemente
+  size_t length;  // Vektorlaenge
 
+  void initializeVector(size_t length);
+  void reinitializeVector(size_t length);
   static void vecError(const char str[]);  // Fehlermeldung ausgeben
 
  public:

@@ -51,7 +51,9 @@ int gsv(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
   int k;
   for (k = 0; k < k_max; k++) {
     x0 = (b - A * x0) / d;
-    if (residuum(A + diagonalMatrix(d), x0, b) <= eps) {
+    double resid = residuum(A + diagonalMatrix(d), x0, b);
+    if (resid <= eps) {
+      eps = resid;
       break;
     }
   }
@@ -78,15 +80,22 @@ int cg(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
   double norm_r_squared = pow(r.norm2(), 2);
   int k;
   for (k = 0; k < k_max; k++) {
+    std::cout << x0 << std::endl;
+    // Line 4
     Vector Ad(A * d);
     double energy_scalar_product = Ad * Ad;
     alpha = norm_r_squared / energy_scalar_product;
+    // Line 5
     x0 += alpha * d;
+    // Line 6
     r -= alpha * Ad;
+    // Line 7
     double norm_r_squared_next = pow(r.norm2(), 2);
     beta = norm_r_squared_next / norm_r_squared;
+    // Line 8
     d *= beta;
     d += r;
+    // Update ||r||_2^2 for next iteration
     norm_r_squared = norm_r_squared_next;
 
     if (residuum(A, x0, b) < eps) {
@@ -98,7 +107,7 @@ int cg(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
   std::cout << "Max iterations reached!" << std::endl;
   // k_max Iterations have been reached
   eps = residuum(A, x0, b);
-  return 0;
+  return k;
 }
 
 int main() {
@@ -108,14 +117,14 @@ int main() {
   int max_iter;
   std::cout << num_examples << " Examples" << std::endl;
   for (int i = 1; i <= num_examples; i++) {
-    if (i != 3) {
+    if (i == 1) {
       getExample(i, A, x0, b, tol, max_iter);
       std::cout << "=================" << std::endl;
       std::cout << A << "*";
       std::cout << x0 << "=";
       std::cout << b << std::endl;
       std::cout << "=================" << std::endl;
-      int res = gsv(A, b, x0, max_iter, tol);
+      int res = cg(A, b, x0, max_iter, tol);
       checkSolution(x0, res, 0);
     }
   }

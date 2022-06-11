@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O0 -fno-inline -fPIC -fPIE -g -fno-stack-protector
+CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -O0 -fno-inline -fPIC -fPIE -g
 
 .PHONY: clean
 

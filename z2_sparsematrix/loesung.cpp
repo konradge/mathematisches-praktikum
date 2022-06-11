@@ -50,7 +50,7 @@ int gsv(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
   Vector residuum_vec;
   int k;
   for (k = 0; k < k_max; k++) {
-    x0 = (b - A * x0) / d;
+    x0 = (b - (A * x0)) / d;
     double resid = residuum(A + diagonalMatrix(d), x0, b);
     if (resid <= eps) {
       eps = resid;
@@ -83,8 +83,8 @@ int cg(Sparse_Matrix& A, Vector& b, Vector& x0, const int k_max, double eps) {
     std::cout << x0 << std::endl;
     // Line 4
     Vector Ad(A * d);
-    double energy_scalar_product = Ad * Ad;
-    alpha = norm_r_squared / energy_scalar_product;
+    double scalar_product = Ad * d;
+    alpha = norm_r_squared / scalar_product;
     // Line 5
     x0 += alpha * d;
     // Line 6
@@ -117,7 +117,7 @@ int main() {
   int max_iter;
   std::cout << num_examples << " Examples" << std::endl;
   for (int i = 1; i <= num_examples; i++) {
-    if (i == 1) {
+    if (i == 3) {
       getExample(i, A, x0, b, tol, max_iter);
       std::cout << "=================" << std::endl;
       std::cout << A << "*";
@@ -125,7 +125,7 @@ int main() {
       std::cout << b << std::endl;
       std::cout << "=================" << std::endl;
       int res = cg(A, b, x0, max_iter, tol);
-      checkSolution(x0, res, 0);
+      checkSolution(x0, res, 1);
     }
   }
 

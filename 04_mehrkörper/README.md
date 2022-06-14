@@ -1,20 +1,23 @@
-
 # Build and run the project with cmake
 
-  
+## Initialize build folder
 
-## Build it
+    cmake -S . -B build
 
-	cmake -S . -B build
+## Compile/Build
 
-	cmake --build build
+    cmake --build build
 
-  
+## Compile/Build for debugging
+
+    cd build
+    cmake .. -DCMAKE_BUILD_TYPE=Debug
+    make
 
 ## Run solution
 
-	cd build/bin"
-	./loesung
+    cd build/bin"
+    ./loesung
 
 ## Run tests
 

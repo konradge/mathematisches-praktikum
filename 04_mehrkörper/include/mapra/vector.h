@@ -15,7 +15,7 @@ namespace mapra {
 template <typename T = double>
 class Vector {
  public:
-  explicit Vector(std::size_t len = 1) : elems_(len, 0){};
+  explicit Vector(std::size_t len = 1) : elems_(len){};
 
   T& operator()(std::size_t i) {
 #ifndef NDEBUG
@@ -82,7 +82,7 @@ class Vector {
   }
 
   Vector<T>& Redim(std::size_t l) {
-    elems_ = std::vector<double>(l, 0);
+    elems_ = std::vector<T>(l);
     return (*this);
   }
 

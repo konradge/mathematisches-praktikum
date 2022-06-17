@@ -48,8 +48,37 @@ int main() {
 }
 
 VFFunction getFunction(const RealVector& m) {
-  return [m](real y_1, const RealVector& y_0) {
-    RealVector res(y_0);
+  // y_0 that we get from the example corresponds with the entire y vector
+  // from the example. t remains unused in "Mehrkörperproblem"
+  return [m](real t, const RealVector& y) {
+    size_t half_length = y.GetLength() / 2;
+    RealVector res(y.GetLength());
+    // copies y1 from the bottom of y to the top of the res vector
+    for (size_t i = 0; i < half_length; i++) {
+      res(i) = y(i + half_length + 1);
+    }
+    // computes f(y0) to put on the bottom of res
+    // first we group the values into vectors of two so we can apply formula
+    
+    // HIERDRUNTER IST SCHIEFGELAUFEN ICH WEIẞ ABER WIE ES AUSSEHEN SOLLTE
+    // for (size_t i = 0; i < half_length; i = i + 2) {
+    //   RealVector xi(2);
+    //   xi(1) = y(i);
+    //   xi(2) = y(i + 1);
+    //   RealVector newx(2);
+    //   for (size_t j = 0; j < half_length / 2; j = j + 2) {
+    //     if (j != i) {
+    //       RealVector xj(2);
+    //       xj(1) = y(j);
+    //       xj(2) = y(j + 1);
+    //       // WIRD DAS HINTEREINANDER BERECHNET?
+    //       newx += (m(j / 2)) / pow((xj-xi).Norm2(), 3) * (xj - xi); 
+    //     }
+    //   }
+    //   newx *= (6.67 * pow(10, -11)); // multiply by constant G
+    //   res(i + half_length + 1) = newx(1);
+    //   res(i + half_length + 2) = newx(2);
+    // }
     return res;
   };
 }

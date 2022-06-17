@@ -174,6 +174,21 @@ class Vector {
     return multiplied;
   }
 
+  friend Vector<T> stack(const Vector<T>& x, const Vector<T>& y) {
+    size_t x_length = x.GetLength();
+    size_t y_length = y.GetLength();
+    Vector res(x_length + y_length);
+
+    for (size_t i = 0; i < x_length; i++) {
+      res(i) = x(i);
+    }
+    for (size_t i = 0; i < y_length; i++) {
+      res(i + x_length + 1) = y(i);
+    }
+
+    return res;
+  }
+
   friend bool operator==(const Vector<T>& x, const Vector<T>& y) {
     if (x.elems_.size() != y.elems_.size()) {
       return false;

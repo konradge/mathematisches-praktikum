@@ -15,6 +15,15 @@
     cmake .. -DCMAKE_BUILD_TYPE=Debug
     make
 
+## Compile/Build without debugging (with delete beforehand)
+
+    cd ..
+    rm -rf build
+    mkdir build
+    cd build
+    cmake .. 
+    make
+
 ## Run solution
 
     cd build/bin"

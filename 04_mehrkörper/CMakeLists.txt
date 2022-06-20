@@ -13,6 +13,7 @@ if(NOT CMAKE_BUILD_TYPE)
         "Configuration type (one of Debug, Release, RelWithDebInfo, MinSizeRel)"
   )
 endif()
+set(CMAKE_CXX_FLAGS "-O3")
 message(STATUS "The build type is ${CMAKE_BUILD_TYPE}")
 #
 # ##############################################################################

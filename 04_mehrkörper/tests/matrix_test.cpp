@@ -67,35 +67,3 @@ TEST_F(MatrixTest, CopyConstructor) {
     }
   }
 }
-
-// void vectorTests() {
-//   mapra::MapraTest test("Vektoren");
-
-//   mapra::Vector m(2);
-//   bool zeroTester = false;
-//   for (size_t j = 0; j < m.GetLength(); j++) {
-//     zeroTester = zeroTester || (m(j) != 0);
-//   }
-//   test.Assert("Neuer Vektor ist implizit der Nullvektor", !zeroTester);
-
-//   for (size_t j = 0; j < m.GetLength(); j++) {
-//     m(j) = fRand(-69, 69);
-//   }
-//   m.Redim(4);
-//   zeroTester = false;
-//   for (size_t j = 0; j < m.GetLength(); j++) {
-//     zeroTester = zeroTester || (m(j) != 0);
-//   }
-//   test.Assert("Redimensionierter Vektor ist implizit die Nullvektor",
-//               !zeroTester);
-
-//   mapra::Vector n(5);
-//   for (size_t j = 0; j < m.GetLength(); j++) {
-//     m(j) = fRand(-69, 69);
-//   }
-//   n = m;
-//   test.Assert("Zuweisung von Vektor zu Vektor", n == m);
-
-//   mapra::Vector l(m);
-//   test.Assert("copy-Konstruktor kopiert Vektor", l == m);
-// }

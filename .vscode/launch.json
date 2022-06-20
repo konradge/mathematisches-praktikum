@@ -2,27 +2,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "g++ build and debug active file on WSL",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "${workspaceRoot}/out/${fileBasenameNoExtension}",
-      "args": [],
-      "stopAtEntry": true,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ],
-      "preLaunchTask": "Compile for WSL",
-      "miDebuggerPath": "/usr/bin/gdb"
-    },
-    {
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",

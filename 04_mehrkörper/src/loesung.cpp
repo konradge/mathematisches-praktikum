@@ -6,6 +6,7 @@
 #include "mapra/unit.h"
 #include "mapra/vector.h"
 
+
 #define DRAW false
 
 void RkStep(const VFFunction& f, real& t, RealVector& y, real& h,
@@ -19,7 +20,7 @@ int main() {
   std::cin >> example_id;
 
   auto [mass, fun, y_0, t_begin, t_end, h_0] =
-      mapra::GetExample(example_id, DRAW, DRAW);
+      mapra::GetExample(example_id, DRAW, DRAW);  
 
   std::cout << "h0:" << h_0 << std::endl;
   std::cout << "t_begin:" << t_begin << std::endl;
@@ -32,6 +33,7 @@ int main() {
   }
 
   mapra::CheckStep(t_begin, y_0, DRAW);
+
   while (t_begin < t_end) {
     // std::cout << "\033[1;31m New Step \033[0m\n" << std::endl;
     RkStep(fun, t_begin, y_0, h_0, t_end);
@@ -50,35 +52,34 @@ int main() {
 VFFunction getFunction(const RealVector& m) {
   // y_0 that we get from the example corresponds with the entire y vector
   // from the example. t remains unused in "Mehrkörperproblem"
-  return [m](real t, const RealVector& y) {
+  return [m](real, const RealVector& y) {
     size_t half_length = y.GetLength() / 2;
     RealVector res(y.GetLength());
     // copies y1 from the bottom of y to the top of the res vector
     for (size_t i = 0; i < half_length; i++) {
-      res(i) = y(i + half_length + 1);
+      res(i) = y(i + half_length);
     }
     // computes f(y0) to put on the bottom of res
     // first we group the values into vectors of two so we can apply formula
     
-    // HIERDRUNTER IST SCHIEFGELAUFEN ICH WEIẞ ABER WIE ES AUSSEHEN SOLLTE
-    // for (size_t i = 0; i < half_length; i = i + 2) {
-    //   RealVector xi(2);
-    //   xi(1) = y(i);
-    //   xi(2) = y(i + 1);
-    //   RealVector newx(2);
-    //   for (size_t j = 0; j < half_length / 2; j = j + 2) {
-    //     if (j != i) {
-    //       RealVector xj(2);
-    //       xj(1) = y(j);
-    //       xj(2) = y(j + 1);
-    //       // WIRD DAS HINTEREINANDER BERECHNET?
-    //       newx += (m(j / 2)) / pow((xj-xi).Norm2(), 3) * (xj - xi); 
-    //     }
-    //   }
-    //   newx *= (6.67 * pow(10, -11)); // multiply by constant G
-    //   res(i + half_length + 1) = newx(1);
-    //   res(i + half_length + 2) = newx(2);
-    // }
+    for (size_t i = 0; i < half_length; i = i + 2) {
+      RealVector xi(2);
+      xi(0) = y(i);
+      xi(1) = y(i + 1);
+      RealVector newx(2);
+      for (size_t j = 0; j < half_length; j = j + 2) {
+        if (j != i) {
+          RealVector xj(2);
+          xj(0) = y(j);
+          xj(1) = y(j + 1);
+          real norm = (xj - xi).Norm2();
+          newx += (m(j / 2) / pow(norm, 3)) * (xj - xi); 
+        }
+      }
+      newx = mapra::kGrav * newx;
+      res(i + half_length) = newx(0);
+      res(i + half_length + 1) = newx(1);
+    }
     return res;
   };
 }
@@ -139,7 +140,7 @@ void RkStep(const VFFunction& f, real& t, RealVector& y, real& h,
     h *= c;
   }
 
-  std::cout << "Fehler: " << eps << std::endl;
+  std::cout << "FehlerXXX: " << eps << std::endl;
 
   // Recalculate Step with updated h, if error was too big
   if (eps > eps_max) {

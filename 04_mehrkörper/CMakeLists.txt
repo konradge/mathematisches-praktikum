@@ -39,7 +39,8 @@ include(${mapra_SOURCE_DIR}/cmake/functions.cmake)
 # ##############################################################################
 
 enable_testing()
-mapra_add_test(example_test)
+mapra_add_test(matrix_test)
+mapra_add_test(vector_test)
 # Add new tests via mapra_add_test(filename)
 
 # ##############################################################################

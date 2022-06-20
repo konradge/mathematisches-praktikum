@@ -101,7 +101,15 @@ class Matrix {
   Matrix<T> &Redim(std::size_t r, std::size_t c) {
     rows_ = r;
     cols_ = c;
-    elems_ = std::vector<double>(r * c, 0);
+    elems_.resize(r * c);
+    return *this;
+  }
+
+  Matrix<T> &Redim(std::size_t r, std::size_t c, T defaultValue) {
+    Redim(r, c);
+    for (size_t i = 0; i < elems_.size(); i++) {
+      elems_[i] = defaultValue;
+    }
     return *this;
   }
 

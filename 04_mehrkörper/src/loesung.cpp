@@ -22,13 +22,8 @@ int main() {
   auto [mass, fun, y_0, t_begin, t_end, h_0] =
       mapra::GetExample(example_id, DRAW, DRAW);  
 
-  std::cout << "h0:" << h_0 << std::endl;
-  std::cout << "t_begin:" << t_begin << std::endl;
-
   if (mass.Norm2() != 0) {
     // Mass is not the 0-Vector => fun must be calculated
-    std::cout << "Function is being calculated" << std::endl;
-
     fun = getFunction(mass);
   }
 
@@ -41,7 +36,6 @@ int main() {
     mapra::CheckStep(t_begin, y_0, false);
     // std::cout << "Check completed" << std::endl;
   }
-
   // Hier ist t_begin genau t_end
 
   mapra::CheckSolution(t_begin, y_0);
@@ -89,8 +83,10 @@ VFFunction getFunction(const RealVector& m) {
 void RkStep(const VFFunction& f, real& t, RealVector& y, real& h,
             const real& t_end) {
   // std::cout << "Execute step" << std::endl;
+  bool last_step = false;
   if (t + h > t_end) {
     h = t_end - t;
+    last_step = true;
   }
   /** Calculate K_j's **/
   const size_t n = y.GetLength();
@@ -121,32 +117,32 @@ void RkStep(const VFFunction& f, real& t, RealVector& y, real& h,
 
   /* Update h */
   // e(t+h)
-  RealVector delta_sum(n);
-  for (size_t l = 1; l <= m; l++) {
-    delta_sum += mapra::rk_delta(l - 1) * K[l - 1];
-  }
-  const RealVector e_th = h * delta_sum;
-  const real eps = e_th.NormMax();
-  const real eps_max = mapra::eps;
+  if(!last_step) {
+    RealVector delta_sum(n);
+    for (size_t l = 1; l <= m; l++) {
+      delta_sum += mapra::rk_delta(l - 1) * K[l - 1];
+    }
+    const RealVector e_th = h * delta_sum;
+    const real eps = e_th.NormMax();
+    const real eps_max = mapra::eps;
 
-  const real c = 0.9 * pow(eps_max / eps, (real)1 / (mapra::rk_p + 1));
+    const real c = 0.9 * pow(eps_max / eps, (real)1 / (mapra::rk_p + 1));
 
-  std::cout << "c= " << c << std::endl;
-  if (c < 0.1) {
-    h *= 0.1;
-  } else if (c > 5) {
-    h *= 5;
-  } else {
-    h *= c;
-  }
+    if (c < 0.1) {
+      h *= 0.1;
+    } else if (c > 5) {
+      h *= 5;
+    } else {
+      h *= c;
+    }
 
-  std::cout << "FehlerXXX: " << eps << std::endl;
-
-  // Recalculate Step with updated h, if error was too big
-  if (eps > eps_max) {
-    std::cout << "Recalculate step with h=" << h << std::endl;
-    t = old_t;
-    RkStep(f, t, y, h, t_end);
+    // Recalculate Step with updated h, if error was too big
+    if (eps > eps_max) {
+      t = old_t;
+      RkStep(f, t, y, h, t_end);
+    } else {
+      y = y_new;
+    }
   } else {
     y = y_new;
   }

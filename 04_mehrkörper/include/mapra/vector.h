@@ -12,7 +12,7 @@
 
 namespace mapra {
 
-template <typename T = double>
+template <typename T>
 class Vector {
  public:
   explicit Vector(std::size_t len = 1) : elems_(len){};
@@ -89,7 +89,7 @@ class Vector {
   std::size_t GetLength() const { return elems_.size(); }
 
   T Norm2() const {
-    double squaresum = 0;
+    T squaresum = 0;
 
     for (size_t i = 0; i < (*this).GetLength(); i++) {
       squaresum += pow((*this)(i), 2);
@@ -99,7 +99,7 @@ class Vector {
   }
 
   T NormMax() const {
-    double max = fabs((*this)(0));
+    T max = fabs((*this)(0));
 
     for (size_t i = 1; i < (*this).GetLength(); i++) {
       if (fabs((*this)(i)) > max) max = fabs((*this)(i));

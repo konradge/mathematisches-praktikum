@@ -116,18 +116,18 @@ int main() {
   double tol;
   int max_iter;
   std::cout << num_examples << " Examples" << std::endl;
+
   for (int i = 1; i <= num_examples; i++) {
-    if (i == 3) {
       getExample(i, A, x0, b, tol, max_iter);
-      std::cout << "=================" << std::endl;
-      std::cout << A << "*";
-      std::cout << x0 << "=";
-      std::cout << b << std::endl;
-      std::cout << "=================" << std::endl;
-      int res = cg(A, b, x0, max_iter, tol);
-      checkSolution(x0, res, 1);
-    }
+      int res = gsv(A, b, x0, max_iter, tol);
+      checkSolution(x0, res, 0);
   }
 
+  for (int i = 1; i <= num_examples; i++) {
+      getExample(i, A, x0, b, tol, max_iter);
+      int res = cg(A, b, x0, max_iter, tol);
+      checkSolution(x0, res, 1);
+  }
+  
   return 0;
 }

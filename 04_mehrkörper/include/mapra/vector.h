@@ -12,10 +12,10 @@
 
 namespace mapra {
 
-template <typename T = double>
+template <typename T>
 class Vector {
  public:
-  explicit Vector(std::size_t len = 1) : elems_(len, 0){};
+  explicit Vector(std::size_t len = 1) : elems_(len){};
 
   T& operator()(std::size_t i) {
 #ifndef NDEBUG
@@ -82,14 +82,14 @@ class Vector {
   }
 
   Vector<T>& Redim(std::size_t l) {
-    elems_ = std::vector<double>(l, 0);
+    elems_ = std::vector<T>(l);
     return (*this);
   }
 
   std::size_t GetLength() const { return elems_.size(); }
 
   T Norm2() const {
-    double squaresum = 0;
+    T squaresum = 0;
 
     for (size_t i = 0; i < (*this).GetLength(); i++) {
       squaresum += pow((*this)(i), 2);
@@ -99,7 +99,7 @@ class Vector {
   }
 
   T NormMax() const {
-    double max = fabs((*this)(0));
+    T max = fabs((*this)(0));
 
     for (size_t i = 1; i < (*this).GetLength(); i++) {
       if (fabs((*this)(i)) > max) max = fabs((*this)(i));
@@ -172,6 +172,21 @@ class Vector {
 
     multiplied /= c;
     return multiplied;
+  }
+
+  friend Vector<T> stack(const Vector<T>& x, const Vector<T>& y) {
+    size_t x_length = x.GetLength();
+    size_t y_length = y.GetLength();
+    Vector res(x_length + y_length);
+
+    for (size_t i = 0; i < x_length; i++) {
+      res(i) = x(i);
+    }
+    for (size_t i = 0; i < y_length; i++) {
+      res(i + x_length + 1) = y(i);
+    }
+
+    return res;
   }
 
   friend bool operator==(const Vector<T>& x, const Vector<T>& y) {

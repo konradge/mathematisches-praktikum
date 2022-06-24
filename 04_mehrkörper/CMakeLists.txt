@@ -13,6 +13,7 @@ if(NOT CMAKE_BUILD_TYPE)
         "Configuration type (one of Debug, Release, RelWithDebInfo, MinSizeRel)"
   )
 endif()
+set(CMAKE_CXX_FLAGS "-O3")
 message(STATUS "The build type is ${CMAKE_BUILD_TYPE}")
 #
 # ##############################################################################
@@ -39,7 +40,8 @@ include(${mapra_SOURCE_DIR}/cmake/functions.cmake)
 # ##############################################################################
 
 enable_testing()
-mapra_add_test(example_test)
+mapra_add_test(matrix_test)
+mapra_add_test(vector_test)
 # Add new tests via mapra_add_test(filename)
 
 # ##############################################################################

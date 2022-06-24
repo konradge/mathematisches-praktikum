@@ -35,18 +35,17 @@ function(mapra_add_library NAME)
 endfunction()
 
 function(mapra_add_executable NAME)
-  add_executable(${NAME} ${ARGN})
+  add_executable(
+    ${NAME}
+    ${ARGN}
+    $<$<CXX_COMPILER_ID:AppleClang>:${mapra_SOURCE_DIR}/lib/IGLMac.o>
+    $<$<CXX_COMPILER_ID:AppleClang>:${mapra_SOURCE_DIR}/lib/unitMac.o>
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:${mapra_SOURCE_DIR}/lib/IGL.o>
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:${mapra_SOURCE_DIR}/lib/unit.o>
+  )
   mapra_set_standard_target_options(${NAME})
   target_include_directories(${NAME} PUBLIC "/opt/X11/include")
-  target_link_libraries(
-    ${NAME}
-    PRIVATE
-      GL
-      X11
-      Threads::Threads
-      $<$<CXX_COMPILER_ID:AppleClang>:${mapra_SOURCE_DIR}/lib/libMapraUnitMac.a>
-      $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:${mapra_SOURCE_DIR}/lib/libMapraUnit.a>
-  )
+  target_link_libraries(${NAME} PRIVATE GL X11 Threads::Threads)
   set_target_properties(${NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
                                            "${CMAKE_BINARY_DIR}/bin")
   target_link_directories(${NAME} PRIVATE "/opt/X11/lib")

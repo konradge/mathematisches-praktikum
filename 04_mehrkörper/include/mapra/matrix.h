@@ -27,7 +27,7 @@
 
 namespace mapra {
 
-template <typename T = double>
+template <typename T>
 class Matrix {
  public:
   explicit Matrix(std::size_t r = 1, std::size_t c = 1) {
@@ -101,7 +101,15 @@ class Matrix {
   Matrix<T> &Redim(std::size_t r, std::size_t c) {
     rows_ = r;
     cols_ = c;
-    elems_ = std::vector<double>(r * c, 0);
+    elems_.resize(r * c);
+    return *this;
+  }
+
+  Matrix<T> &Redim(std::size_t r, std::size_t c, T defaultValue) {
+    Redim(r, c);
+    for (size_t i = 0; i < elems_.size(); i++) {
+      elems_[i] = defaultValue;
+    }
     return *this;
   }
 
@@ -139,7 +147,7 @@ class Matrix {
   }
   friend Matrix<T> operator*(const Matrix<T> &m, T c) { return c * m; }
   friend Matrix<T> operator/(const Matrix<T> &m, T c) {
-    return ((double)1 / c) * m;
+    return ((T)1 / c) * m;
   }
 
   friend bool operator==(const Matrix<T> &m1, const Matrix<T> &m2) {

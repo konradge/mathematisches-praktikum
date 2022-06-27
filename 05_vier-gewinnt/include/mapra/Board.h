@@ -31,11 +31,13 @@ class Board {
 
   size_t get_row_depth() const { return row_depth; }
 
+  void set(size_t col, size_t row, State state);
+
  private:
   size_t col_count, row_depth;
 
   // Each entry of the outter vector is one column of the board.
   // Each entry in the inner vector is one position in this column, where row=0
   // is the bottommost position.
-  std::vector<std::vector<State>> board;
+  std::vector<State> board;
 };

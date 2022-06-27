@@ -4,11 +4,10 @@
 #include <stdexcept>
 
 Board::Board(size_t n, size_t m) : col_count(n), row_depth(m) {
-  board.resize(col_count);
+  board.resize(col_count * row_depth);
   for (size_t i = 0; i < col_count; i++) {
-    board[i].resize(row_depth, EMPTY_STATE);
     for (size_t j = 0; j < row_depth; j++) {
-      board[i][j] = EMPTY_STATE;
+      (*this)(i, j) = EMPTY_STATE;
     }
   }
 }
@@ -17,11 +16,10 @@ Board::Board(Board& b) {
   col_count = b.col_count;
   row_depth = b.row_depth;
 
-  board.resize(col_count);
+  board.resize(col_count * row_depth);
   for (size_t i = 0; i < col_count; i++) {
-    board[i].resize(row_depth, EMPTY_STATE);
     for (size_t j = 0; j < row_depth; j++) {
-      board[i][j] = b.board[i][j];
+      (*this)(i, j) = b(i, j);
     }
   }
 }
@@ -32,7 +30,7 @@ void Board::print() const {
             << std::endl;
   for (size_t i = row_depth; i > 0; i--) {
     for (size_t j = 0; j < col_count; j++) {
-      std::cout << board[j][i - 1] << " ";
+      std::cout << (*this)(j, i - 1) << " ";
     }
     std::cout << std::endl;
   }
@@ -42,7 +40,7 @@ void Board::print() const {
 void Board::clear() {
   for (size_t i = 0; i < col_count; i++) {
     for (size_t j = 0; j < row_depth; j++) {
-      board[i][j] = EMPTY_STATE;
+      (*this)(i, j) = EMPTY_STATE;
     }
   }
 }
@@ -55,7 +53,7 @@ State Board::operator()(size_t col, size_t row) const {
     // throw std::out_of_range("row or col out of range");
     return EMPTY_STATE;
   }
-  return board[col][row];
+  return board[col * row_depth + row];
 }
 
 // Access the state of the board at the given position, where row=0 means the
@@ -66,7 +64,7 @@ State& Board::operator()(size_t col, size_t row) {
     throw std::out_of_range("row " + std::to_string(row) + " or col " +
                             std::to_string(col) + " out of range");
   }
-  return board[col][row];
+  return board[col * row_depth + row];
 }
 
 // Inserts the player's piece in the given column.

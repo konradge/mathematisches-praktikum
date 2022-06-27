@@ -77,7 +77,7 @@ TEST(BoardTest, VerticalOverflow) {
   EXPECT_TRUE(b.insert(0, RED));
   EXPECT_TRUE(b.insert(0, RED));
   EXPECT_TRUE(b.insert(0, RED));
-  EXPECT_TRUE(b.insert(0, RED));
+  EXPECT_FALSE(b.insert(0, RED));
   EXPECT_FALSE(b.hasWon(RED));
   EXPECT_EQ(b.getWinningState(), UNFINISHED);
   EXPECT_FALSE(b.boardFilled());

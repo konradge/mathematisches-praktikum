@@ -3,7 +3,7 @@
 
 enum Player { YELLOW = 1, RED = 2 };
 
-enum State { EMPTY_STATE, YELLOW_STATE, RED_STATE };
+enum State { EMPTY_STATE = 0, YELLOW_STATE = 1, RED_STATE = 2 };
 enum WinningState { UNFINISHED, YELLOW_WON, RED_WON, DRAW };
 
 class Board {
@@ -22,8 +22,10 @@ class Board {
 
   void clear();
 
-  State operator()(size_t row, size_t col) const;
-  State& operator()(size_t row, size_t col);
+  void print() const;
+
+  State operator()(size_t col, size_t row) const;
+  State& operator()(size_t col, size_t row);
 
   size_t get_col_count() const { return col_count; }
 

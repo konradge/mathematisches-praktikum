@@ -7,8 +7,10 @@
 #include "mapra/Board.h"
 #include "mapra/unit.h"
 
-#define Z_2 0.1
-#define Z_3 0.2
+double Z_2;
+double Z_3;
+
+#define DIFFICULTY 1
 
 std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
                                           int depth);
@@ -16,20 +18,36 @@ std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
 Player getOtherPlayer(Player p) { return (p == YELLOW) ? RED : YELLOW; }
 
 int main() {
-  Board b(mapra::kNumCols, mapra::kNumCols);
-  mapra::StartGame(0);
+  std::cin >> Z_2;
+  std::cin >> Z_3;
+
+  std::cout << "Running with Z_2 = " << Z_2 << " and Z_3 = " << Z_3
+            << std::endl;
+  Board b(mapra::kNumCols, mapra::kNumRows);
+  mapra::StartGame(DIFFICULTY);
+  size_t round = 0;
+  int column;
 
   while (true) {
     auto [value, turn] = miniMaxAlgorithmus(b, YELLOW, YELLOW, 4);
-    std::cout << "Yellow placed in column " << turn << std::endl;
     b.insert(turn, YELLOW);
-    std::cout << "Yellow has won? " << b.hasWon(YELLOW) << std::endl;
-    int column = mapra::NextTurn(turn);
-    b.insert(column, RED);
-    std::cout << "Red placed in column " << column << std::endl;
-    std::cout << "Red has won? " << b.hasWon(RED) << std::endl;
+
+    column = mapra::NextTurn(turn);
+    if (column >= 0) {
+      b.insert(column, RED);
+    } else {
+      b.clear();
+      round++;
+      if (round < 5 && round % 2 != 0) {
+        column = mapra::NextTurn(-1);
+        b.insert(column, RED);
+      } else if (round >= 5) {
+        return 1;
+      }
+    }
   }
-  return 1;
+
+  return 0;
 }
 
 int randomInt(int min, int max) {
@@ -43,27 +61,36 @@ typedef std::vector<State> section_t;
 std::vector<section_t> getSections(Board& b) {
   // Get all sections of four on the board
   std::vector<section_t> sections;
-  // Rows
+  // Columns
   for (size_t i = 0; i < b.get_col_count(); i++) {
     for (size_t j = 0; j < b.get_row_depth() - 3; j++) {
       sections.push_back(
-          section_t{b(i, j), b(i + 1, j), b(i + 2, j), b(i + 3, j)});
+          section_t{b(i, j), b(i, j + 1), b(i, j + 2), b(i, j + 3)});
     }
   }
-  // Columns
+  // Rows
   for (size_t i = 0; i < b.get_row_depth(); i++) {
     for (size_t j = 0; j < b.get_col_count() - 3; j++) {
       sections.push_back(
           section_t{b(j, i), b(j + 1, i), b(j + 2, i), b(j + 3, i)});
     }
   }
-  // Diagonals
+  // Diagonals left-bottom to right-top
   for (size_t i = 0; i < b.get_row_depth() - 3; i++) {
     for (size_t j = 0; j < b.get_col_count() - 3; j++) {
       sections.push_back(section_t{b(j, i), b(j + 1, i + 1), b(j + 2, i + 2),
                                    b(j + 3, i + 3)});
     }
   }
+
+  // Diagonals left-top to right-bottom
+  for (size_t i = 3; i < b.get_row_depth(); i++) {
+    for (size_t j = 0; j < b.get_col_count() - 3; j++) {
+      sections.push_back(section_t{b(j, i), b(j + 1, i - 1), b(j + 2, i - 2),
+                                   b(j + 3, i - 3)});
+    }
+  }
+
   return sections;
 }
 
@@ -88,7 +115,7 @@ double heuristic(Board& b) {
   for (auto section : getSections(b)) {
     if (vector_contains(section, YELLOW_STATE) &&
         vector_contains(section, RED_STATE)) {
-      value += 0;
+      // NOOP
     } else if (vector_count(section, YELLOW_STATE) == 2) {
       value += Z_2;
     } else if (vector_count(section, YELLOW_STATE) == 3) {
@@ -121,11 +148,11 @@ std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
   }
 
   std::vector<std::pair<double, size_t>> possible_turns;
-  for (size_t col = 0U; col < mapra::kNumCols; col++) {
+  for (size_t col = 0; col < mapra::kNumCols; col++) {
     if (b.canInsert(col)) {
       // Execute step on (copied) board to test its value
       Board boardCopy(b);
-      b.insert(col, turn);
+      boardCopy.insert(col, turn);
       auto [currentValue, _] = miniMaxAlgorithmus(
           boardCopy, caller, getOtherPlayer(turn), depth - 1);
       // And add it to the list of possible turns
@@ -151,12 +178,11 @@ std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
   // Find all turns with best/worst value
   std::vector<std::pair<double, size_t>> extreme_turns;
 
+  // Filter all turns with a value of extreme_value
   std::copy_if(possible_turns.begin(), possible_turns.end(),
                std::back_inserter(extreme_turns), [extreme_value](auto turn) {
                  return turn.first == extreme_value;
                });
-
-  assert(extreme_turns.size() > 0);
 
   // Select on of those turns randomly
   return extreme_turns[randomInt(0, extreme_turns.size() - 1)];

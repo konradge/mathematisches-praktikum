@@ -6,7 +6,7 @@
       "type": "cppdbg",
       "request": "launch",
       // Resolved by CMake Tools:
-      "program": "${workspaceRoot}/04_mehrkörper/build/bin/loesung",
+      "program": "${workspaceRoot}/05_vier-gewinnt/build/bin/main",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

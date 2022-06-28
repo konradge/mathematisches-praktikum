@@ -10,7 +10,7 @@
 #include "util.h"
 
 double Z_2 = 0.005, Z_3 = 0.01;
-size_t difficulty = 1, depth = 4;
+size_t difficulty = 4, depth = 4;
 
 std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
                                           int depth);
@@ -22,13 +22,13 @@ int main(int argc, char* argv[]) {
     std::istringstream(argv[4]) >> depth;
   }
   if (argc >= 4) {
-    std::istringstream(argv[3]) >> difficulty;
+    std::istringstream(argv[3]) >> Z_3;
   }
   if (argc >= 3) {
-    std::istringstream(argv[2]) >> Z_3;
+    std::istringstream(argv[2]) >> Z_2;
   }
   if (argc >= 2) {
-    std::istringstream(argv[1]) >> Z_2;
+    std::istringstream(argv[1]) >> difficulty;
   }
 
   std::cout << "Running with Z_2 = " << Z_2 << " and Z_3 = " << Z_3
@@ -102,8 +102,12 @@ std::vector<section_t> getSections(Board& b) {
 double heuristic(Board& b) {
   double value;
   for (auto section : getSections(b)) {
-    if (vector_contains(section, YELLOW_STATE) &&
-        vector_contains(section, RED_STATE)) {
+    if (vector_count(section, YELLOW_STATE) == 4) {
+      return 1;
+    } else if (vector_count(section, RED_STATE) == 4) {
+      return -1;
+    } else if (vector_contains(section, YELLOW_STATE) &&
+               vector_contains(section, RED_STATE)) {
       // NOOP
     } else if (vector_count(section, YELLOW_STATE) == 2) {
       value += Z_2;
@@ -113,15 +117,7 @@ double heuristic(Board& b) {
       value -= Z_2;
     } else if (vector_count(section, RED_STATE) == 3) {
       value -= Z_3;
-    } else if (vector_count(section, YELLOW_STATE) == 4) {
-      return 1;
-    } else if (vector_count(section, RED_STATE) == 4) {
-      return -1;
     }
-  }
-
-  if (fabs(value) >= 1) {
-    // std::cout << value << std::endl;
   }
   return value;
 }
@@ -153,7 +149,7 @@ std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
       b.uninsert(col);
 
       /** Version with copy **/
-      Board boardCopy(b);
+      // Board boardCopy(b);
       // boardCopy.insert(col, turn);
       // auto [currentValue, _] = miniMaxAlgorithmus(
       //     boardCopy, caller, getOtherPlayer(turn), depth - 1);

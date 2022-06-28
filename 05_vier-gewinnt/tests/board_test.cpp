@@ -7,11 +7,15 @@
 #include "gtest/gtest.h"
 
 TEST(BoardTest, ConstBoardAfterInitialization) {
-  const Board b(3, 3);
+  const Board b(4, 4);
   EXPECT_EQ(b(1, 1), State::EMPTY_STATE);
   EXPECT_EQ(b(10, 10), State::EMPTY_STATE);
   EXPECT_FALSE(b.boardFilled());
   EXPECT_EQ(b.getWinningState(), WinningState::UNFINISHED);
+}
+
+TEST(BoardTest, TooSmallBoard) {
+  EXPECT_THROW(Board b(3, 3), std::invalid_argument);
 }
 
 TEST(BoardTest, HasWonHorizontallyYellow) {

@@ -4,6 +4,8 @@
 #include <stdexcept>
 
 Board::Board(size_t n, size_t m) : col_count(n), row_depth(m) {
+  if (n < 4 || m < 4)
+    throw std::invalid_argument("Minimal 4x4 board required!");
   board.resize(col_count * row_depth);
   for (size_t i = 0; i < col_count; i++) {
     for (size_t j = 0; j < row_depth; j++) {

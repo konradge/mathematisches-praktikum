@@ -83,6 +83,19 @@ bool Board::insert(size_t column, Player player) {
   return false;
 }
 
+void Board::uninsert(size_t column) {
+  if (column >= col_count) {
+    throw std::out_of_range("column " + std::to_string(column) +
+                            " out of range");
+  }
+  for (size_t i = row_depth; i > 0; i--) {
+    if ((*this)(column, i - 1) != EMPTY_STATE) {
+      (*this)(column, i - 1) = EMPTY_STATE;
+      return;
+    }
+  }
+}
+
 bool Board::canInsert(size_t column) const {
   if (column >= col_count) {
     return false;

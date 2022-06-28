@@ -16,6 +16,8 @@ class Board {
 
   bool insert(size_t column, Player player);
 
+  void uninsert(size_t column);
+
   bool canInsert(size_t column) const;
 
   bool boardFilled() const;

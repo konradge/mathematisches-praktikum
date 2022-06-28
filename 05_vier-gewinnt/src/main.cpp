@@ -2,34 +2,45 @@
 #include <cassert>
 #include <iostream>
 #include <random>
+#include <sstream>
 #include <tuple>
 
 #include "mapra/Board.h"
 #include "mapra/unit.h"
+#include "util.h"
 
-double Z_2;
-double Z_3;
-
-#define DIFFICULTY 1
+double Z_2 = 0.005, Z_3 = 0.01;
+size_t difficulty = 1, depth = 4;
 
 std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
                                           int depth);
 
 Player getOtherPlayer(Player p) { return (p == YELLOW) ? RED : YELLOW; }
 
-int main() {
-  std::cin >> Z_2;
-  std::cin >> Z_3;
+int main(int argc, char* argv[]) {
+  if (argc >= 5) {
+    std::istringstream(argv[4]) >> depth;
+  }
+  if (argc >= 4) {
+    std::istringstream(argv[3]) >> difficulty;
+  }
+  if (argc >= 3) {
+    std::istringstream(argv[2]) >> Z_3;
+  }
+  if (argc >= 2) {
+    std::istringstream(argv[1]) >> Z_2;
+  }
 
   std::cout << "Running with Z_2 = " << Z_2 << " and Z_3 = " << Z_3
-            << std::endl;
+            << " and depth = " << depth << std::endl;
   Board b(mapra::kNumCols, mapra::kNumRows);
-  mapra::StartGame(DIFFICULTY);
+  mapra::StartGame(difficulty);
   size_t round = 0;
   int column;
 
   while (true) {
-    auto [value, turn] = miniMaxAlgorithmus(b, YELLOW, YELLOW, 4);
+    auto [value, turn] = miniMaxAlgorithmus(b, YELLOW, YELLOW, depth);
+    // auto turn = random() % mapra::kNumCols;
     b.insert(turn, YELLOW);
 
     column = mapra::NextTurn(turn);
@@ -48,12 +59,6 @@ int main() {
   }
 
   return 0;
-}
-
-int randomInt(int min, int max) {
-  std::default_random_engine generator(std::random_device{}());
-  std::uniform_int_distribution<int> distribution(min, max);
-  return distribution(generator);
 }
 
 typedef std::vector<State> section_t;
@@ -94,22 +99,6 @@ std::vector<section_t> getSections(Board& b) {
   return sections;
 }
 
-template <typename T>
-bool vector_contains(std::vector<T> v, T elem) {
-  return (std::find(v.begin(), v.end(), elem) != v.end());
-}
-
-template <typename T>
-size_t vector_count(std::vector<T> v, T elem) {
-  int count = 0;
-  for (T e : v) {
-    if (e == elem) {
-      count++;
-    }
-  }
-  return count;
-}
-
 double heuristic(Board& b) {
   double value;
   for (auto section : getSections(b)) {
@@ -130,7 +119,11 @@ double heuristic(Board& b) {
       return -1;
     }
   }
-  return 1;
+
+  if (fabs(value) >= 1) {
+    // std::cout << value << std::endl;
+  }
+  return value;
 }
 
 std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
@@ -151,12 +144,21 @@ std::pair<double, int> miniMaxAlgorithmus(Board& b, Player caller, Player turn,
   for (size_t col = 0; col < mapra::kNumCols; col++) {
     if (b.canInsert(col)) {
       // Execute step on (copied) board to test its value
-      Board boardCopy(b);
-      boardCopy.insert(col, turn);
-      auto [currentValue, _] = miniMaxAlgorithmus(
-          boardCopy, caller, getOtherPlayer(turn), depth - 1);
+      /** Version with uninsert **/
+      b.insert(col, turn);
+      auto [currentValue, _] =
+          miniMaxAlgorithmus(b, caller, getOtherPlayer(turn), depth - 1);
       // And add it to the list of possible turns
       possible_turns.push_back(std::make_pair(currentValue, col));
+      b.uninsert(col);
+
+      /** Version with copy **/
+      Board boardCopy(b);
+      // boardCopy.insert(col, turn);
+      // auto [currentValue, _] = miniMaxAlgorithmus(
+      //     boardCopy, caller, getOtherPlayer(turn), depth - 1);
+      // // And add it to the list of possible turns
+      // possible_turns.push_back(std::make_pair(currentValue, col));
     }
   }
 

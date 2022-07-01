@@ -4,7 +4,7 @@
 #include "unit.h"
 #include <iostream>
 #include <map>
-#define G 1/2
+
 std::map<double ,double> function;
 void itteration(double &xi, double &fi, double &xiPlus1, double &fiPlus1,int meth );
 void andBjrk(double &xi, double &fi, double &xiPlus1, double &fiPlus1 );
@@ -13,6 +13,7 @@ void pegasus(double &xi, double &fi, double &xiPlus1, double &fiPlus1 );
 void regFalsi(double &xi, double &fi, double &xiPlus1, double &fiPlus1 );
 void Step(double &xi, double &fi, double &xiPlus1, double &fiPlus1,  int meth );
 int main() {
+  std::cout<<eps <<std::endl ;
     int ex = 0;
     double xi  = 0;
     double xiPlus1 = 0;
@@ -45,7 +46,7 @@ int main() {
         default:
         std::cout<<"this method is not aviable"<<std::endl ;
       break;
-    } */   
+    } */  
     std::cout << "enter the number of the example (1....9)" <<std::endl ;
    std::cin>>ex ;
     getExample(ex,xi, xiPlus1, draw,pause);
@@ -53,7 +54,11 @@ int main() {
     function.insert(std::pair<double , double >(xi,fi));
     fiPlus1= f(xiPlus1);
     function.insert(std::pair<double , double >(xiPlus1,fiPlus1));
-    andBjrk(xi, fi, xiPlus1,fiPlus1 );
+    //pegasus(xi, fi, xiPlus1,fiPlus1 );
+    //regFalsi(xi, fi, xiPlus1,fiPlus1 );
+    //andBjrk(xi, fi, xiPlus1,fiPlus1 );
+    illinois(xi, fi, xiPlus1,fiPlus1 );
+    
     
       
     
@@ -68,7 +73,6 @@ void regFalsi(double &xi, double &fi, double &xiPlus1, double &fiPlus1 ){ ittera
 
 void itteration(double &xi, double &fi, double &xiPlus1, double &fiPlus1,int meth ){
   bool end = false ;
-    
   while (!end){
       Step(xi,  fi, xiPlus1, fiPlus1,  meth );
       
@@ -89,9 +93,6 @@ void itteration(double &xi, double &fi, double &xiPlus1, double &fiPlus1,int met
       std::cout<<"this method is not avaible"<<std::endl ;
       break;
     }  
-    if((std::abs(fiPlus1 )<= eps && std::abs(xiPlus1 - xi )<= eps) || std::abs(fiPlus1 )== 0){
-      end = true ;
-    } 
   }
   checkSolution(meth,  xiPlus1);
 }
@@ -119,10 +120,10 @@ void Step(double &xi, double &fi, double &xiPlus1, double &fiPlus1,  int meth){
       break;
     case Illinois:gamma = 0.5 ;
       break;
-    case Pegasus:gamma = fi/(fi+ fiPlus1) ;
+    case Pegasus:gamma = fi/(fi + fiPlus1) ;
       break;
     case AndBjrk :
-         gamma = 1- fi/fiPlus1 ;
+         gamma = 1- fiPlus1/fi ;
           if(gamma <= 0 )
             gamma = 0.5 ;
       break;
@@ -130,12 +131,10 @@ void Step(double &xi, double &fi, double &xiPlus1, double &fiPlus1,  int meth){
         std::cout<<"this method is not aviable"<<std::endl ;
       break;
     }  
-    if(fi * fiPlus1 < 0){
-        return ;
-    }
-    else{
-        xi = xim1;
-        fi = fim1*gamma ;
+
+    if(fi * fiPlus1 > 0){
+      xi = xim1;
+      fi = fim1*gamma ;
         
     }   
 }

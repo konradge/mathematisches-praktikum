@@ -1,0 +1,5 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/mnt/c/Users/valde/Programming/C++/mathematisches-praktikum/z3_nullStelle'
+make: Nothing to be done for 'all'.
+make: Leaving directory '/mnt/c/Users/valde/Programming/C++/mathematisches-praktikum/z3_nullStelle'
+ 

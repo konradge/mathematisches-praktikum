@@ -100,7 +100,7 @@ std::vector<section_t> getSections(Board& b) {
 }
 
 double heuristic(Board& b) {
-  double value;
+  double value = 0;
   for (auto section : getSections(b)) {
     if (vector_count(section, YELLOW_STATE) == 4) {
       return 1;
